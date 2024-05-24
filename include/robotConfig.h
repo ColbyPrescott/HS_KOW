@@ -3,14 +3,14 @@
 
 extern vex::competition Competition;
 extern vex::brain Brain;
-extern vex::controller ControllerPrimary;
+extern vex::controller PrimaryController;
 
-extern motor leftWheelsPrimary;
-extern motor leftWheelsSecondary;
-extern motor_group leftWheels;
+extern vex::motor leftWheelsPrimary;
+extern vex::motor leftWheelsSecondary;
+extern vex::motor_group leftWheels;
 
-extern motor rightWheelsPrimary;
-extern motor rightWheelsSecondary;
-extern motor_group rightWheels;
+extern vex::motor rightWheelsPrimary;
+extern vex::motor rightWheelsSecondary;
+extern vex::motor_group rightWheels;
 
 #endif

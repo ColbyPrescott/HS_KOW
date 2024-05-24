@@ -1,20 +1,23 @@
 #include "vex.h"
 
+#include "Subsystems/drivetrain.h"
+
 using namespace vex;
 
 void pre_auton(void) {
-
+    InitDrivetrain();
 }
 
 void autonomous(void) {
-
+    
 }
 
 void usercontrol(void) {
-    
+    UserInitDrivetrain();
 
     while(true) {
-
+        TickDrivetrain();
+        
         wait(20, msec);
     }
 }
