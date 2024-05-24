@@ -1,5 +1,7 @@
 #include "vex.h"
 
+#include <string>
+
 using namespace vex;
 
 void DrawControllerMonitors() {
@@ -9,10 +11,13 @@ void DrawControllerMonitors() {
     int rightWheelsPrimaryTemp = (int)rightWheelsPrimary.temperature(percent) / 10;
     int rightWheelsSecondaryTemp = (int)rightWheelsSecondary.temperature(percent) / 10;
 
+    // Mobile goal mover
+    std::string mogoMoverStatus = mogoMover.value() == 1 ? "HOLD" : "____";
+
     // Draw to screen
     PrimaryController.Screen.clearScreen();
     PrimaryController.Screen.setCursor(1, 1);
     PrimaryController.Screen.print("%d--%d", leftWheelsPrimaryTemp, rightWheelsPrimaryTemp); PrimaryController.Screen.newLine();
     PrimaryController.Screen.print("%d--%d", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp); PrimaryController.Screen.newLine();
-    PrimaryController.Screen.print("");
+    PrimaryController.Screen.print("%s", mogoMoverStatus.c_str());
 }
