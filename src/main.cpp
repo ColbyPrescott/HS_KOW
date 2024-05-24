@@ -2,6 +2,8 @@
 
 #include "Subsystems/drivetrain.h"
 
+#include "Displays/controllerMonitors.h"
+
 using namespace vex;
 
 void pre_auton(void) {
@@ -32,6 +34,8 @@ int main() {
 
     // Prevent main from exiting with an infinite loop.
     while(true) {
+
+        DrawControllerMonitors();
 
         wait(100, msec);
     }
