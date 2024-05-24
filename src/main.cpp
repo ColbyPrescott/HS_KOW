@@ -1,6 +1,7 @@
 #include "vex.h"
 
 #include "Subsystems/drivetrain.h"
+#include "Subsystems/mogoMover.h"
 
 #include "Displays/controllerMonitors.h"
 
@@ -8,6 +9,7 @@ using namespace vex;
 
 void pre_auton(void) {
     InitDrivetrain();
+    InitMogoMover();
 }
 
 void autonomous(void) {
@@ -16,9 +18,11 @@ void autonomous(void) {
 
 void usercontrol(void) {
     UserInitDrivetrain();
+    UserInitMogoMover();
 
     while(true) {
         TickDrivetrain();
+        TickMogoMover();
         
         wait(20, msec);
     }

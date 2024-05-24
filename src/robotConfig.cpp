@@ -18,4 +18,8 @@ motor rightWheelsSecondary = motor(PORT16, ratio18_1, false);
 motor_group rightWheels = motor_group(rightWheelsPrimary, rightWheelsSecondary);
 
 
+// Pneumatics
+pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.A);
+
+
 // Sensors
