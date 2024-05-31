@@ -1,0 +1,34 @@
+1: 
+2: 
+3: 
+4: 
+5: Left wheels primary
+
+6: Left wheels secondary
+7: 
+8: 
+9: 
+10: 
+
+11: 
+12: 
+13: 
+14: Left wheels primary
+15: 
+
+16: Left wheels secondary
+17: 
+18: 
+19: 
+20: 
+
+21: 
+
+A: Mogo mover
+B: 
+C: 
+D: 
+E: 
+F: 
+G: 
+H: 

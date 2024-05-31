@@ -1,0 +1,19 @@
+L1: 
+L2: 
+R1: 
+R2: Toggle mogo mover
+
+Up: 
+Down: 
+Left: 
+Right: 
+
+X: 
+B: 
+Y: 
+A: 
+
+Axis 1: Drivetrain left right
+Axis 2: 
+Axis 3: Drivetrain forward backward
+Axis 4: 
