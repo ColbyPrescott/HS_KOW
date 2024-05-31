@@ -2,6 +2,7 @@
 
 #include "Subsystems/drivetrain.h"
 #include "Subsystems/mogoMover.h"
+#include "Subsystems/intakeConveyor.h"
 
 #include "Displays/controllerMonitors.h"
 
@@ -10,6 +11,7 @@ using namespace vex;
 void pre_auton(void) {
     InitDrivetrain();
     InitMogoMover();
+    InitIntakeConveyor();
 }
 
 void autonomous(void) {
@@ -19,10 +21,12 @@ void autonomous(void) {
 void usercontrol(void) {
     UserInitDrivetrain();
     UserInitMogoMover();
+    UserInitIntakeConveyor();
 
     while(true) {
         TickDrivetrain();
         TickMogoMover();
+        TickIntakeConveyor();
         
         wait(20, msec);
     }

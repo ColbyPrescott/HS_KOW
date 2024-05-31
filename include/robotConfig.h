@@ -13,6 +13,8 @@ extern vex::motor rightWheelsPrimary;
 extern vex::motor rightWheelsSecondary;
 extern vex::motor_group rightWheels;
 
+extern vex::motor intakeConveyor;
+
 extern vex::pneumatics mogoMover;
 
 #endif
