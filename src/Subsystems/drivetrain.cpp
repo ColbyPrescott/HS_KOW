@@ -2,10 +2,10 @@
 
 using namespace vex;
 
-float driveSpeed = 1;
-float turnSpeed = 0.4;
+const double driveSpeed = 1;
+const double turnSpeed = 0.4;
 
-float driftThreshold = 0.08;
+const double driftThreshold = 0.08;
 
 void InitDrivetrain() {
 
@@ -17,8 +17,8 @@ void UserInitDrivetrain() {
 
 void TickDrivetrain() {
     // Get controller input
-    float forwardInput = PrimaryController.Axis3.value() / 127;
-    float rightwardInput = PrimaryController.Axis1.value() / 127;
+    double forwardInput = PrimaryController.Axis3.value() / 127;
+    double rightwardInput = PrimaryController.Axis1.value() / 127;
 
     // Nullify input if it could be drifting
     if(fabs(forwardInput) < driftThreshold) forwardInput = 0;
