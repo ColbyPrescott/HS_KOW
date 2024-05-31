@@ -17,8 +17,8 @@ void UserInitDrivetrain() {
 
 void TickDrivetrain() {
     // Get controller input
-    double forwardInput = PrimaryController.Axis3.value() / 127;
-    double rightwardInput = PrimaryController.Axis1.value() / 127;
+    double forwardInput = PrimaryController.Axis3.value() / 127.0;
+    double rightwardInput = PrimaryController.Axis1.value() / 127.0;
 
     // Nullify input if it could be drifting
     if(fabs(forwardInput) < driftThreshold) forwardInput = 0;
@@ -30,5 +30,5 @@ void TickDrivetrain() {
 
     // Set motor velocities
     leftWheels.spin(forward, fmin(fmax((forwardInput + rightwardInput) * 12, -12), 12), volt);
-    leftWheels.spin(forward, fmin(fmax((forwardInput - rightwardInput) * 12, -12), 12), volt);
+    rightWheels.spin(forward, fmin(fmax((forwardInput - rightwardInput) * 12, -12), 12), volt);
 }
