@@ -3,6 +3,7 @@
 #include "Subsystems/drivetrain.h"
 #include "Subsystems/mogoMover.h"
 #include "Subsystems/intakeConveyor.h"
+#include "Subsystems/intakeProp.h"
 
 #include "Displays/controllerMonitors.h"
 
@@ -12,6 +13,7 @@ void pre_auton(void) {
     InitDrivetrain();
     InitMogoMover();
     InitIntakeConveyor();
+    InitIntakeProp();
 }
 
 void autonomous(void) {
@@ -22,11 +24,13 @@ void usercontrol(void) {
     UserInitDrivetrain();
     UserInitMogoMover();
     UserInitIntakeConveyor();
+    UserInitIntakeProp();
 
     while(true) {
         TickDrivetrain();
         TickMogoMover();
         TickIntakeConveyor();
+        TickIntakeProp();
         
         wait(20, msec);
     }

@@ -13,10 +13,10 @@
 11: 
 12: 
 13: 
-14: Left wheels primary
+14: Right wheels primary
 15: 
 
-16: Left wheels secondary
+16: Right wheels secondary
 17: 
 18: 
 19: 
@@ -25,7 +25,7 @@
 21: 
 
 A: Mogo mover
-B: 
+B: Intake prop
 C: 
 D: 
 E: 

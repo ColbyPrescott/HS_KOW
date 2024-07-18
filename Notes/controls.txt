@@ -1,11 +1,11 @@
 L1: 
-L2: 
+L2: Toggle mogo mover
 R1: 
-R2: Toggle mogo mover
+R2: Toggle intake prop
 
 Up: Spin intake / conveyor forwards or stop
 Down: Spin intake / conveyor backwards or stop
-Left: 
+Left: Slow down intake
 Right: 
 
 X: 

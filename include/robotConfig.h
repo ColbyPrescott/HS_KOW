@@ -16,5 +16,6 @@ extern vex::motor_group rightWheels;
 extern vex::motor intakeConveyor;
 
 extern vex::pneumatics mogoMover;
+extern vex::pneumatics intakeProp;
 
 #endif
