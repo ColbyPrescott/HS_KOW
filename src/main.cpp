@@ -9,23 +9,29 @@
 
 using namespace vex;
 
+// Called at program start
 void pre_auton(void) {
+    // Call the program initialization of each subsystem
     InitDrivetrain();
     InitMogoMover();
     InitIntakeConveyor();
     InitIntakeProp();
 }
 
+// Called at start of autonomous
 void autonomous(void) {
     
 }
 
+// Called at start of driver control
 void usercontrol(void) {
+    // Call the driver initialization of each subsytem
     UserInitDrivetrain();
     UserInitMogoMover();
     UserInitIntakeConveyor();
     UserInitIntakeProp();
 
+    // Update each subsystem continuously during driver control
     while(true) {
         TickDrivetrain();
         TickMogoMover();
@@ -47,6 +53,7 @@ int main() {
     // Prevent main from exiting with an infinite loop.
     while(true) {
 
+        // Draw important information to the controller screen for easy monitoring
         DrawControllerMonitors();
 
         wait(100, msec);

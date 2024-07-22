@@ -6,6 +6,7 @@
 
 using namespace vex;
 
+// Draw important information that is useful to monitor to the controller screen
 void DrawControllerMonitors() {
     // Drivetrain temperatures
     int leftWheelsPrimaryTemp = (int)leftWheelsPrimary.temperature(percent) / 10;

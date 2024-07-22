@@ -2,19 +2,26 @@
 
 using namespace vex;
 
+// Quick settings
+// Drivetrain motor speed going forwards and backwards, 0 - 1
 const double driveSpeed = 1;
+// Drivetrain motor speed turning left and right, 0 - 1
 const double turnSpeed = 0.4;
-
+// Value that controller joystick axes must exceed to avoid being considered joystick drift, 0 - 1
 const double driftThreshold = 0.08;
 
+
+// Initialize drivetrain at the start of the program
 void InitDrivetrain() {
 
 }
 
+// Initialize drivetrain at the start of driver control
 void UserInitDrivetrain() {
 
 }
 
+// Update drivetrain during driver control
 void TickDrivetrain() {
     // Get controller input
     double forwardInput = PrimaryController.Axis3.value() / 127.0;
