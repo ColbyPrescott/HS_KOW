@@ -4,7 +4,7 @@ using namespace vex;
 
 // Quick settings
 // Speed for the intake conveyor motors, 0 - 1
-const double intakeConveyorSpeed = 0.8;
+const double intakeConveyorRPM = 100;
 
 
 // Variables needed for system functionality
@@ -20,7 +20,7 @@ void InitIntakeConveyor() {
         // If already moving forwards, stop
         if(intakeConveyorDirection == 1) {intakeConveyor.stop(); intakeConveyorDirection = 0;}
         // If stopped or moving backwards, spin forwards
-        else {intakeConveyor.spin(forward, fmin(fmax(intakeConveyorSpeed * 12, -12), 12), volt); intakeConveyorDirection = 1;}
+        else {intakeConveyor.spin(forward, intakeConveyorRPM, rpm); intakeConveyorDirection = 1;}
     });
 
     // Start or stop intake conveyor moving backwards when the down arrow button is pressed
@@ -28,13 +28,13 @@ void InitIntakeConveyor() {
         // If already moving backwards, stop
         if(intakeConveyorDirection == -1) {intakeConveyor.stop(); intakeConveyorDirection = 0;}
         // If stopped or moving forwards, spin backwards
-        else {intakeConveyor.spin(reverse, fmin(fmax(intakeConveyorSpeed * 12, -12), 12), volt); intakeConveyorDirection = -1;}
+        else {intakeConveyor.spin(reverse, intakeConveyorRPM, rpm); intakeConveyorDirection = -1;}
     });
 
     // TEST Slow down intake conveyor when the left arrow button is pressed
     PrimaryController.ButtonLeft.pressed([](){
-        if(intakeConveyorDirection == 1) intakeConveyor.spin(forward, fmin(fmax(intakeConveyorSpeed * 0.5 * 12, -12), 12), volt);
-        if(intakeConveyorDirection == -1) intakeConveyor.spin(reverse, fmin(fmax(intakeConveyorSpeed * 0.5 * 12, -12), 12), volt);
+        if(intakeConveyorDirection == 1) intakeConveyor.spin(forward, intakeConveyorRPM * 0.5, rpm);
+        if(intakeConveyorDirection == -1) intakeConveyor.spin(reverse, intakeConveyorRPM * 0.5, rpm);
     });
 }
 

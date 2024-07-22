@@ -1,5 +1,5 @@
-1: Intake and conveyor
-2: 
+1: Intake and conveyor top
+2: Intake and conveyor bottom
 3: 
 4: 
 5: Left wheels primary
