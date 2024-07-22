@@ -1,34 +1,34 @@
-1: Intake and conveyor top
-2: Intake and conveyor bottom
+1: 
+2: !! Intake and conveyor bottom
 3: 
 4: 
-5: Left wheels primary
+5: Right wheels primary
 
-6: Left wheels secondary
-7: 
-8: 
-9: 
-10: 
+6: 
+7: BROKEN
+8: Intake and conveyor top
+9: Right wheels secondary
+10: BROKEN
 
 11: 
 12: 
 13: 
-14: Right wheels primary
-15: 
+14: 
+15: Left wheels primary
 
-16: Right wheels secondary
+16: 
 17: 
 18: 
 19: 
-20: 
+20: Left wheels secondary
 
 21: 
 
-A: Mogo mover
-B: Intake prop
+A: 
+B: !! Intake prop
 C: 
 D: 
 E: 
 F: 
 G: 
-H: 
+H: Mogo mover
