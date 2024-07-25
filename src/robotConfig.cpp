@@ -19,9 +19,7 @@ motor rightWheelsPrimary = motor(PORT5, ratio18_1, true);
 motor rightWheelsSecondary = motor(PORT9, ratio18_1, false);
 motor_group rightWheels = motor_group(rightWheelsPrimary, rightWheelsSecondary);
 
-motor intakeConveyorTop = motor(PORT8, ratio18_1, true);
-motor intakeConveyorBottom = motor(PORT2, true);
-motor_group intakeConveyor = motor_group(intakeConveyorTop, intakeConveyorBottom);
+motor intakeConveyor = motor(PORT8, ratio18_1, true);
 
 
 // Pneumatics
