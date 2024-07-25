@@ -11,7 +11,7 @@ controller PrimaryController;
 
 
 // Motors
-motor leftWheelsPrimary = motor(PORT15, ratio18_1, false);
+motor leftWheelsPrimary = motor(PORT14, ratio18_1, false);
 motor leftWheelsSecondary = motor(PORT20, ratio18_1, true);
 motor_group leftWheels = motor_group(leftWheelsPrimary, leftWheelsSecondary);
 

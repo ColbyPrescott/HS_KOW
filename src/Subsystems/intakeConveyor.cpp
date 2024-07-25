@@ -4,7 +4,7 @@ using namespace vex;
 
 // Quick settings
 // Speed for the intake conveyor motors, 0 - 1
-const double intakeConveyorRPM = 100;
+const double intakeConveyorRPM = 200;
 
 
 // Variables needed for system functionality
