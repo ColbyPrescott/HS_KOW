@@ -18,6 +18,5 @@ extern vex::motor intakeConveyorBottom;
 extern vex::motor_group intakeConveyor;
 
 extern vex::pneumatics mogoMover;
-extern vex::pneumatics intakeProp;
 
 #endif

@@ -25,7 +25,7 @@
 21: 
 
 A: 
-B: !! Intake prop
+B: 
 C: 
 D: 
 E: 

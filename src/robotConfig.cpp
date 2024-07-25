@@ -26,7 +26,6 @@ motor_group intakeConveyor = motor_group(intakeConveyorTop, intakeConveyorBottom
 
 // Pneumatics
 pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.H);
-pneumatics intakeProp = pneumatics(Brain.ThreeWirePort.B);
 
 
 // Sensors
