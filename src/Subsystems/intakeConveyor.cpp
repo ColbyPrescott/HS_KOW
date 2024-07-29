@@ -37,6 +37,12 @@ int intakeConveyorDirection = 0;
 
 // Initialize intake conveyor at the start of the program
 void InitIntakeConveyor() {
+    
+
+}
+
+// Initialize intake conveyor at the start of driver control
+void UserInitIntakeConveyor() {
     // Controls
     // Start or stop intake conveyor moving forwards when the up arrow button is pressed
     PrimaryController.ButtonUp.pressed([](){
@@ -80,12 +86,6 @@ void InitIntakeConveyor() {
         // intakeConveyor.setPosition(-100, degrees);
         // printf("%f\n", intakeConveyor.position(degrees));
     });
-
-}
-
-// Initialize intake conveyor at the start of driver control
-void UserInitIntakeConveyor() {
-
 }
 
 // Update intake conveyor during driver control
