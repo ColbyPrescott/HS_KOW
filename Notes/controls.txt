@@ -3,10 +3,10 @@ L2: Toggle mogo mover
 R1: 
 R2: 
 
-Up: Spin intake / conveyor forwards or stop
-Down: Spin intake / conveyor backwards or stop
+Up: Spin intake forwards or stop
+Down: Spin intake backwards or stop
 Left: Slow down intake
-Right: 
+Right: Next waypoint on intake
 
 X: 
 B: 

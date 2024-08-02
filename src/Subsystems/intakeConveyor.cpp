@@ -6,6 +6,12 @@ using namespace vex;
 // Speed for the intake conveyor motors, 0 - 1
 const double intakeConveyorRPM = 200;
 
+
+// Variables needed for system functionality
+// Direction of the intake conveyor motors. -1 is backwards, 0 is stopped, and 1 is forwards
+int intakeConveyorDirection = 0;
+
+// Record of motor encoder values of different significant positions
 enum class IntakeDegreePositions {
     lowest = 0, // Start encoder with standoffs at lowest possible position
     highest = 2500, // Standoffs at highest possible position
@@ -14,10 +20,11 @@ enum class IntakeDegreePositions {
     startPlexiglass = 3720, // Standoffs have rounded the corner and now start to touch the plexiglass
     endPlexiglass = 4400, // Standoffs cleared the plexiglass and are now back to normal orientation
     readyForDisk = 4600, // Standoff is at a good position to quickly pick up the next disk
-    lowestReset = 5040, // Standoff is at the lowest point again, having traveled a full entire loop
+    fullLoop = 5040, // Standoff is at the lowest point again, having traveled a full entire loop
 };
 
-int intakeDegreePositions[] = {
+// Waypoints to stop at
+int intakeWaypoints[] = {
     (int)IntakeDegreePositions::lowest,
     (int)IntakeDegreePositions::highest,
     (int)IntakeDegreePositions::startHorizontal,
@@ -26,13 +33,10 @@ int intakeDegreePositions[] = {
     (int)IntakeDegreePositions::endPlexiglass,
     (int)IntakeDegreePositions::readyForDisk,
 };
-int intakeDegreePositionIndex = 0;
-const int numIntakeDegreePositions = 7;
-
-
-// Variables needed for system functionality
-// Direction of the intake conveyor motors. -1 is backwards, 0 is stopped, and 1 is forwards
-int intakeConveyorDirection = 0;
+// Current waypoint
+int intakeWaypointIndex = 0;
+// Total number of waypoints
+const int numIntakeWaypoints = 7;
 
 
 // Initialize intake conveyor at the start of the program
@@ -67,24 +71,20 @@ void UserInitIntakeConveyor() {
     });
 
     PrimaryController.ButtonRight.pressed([](){
-        intakeDegreePositionIndex++;
-        if(intakeDegreePositionIndex == numIntakeDegreePositions) {
-            intakeDegreePositionIndex = 0;
-            int oldEncoder = intakeConveyor.position(degrees);
-            int resetOffset = intakeDegreePositions[numIntakeDegreePositions - 1];
-            intakeConveyor.setPosition(oldEncoder - resetOffset, degrees);
+        // Increment to next waypoint
+        intakeWaypointIndex++;
+        // If after last waypoint, jump back to the first waypoint
+        if(intakeWaypointIndex == numIntakeWaypoints) {
+            // Reset waypoint index to start
+            intakeWaypointIndex = 0;
+            // Subtract a full loop from the motor's encoder value
+            double oldEncoder = intakeConveyor.position(degrees);
+            double fullLoop = (double)IntakeDegreePositions::fullLoop;
+            intakeConveyor.setPosition(oldEncoder - fullLoop, degrees);
         }
-        printf("At: %i, Spinning to: %i\n", (int)intakeConveyor.position(degrees), intakeDegreePositions[intakeDegreePositionIndex]); // 4319 to 4400, 4399 to 4600, 0 to 0 when it should be -440 to 0
-        intakeConveyor.spinToPosition(intakeDegreePositions[intakeDegreePositionIndex], degrees, intakeConveyorRPM, rpm, false);
-
-        // // intakeConveyor.setPosition(0, degrees);
-        // printf("%f\n", intakeConveyor.position(degrees));
-        // intakeConveyor.setPosition(100, degrees);
-        // printf("%f\n", intakeConveyor.position(degrees));
-        // intakeConveyor.setPosition(720, degrees);
-        // printf("%f\n", intakeConveyor.position(degrees));
-        // intakeConveyor.setPosition(-100, degrees);
-        // printf("%f\n", intakeConveyor.position(degrees));
+        
+        // Spin to the next waypoint
+        intakeConveyor.spinToPosition(intakeWaypoints[intakeWaypointIndex], degrees, intakeConveyorRPM, rpm, false);
     });
 }
 
