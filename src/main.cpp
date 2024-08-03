@@ -14,6 +14,14 @@ void pre_auton(void) {
     InitDrivetrain();
     InitMogoMover();
     InitIntakeConveyor();
+
+    // Calibrate inertial sensor
+    inertialA.calibrate();
+    while(inertialA.isCalibrating()) wait(0.2, seconds);
+    PrimaryController.rumble(".");
+
+    // Start APS
+    aps.StartTracking(200);
 }
 
 // Called at start of autonomous
@@ -51,6 +59,12 @@ int main() {
 
         // Draw important information to the controller screen for easy monitoring
         DrawControllerMonitors();
+
+        // Plot APS to screen
+        const double scale = 0.1;
+        Brain.Screen.setPenColor(white);
+        Brain.Screen.drawPixel(480.0 / 2.0 + aps.GetX() * scale, 
+                                240.0 / 2.0 - aps.GetY() * scale);
 
         wait(100, msec);
     }

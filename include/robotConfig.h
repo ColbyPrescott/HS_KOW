@@ -5,6 +5,8 @@ extern vex::competition Competition;
 extern vex::brain Brain;
 extern vex::controller PrimaryController;
 
+extern AbsolutePositioningSystem aps;
+
 extern vex::motor leftWheelsPrimary;
 extern vex::motor leftWheelsSecondary;
 extern vex::motor_group leftWheels;
@@ -16,5 +18,7 @@ extern vex::motor_group rightWheels;
 extern vex::motor intakeConveyor;
 
 extern vex::pneumatics mogoMover;
+
+extern vex::inertial inertialA;
 
 #endif

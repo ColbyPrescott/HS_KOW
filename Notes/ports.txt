@@ -1,12 +1,12 @@
 1: 
-2: !! Intake and conveyor bottom
-3: 
+2: 
+3: Inertial sensor A
 4: 
 5: Right wheels primary
 
 6: 
 7: BROKEN
-8: Intake and conveyor top
+8: Intake
 9: Right wheels secondary
 10: BROKEN
 

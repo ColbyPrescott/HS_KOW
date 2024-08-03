@@ -9,6 +9,7 @@
 #include "v5.h"
 #include "v5_vcs.h"
 
+#include "Backend/absolutePositioningSystem.h"
 #include "robotConfig.h"
 
 #define waitUntil(condition)                                                   \

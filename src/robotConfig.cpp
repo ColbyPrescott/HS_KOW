@@ -1,5 +1,7 @@
 #include "vex.h"
 
+#include "Backend/absolutePositioningSystem.h"
+
 using namespace vex;
 
 // VEX related global variables
@@ -8,6 +10,10 @@ using namespace vex;
 competition Competition;
 brain Brain;
 controller PrimaryController;
+
+
+// Other global variables
+AbsolutePositioningSystem aps = AbsolutePositioningSystem(&leftWheelsPrimary, &rightWheelsPrimary, &inertialA);
 
 
 // Motors
@@ -27,3 +33,4 @@ pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.H);
 
 
 // Sensors
+inertial inertialA = inertial(PORT3, vex::left);
