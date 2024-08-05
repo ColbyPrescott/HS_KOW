@@ -19,6 +19,6 @@ extern vex::motor intakeConveyor;
 
 extern vex::pneumatics mogoMover;
 
-extern vex::inertial inertialA;
+extern DualInertial dualInertial;
 
 #endif

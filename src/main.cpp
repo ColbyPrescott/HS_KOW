@@ -16,8 +16,8 @@ void pre_auton(void) {
     InitIntakeConveyor();
 
     // Calibrate inertial sensor
-    inertialA.calibrate();
-    while(inertialA.isCalibrating()) wait(0.2, seconds);
+    dualInertial.Calibrate();
+    while(dualInertial.GetCalibrating()) wait(0.2, seconds);
     PrimaryController.rumble(".");
 
     // Start APS
@@ -61,7 +61,7 @@ int main() {
         DrawControllerMonitors();
 
         // Plot APS to screen
-        const double scale = 0.1;
+        const double scale = 0.06;
         Brain.Screen.setPenColor(white);
         Brain.Screen.drawPixel(480.0 / 2.0 + aps.GetX() * scale, 
                                 240.0 / 2.0 - aps.GetY() * scale);

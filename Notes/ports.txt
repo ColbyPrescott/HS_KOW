@@ -1,10 +1,10 @@
 1: 
 2: 
-3: Inertial sensor A
+3: Inertial sensor A (upright)
 4: 
 5: Right wheels primary
 
-6: 
+6: Inertial sensor B (upside down)
 7: BROKEN
 8: Intake
 9: Right wheels secondary

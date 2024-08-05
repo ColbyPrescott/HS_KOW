@@ -13,7 +13,7 @@ controller PrimaryController;
 
 
 // Other global variables
-AbsolutePositioningSystem aps = AbsolutePositioningSystem(&leftWheelsPrimary, &rightWheelsPrimary, &inertialA);
+AbsolutePositioningSystem aps = AbsolutePositioningSystem(&leftWheelsPrimary, &rightWheelsPrimary, &dualInertial);
 
 
 // Motors
@@ -33,4 +33,4 @@ pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.H);
 
 
 // Sensors
-inertial inertialA = inertial(PORT3, vex::left);
+DualInertial dualInertial = DualInertial(inertial(PORT3, vex::left), inertial(PORT6, vex::left));

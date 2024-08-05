@@ -39,7 +39,7 @@ void TickDrivetrain() {
     // // RPM control can't seem to drive super slowly, but the PID controller will keep the sides even better...
     // leftWheels.spin(forward, fmin(fmax((forwardInput + rightwardInput) * 200, -200), 200), rpm);
     // rightWheels.spin(forward, fmin(fmax((forwardInput - rightwardInput) * 200, -200), 200), rpm);
-    // Voltage control can be slower, but torqe differences on both sides will skew average without any PID controller
+    // Voltage control can be slower, but torque differences on both sides will skew average without any PID controller
     leftWheels.spin(forward, fmin(fmax((forwardInput + rightwardInput) * 12, -12), 12), volt);
     rightWheels.spin(forward, fmin(fmax((forwardInput - rightwardInput) * 12, -12), 12), volt);
 }

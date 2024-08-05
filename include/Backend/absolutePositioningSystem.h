@@ -4,7 +4,7 @@
 #include "v5.h"
 #include "v5_vcs.h"
 
-#include <vector>
+#include "Backend/dualInertial.h"
 
 class AbsolutePositioningSystem {
     private:
@@ -12,15 +12,15 @@ class AbsolutePositioningSystem {
         double mX = 0;
         // Current absolute Y coordinate in inches
         double mY = 0;
-        // Current absolute angle in degrees
+        // Current absolute angle in radians
         double mAngle = 0;
 
         // A motor on the left side of the tank drivetrain
         vex::motor* mLeftDrivetrainMotor;
         // A motor on the right side of the tank drivetrain
         vex::motor* mRightDrivetrainMotor;
-        // Inertial sensor to use to improve tracking
-        vex::inertial* mInertialSensor;
+        // Inertial sensors to use to improve tracking
+        DualInertial* mInertialSensors;
 
         // Previous tick values so they can be compared between ticks
         double mPrevLeftDrivetrainMotorPosition = 0;
@@ -28,10 +28,10 @@ class AbsolutePositioningSystem {
         double mPrevInertialSensorAngle = 0;
 
     public:
-        AbsolutePositioningSystem(vex::motor* leftDrivetrainMotor, vex::motor* rightDrivetrainMotor, vex::inertial* inertialSensor) : 
+        AbsolutePositioningSystem(vex::motor* leftDrivetrainMotor, vex::motor* rightDrivetrainMotor, DualInertial* inertialSensors) : 
             mLeftDrivetrainMotor(leftDrivetrainMotor),
             mRightDrivetrainMotor(rightDrivetrainMotor),
-            mInertialSensor(inertialSensor) {}
+            mInertialSensors(inertialSensors) {}
 
         void SetPosition(double x, double y);
         void SetAngle(double angle);

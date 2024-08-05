@@ -8,7 +8,7 @@ void AbsolutePositioningSystem::SetPosition(double x, double y) {
     mY = y;
 }
 
-// Manually set the absolute angle in degrees
+// Manually set the absolute angle in radians
 void AbsolutePositioningSystem::SetAngle(double angle) {
     mAngle = angle;
 }
@@ -25,7 +25,7 @@ double AbsolutePositioningSystem::GetY() {
     return mY;
 }
 
-// Get the absolute angle in degrees
+// Get the absolute angle in radians
 double AbsolutePositioningSystem::GetAngle() {
     return mAngle;
 }
@@ -66,11 +66,11 @@ void AbsolutePositioningSystem::Tick() {
     double averageTravel = (leftMotorTravel + rightMotorTravel) / 2.0;
 
     // Add travel to absolute coordinate
-    mX += cos(mPrevInertialSensorAngle * M_PI / 180.0) * averageTravel;
-    mY += sin(mPrevInertialSensorAngle * M_PI / 180.0) * averageTravel;
+    mX += cos(mPrevInertialSensorAngle) * averageTravel;
+    mY += sin(mPrevInertialSensorAngle) * averageTravel;
     
     // Update previous tick values
     mPrevLeftDrivetrainMotorPosition = leftMotorPosition;
     mPrevRightDrivetrainMotorPosition = rightMotorPosition;
-    mPrevInertialSensorAngle = mInertialSensor->rotation();
+    mPrevInertialSensorAngle = mInertialSensors->GetRotation();
 }

@@ -3,6 +3,7 @@
 #include "Subsystems/intakeConveyor.h"
 
 #include <string>
+#include "Backend/utilityMath.h"
 
 using namespace vex;
 
@@ -21,7 +22,7 @@ void DrawControllerMonitors() {
     std::string intakeConveyorStatus = intakeConveyorDirection == 0 ? "___" : (intakeConveyorDirection == 1 ? "IN " : "OUT");
 
     // Inertial sensor
-    double heading = inertialA.heading(degrees);
+    double heading = RadiansToDegrees(dualInertial.GetHeading());
 
     // APS
     double apsX = aps.GetX();
