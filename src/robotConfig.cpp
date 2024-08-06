@@ -33,4 +33,11 @@ pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.H);
 
 
 // Sensors
-DualInertial dualInertial = DualInertial(inertial(PORT3, vex::left), inertial(PORT6, vex::left));
+DualInertial dualInertial = DualInertial(inertial(PORT3, vex::left), inertial(PORT6, vex::left), 1.0, 1.0);
+
+// 18081
+// 18111 Ran over a screw at one point
+// 18089 Near full battery, cool
+
+// 17925
+// 17942 Near full battery, cool

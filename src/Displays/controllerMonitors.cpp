@@ -22,7 +22,7 @@ void DrawControllerMonitors() {
     std::string intakeConveyorStatus = intakeConveyorDirection == 0 ? "___" : (intakeConveyorDirection == 1 ? "IN " : "OUT");
 
     // Inertial sensor
-    double heading = RadiansToDegrees(dualInertial.GetHeading());
+    double heading = RadiansToDegrees(dualInertial.GetRotation());
 
     // APS
     double apsX = aps.GetX();

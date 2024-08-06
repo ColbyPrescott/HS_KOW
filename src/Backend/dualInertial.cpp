@@ -15,6 +15,10 @@ double DualInertial::GetRotation() {
     double inertialARotation = DegreesToRadians(mInertialA.rotation(vex::degrees));
     double inertialBRotation = DegreesToRadians(mInertialB.rotation(vex::degrees));
 
+    // Apply biases from the 18000 degree tests
+    inertialARotation *= mBiasA;
+    inertialBRotation *= mBiasB;
+
     // Return one if the other inertial sensor is not installed
     if(!mInertialA.installed()) return inertialBRotation;
     if(!mInertialB.installed()) return inertialARotation;
