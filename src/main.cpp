@@ -1,5 +1,7 @@
 #include "vex.h"
 
+#include "Backend/utilityMath.h"
+
 #include "Subsystems/drivetrain.h"
 #include "Subsystems/mogoMover.h"
 #include "Subsystems/intakeConveyor.h"
@@ -22,6 +24,13 @@ void pre_auton(void) {
 
     // Start APS
     aps.StartTracking(200);
+
+    PrimaryController.ButtonX.pressed([](){
+        static int logNum = -1;
+        logNum++;
+
+        printf("%.3f, %d, %d, %.2f\n", Brain.Timer.system() / 1000.0, 360 * 5 * logNum, (int)RadiansToDegrees(dualInertial.GetRotation()), dualInertial.GetTemperature());
+    });
 }
 
 // Called at start of autonomous
