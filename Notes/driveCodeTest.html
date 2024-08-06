@@ -1,0 +1,276 @@
+<!-- First Desmos math test: https://www.desmos.com/calculator/hf90hwgs68 -->
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Drive Code Test</title>
+        <style>
+
+            body {
+                margin: 0px;
+                overflow: hidden;
+            }
+
+        </style>
+    </head>
+    <body>
+        <script>
+
+            // Utility functions
+            function Map(n, min1, max1, min2, max2) {
+                return (n - min1) / (max1 - min1) * (max2 - min2) + min2;
+            }
+
+            // Create canvas
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            document.body.appendChild(canvas);
+
+            // Fill screen with canvas
+            function Resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener("resize", Resize);
+            Resize();
+
+            // Input
+            const keys = {
+                "w": false,
+                "a": false,
+                "s": false,
+                "d": false
+            };
+            window.addEventListener("keydown", (event) => {
+                keys[event.key] = true;
+            });
+            window.addEventListener("keyup", (event) => {
+                keys[event.key] = false;
+            });
+            const mouse = {
+                x: 0,
+                y: 0
+            };
+            window.addEventListener("mousemove", (event) => {
+                mouse.x = event.clientX;
+                mouse.y = event.clientY;
+            });
+
+
+            class Wheel {
+                constructor(robot, x, y) {
+                    this.robot = robot;
+                    this.x = x;
+                    this.y = y;
+
+                    this.path = [];
+                }
+
+                RecordPath() {
+                    // Use a bit of matrix math to get the coordinate position of the wheel
+                    this.path.push({
+                        x: this.x * Math.cos(this.robot.rot) - this.y * Math.sin(this.robot.rot) + this.robot.x,
+                        y: this.x * Math.sin(this.robot.rot) + this.y * Math.cos(this.robot.rot) + this.robot.y
+                    });
+                }
+
+                GetPathLength() {
+                    let totalLength = 0;
+                    for(let i = 1; i < this.path.length; i++) {
+                        totalLength += Math.sqrt(Math.pow(this.path[i - 1].x - this.path[i].x, 2) + Math.pow(this.path[i - 1].y - this.path[i].y, 2));
+                    }
+                    return totalLength;
+                }
+
+                Draw() {
+                    // Transform to coordiante plane
+                    ctx.resetTransform();
+                    ctx.translate(canvas.width / 2, canvas.height / 2);
+                    ctx.scale(1, -1);
+
+                    // Draw path
+                    if(this.path.length > 0) {
+                        ctx.beginPath();
+                        ctx.moveTo(this.path[0].x, this.path[0].y);
+                        for(let vertex of this.path) ctx.lineTo(vertex.x, vertex.y);
+                        ctx.strokeStyle = "#ffffff";
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+
+                    // Transform to robot position
+                    ctx.translate(this.robot.x, this.robot.y);
+                    ctx.rotate(this.robot.rot);
+
+                    // Transform to wheel position
+                    ctx.translate(this.x, this.y);
+
+                    // Draw circle for wheel
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 7, 0, Math.PI * 2);
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fill();
+                }
+            };
+
+
+            const robot = {
+                x: 0,
+                y: 0,
+                rot: 0,
+                width: 50,
+                height: 50,
+                maxDriveSpeed: 200,
+                maxTurnSpeed: 2,
+                wheels: []
+            };
+
+            robot.wheels.push(new Wheel(robot, 0, 0));
+            robot.wheels.push(new Wheel(robot, 0, 25));
+            robot.wheels.push(new Wheel(robot, 0, -25));
+
+            robot.Draw = function() {
+                // Draw all of the wheels
+                for(wheel of this.wheels) wheel.Draw();
+
+                // Transform to coordiante plane
+                ctx.resetTransform();
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.scale(1, -1);
+
+                // Transform to robot position
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rot);
+
+                // Draw robot body
+                ctx.beginPath();
+                ctx.moveTo(-this.height / 2, +this.width / 2);
+                ctx.lineTo(+this.height / 2, +this.width / 2);
+                ctx.lineTo(+this.height / 2, -this.width / 2);
+                ctx.lineTo(-this.height / 2, -this.width / 2);
+                ctx.lineTo(-this.height / 2, +this.width / 2);
+                ctx.closePath();
+                ctx.strokeStyle = "#0000ff";
+                ctx.lineWidth = 5;
+                ctx.stroke();
+
+                // Draw forwards arrow
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(this.height, 0);
+                ctx.moveTo(this.height - 10, 10);
+                ctx.lineTo(this.height, 0);
+                ctx.lineTo(this.height - 10, -10);
+                ctx.strokeStyle = "#aaaaaa";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            robot.Drive = function() {
+                // Get the speed values from the mouse
+                let driveSpeed = Map(mouse.y, canvas.height, 0, 0, 1);
+                let turnSpeed = Map(mouse.x, 0, canvas.width, 0, 1);
+
+                // Get the direction control from keyboard input
+                let forwardInput = keys.w - keys.s;
+                let rightwardInput = keys.d - keys.a;
+
+                // Rotate the robot
+                this.rot -= rightwardInput * (turnSpeed * this.maxTurnSpeed * deltaTime);
+
+                // Drive the robot
+                this.x += forwardInput * (Math.cos(this.rot) * driveSpeed * this.maxDriveSpeed * deltaTime);
+                this.y += forwardInput * (Math.sin(this.rot) * driveSpeed * this.maxDriveSpeed * deltaTime);
+
+                // Record the new position of each wheel
+                if(frameNum % 2 == 0) for(wheel of this.wheels) wheel.RecordPath();
+            };
+
+
+            function DrawSpeedControls() {
+                ctx.resetTransform();
+
+                // Drive speed
+                ctx.beginPath();
+                ctx.moveTo(0, mouse.y);
+                ctx.lineTo(mouse.x, mouse.y);
+                ctx.strokeStyle = "#aaaaaa";
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(mouse.x, mouse.y);
+                ctx.lineTo(canvas.width, mouse.y);
+                ctx.strokeStyle = "#555555";
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+
+                // Turn speed
+                ctx.beginPath();
+                ctx.moveTo(mouse.x, canvas.height);
+                ctx.lineTo(mouse.x, mouse.y);
+                ctx.strokeStyle = "#aaaaaa";
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(mouse.x, mouse.y);
+                ctx.lineTo(mouse.x, 0);
+                ctx.strokeStyle = "#555555";
+                ctx.lineWidth = 4;
+                ctx.stroke();
+            }
+
+            function DrawInfoText() {
+                ctx.resetTransform();
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "30px Arial";
+                ctx.textAlign = "left";
+                ctx.textBaseline = "top";
+
+                let centerLength = robot.wheels[0].GetPathLength();
+                let leftLength = robot.wheels[1].GetPathLength();
+                let rightLength = robot.wheels[2].GetPathLength();
+                ctx.fillText("Center length: " + Math.round(centerLength), 0, 35 * 0);
+                ctx.fillText("Left length: " + Math.round(leftLength), 0, 35 * 1);
+                ctx.fillText("Right length: " + Math.round(rightLength), 0, 35 * 2);
+
+                let leftDifference = centerLength - leftLength;
+                let rightDifference = centerLength - rightLength;
+                ctx.fillText("Right difference: " + Math.round(leftDifference), 0, 35 * 3);
+                ctx.fillText("Left difference: " + Math.round(rightDifference), 0, 35 * 4);
+
+                let sumDifferences = leftDifference + rightDifference;
+                ctx.fillText("Sum differences: " + Math.round(sumDifferences), 0, 35 * 5);
+            }
+
+            let deltaTime;
+            let prevTime = Date.now();
+            let frameNum = 0;
+            function Frame() {
+                // Calculate deltaTime
+                deltaTime = (Date.now() - prevTime) / 1000;
+                prevTime = Date.now();
+                frameNum++;
+
+                // Clear background
+                ctx.resetTransform();
+                ctx.fillStyle = "#000000";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                DrawSpeedControls();
+
+                robot.Drive();
+                robot.Draw();
+
+                DrawInfoText();
+
+                window.requestAnimationFrame(Frame);
+            }
+            Frame();
+
+        </script>
+    </body>
+</html>
