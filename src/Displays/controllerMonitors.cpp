@@ -23,6 +23,7 @@ void DrawControllerMonitors() {
 
     // Inertial sensor
     double heading = RadiansToDegrees(dualInertial.GetRotation());
+    double inertialTemp = dualInertial.GetTemperature();
 
     // APS
     double apsX = aps.GetX();
@@ -32,7 +33,7 @@ void DrawControllerMonitors() {
     PrimaryController.Screen.clearScreen();
     PrimaryController.Screen.setCursor(1, 1);
     PrimaryController.Screen.print("%d--%d  %.0f", leftWheelsPrimaryTemp, rightWheelsPrimaryTemp, heading); PrimaryController.Screen.newLine();
-    PrimaryController.Screen.print("%d--%d", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp); PrimaryController.Screen.newLine();
+    PrimaryController.Screen.print("%d--%d  %.2f", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp, inertialTemp); PrimaryController.Screen.newLine();
     // PrimaryController.Screen.print("%s  %s", mogoMoverStatus.c_str(), intakeConveyorStatus.c_str());
     PrimaryController.Screen.print("%.1f, %.1f", apsX, apsY);
 }

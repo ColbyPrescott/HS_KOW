@@ -23,7 +23,7 @@ double DualInertial::GetRotation() {
     if(!mInertialA.installed()) return inertialBRotation;
     if(!mInertialB.installed()) return inertialARotation;
 
-    // Return the average between the two inertial sensor
+    // Return the average between the two inertial sensors
     return (inertialARotation + inertialBRotation) / 2.0;
 }
 
@@ -35,4 +35,18 @@ double DualInertial::GetHeading() {
 // Get whether or not one of the inertial sensors is still calibrating
 bool DualInertial::GetCalibrating() {
     return mInertialA.isCalibrating() || mInertialB.isCalibrating();
+}
+
+// Get the average temperature of both inertial sensors
+double DualInertial::GetTemperature() {
+    // Get the temperature of each sensor
+    double inertialATemp = mInertialA.GetTemperature();
+    double inertialBTemp = mInertialB.GetTemperature();
+
+    // Return one if the other inertial sensor is not installed
+    if(!mInertialA.installed()) return inertialBTemp;
+    if(!mInertialB.installed()) return inertialATemp;
+
+    // Return the average between the two inertial sensors
+    return (inertialATemp + inertialBTemp) / 2.0;
 }
