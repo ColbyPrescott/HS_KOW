@@ -1,27 +1,22 @@
 #include "Backend/dualInertial.h"
 
-#include <math.h>
 #include "Backend/utilityMath.h"
 
 // Calibrate both of the inertial sensors
 void DualInertial::Calibrate() {
-    mInertialA.calibrate();
-    mInertialB.calibrate();
+    mInertialA.Calibrate();
+    mInertialB.Calibrate();
 }
 
 // Get the average absolute yaw angle of both inertial sensors in radians
 double DualInertial::GetRotation() {
     // Get the rotation values in radians
-    double inertialARotation = DegreesToRadians(mInertialA.rotation(vex::degrees));
-    double inertialBRotation = DegreesToRadians(mInertialB.rotation(vex::degrees));
-
-    // Apply biases from the 18000 degree tests
-    inertialARotation *= mBiasA;
-    inertialBRotation *= mBiasB;
+    double inertialARotation = mInertialA.GetRotation();
+    double inertialBRotation = mInertialB.GetRotation();
 
     // Return one if the other inertial sensor is not installed
-    if(!mInertialA.installed()) return inertialBRotation;
-    if(!mInertialB.installed()) return inertialARotation;
+    if(!mInertialA.GetInstalled()) return inertialBRotation;
+    if(!mInertialB.GetInstalled()) return inertialARotation;
 
     // Return the average between the two inertial sensors
     return (inertialARotation + inertialBRotation) / 2.0;
@@ -34,7 +29,7 @@ double DualInertial::GetHeading() {
 
 // Get whether or not one of the inertial sensors is still calibrating
 bool DualInertial::GetCalibrating() {
-    return mInertialA.isCalibrating() || mInertialB.isCalibrating();
+    return mInertialA.GetCalibrating() || mInertialB.GetCalibrating();
 }
 
 // Get the average temperature of both inertial sensors
@@ -44,8 +39,8 @@ double DualInertial::GetTemperature() {
     double inertialBTemp = mInertialB.GetTemperature();
 
     // Return one if the other inertial sensor is not installed
-    if(!mInertialA.installed()) return inertialBTemp;
-    if(!mInertialB.installed()) return inertialATemp;
+    if(!mInertialA.GetInstalled()) return inertialBTemp;
+    if(!mInertialB.GetInstalled()) return inertialATemp;
 
     // Return the average between the two inertial sensors
     return (inertialATemp + inertialBTemp) / 2.0;

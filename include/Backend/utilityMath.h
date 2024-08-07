@@ -1,7 +1,7 @@
 #ifndef UTILITY_MATH_H
 #define UTILITY_MATH_H
 
-#include "math.h"
+#include <math.h>
 #include <cmath>
 
 // fmod but negative numbers will wrap around to positive range
