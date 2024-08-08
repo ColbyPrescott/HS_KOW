@@ -60,8 +60,8 @@ void AbsolutePositioningSystem::Tick() {
     double leftMotorPosition = mLeftDrivetrainMotor->position(vex::degrees);
     double rightMotorPosition = mRightDrivetrainMotor->position(vex::degrees);
     
-    double leftMotorTravel = leftMotorPosition - mPrevLeftDrivetrainMotorPosition;
-    double rightMotorTravel = rightMotorPosition - mPrevRightDrivetrainMotorPosition;
+    double leftMotorTravel = (leftMotorPosition - mPrevLeftDrivetrainMotorPosition) * mDegreesToInchesRatio;
+    double rightMotorTravel = (rightMotorPosition - mPrevRightDrivetrainMotorPosition) * mDegreesToInchesRatio;
 
     double averageTravel = (leftMotorTravel + rightMotorTravel) / 2.0;
 

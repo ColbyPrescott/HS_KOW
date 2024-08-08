@@ -13,7 +13,9 @@ controller PrimaryController;
 
 
 // Other global variables
-AbsolutePositioningSystem aps = AbsolutePositioningSystem(&leftWheelsPrimary, &rightWheelsPrimary, &dualInertial);
+// Push number of inches / Output degrees: 160 / 2646
+// Circumference per degree * gear ratio: (2*pi*2)/360*(60/36)
+AbsolutePositioningSystem aps = AbsolutePositioningSystem(&leftWheelsPrimary, &rightWheelsPrimary, &dualInertial, 160.0 / 2646.0);
 
 
 // Motors

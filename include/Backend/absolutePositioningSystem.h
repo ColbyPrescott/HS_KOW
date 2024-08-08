@@ -22,16 +22,20 @@ class AbsolutePositioningSystem {
         // Inertial sensors to use to improve tracking
         DualInertial* mInertialSensors;
 
+        // Scale to convert motor encoder rotation to inches that the wheels travel
+        double mDegreesToInchesRatio = 1;
+
         // Previous tick values so they can be compared between ticks
         double mPrevLeftDrivetrainMotorPosition = 0;
         double mPrevRightDrivetrainMotorPosition = 0;
         double mPrevInertialSensorAngle = 0;
 
     public:
-        AbsolutePositioningSystem(vex::motor* leftDrivetrainMotor, vex::motor* rightDrivetrainMotor, DualInertial* inertialSensors) : 
+        AbsolutePositioningSystem(vex::motor* leftDrivetrainMotor, vex::motor* rightDrivetrainMotor, DualInertial* inertialSensors, double degreesToInchesRatio) : 
             mLeftDrivetrainMotor(leftDrivetrainMotor),
             mRightDrivetrainMotor(rightDrivetrainMotor),
-            mInertialSensors(inertialSensors) {}
+            mInertialSensors(inertialSensors),
+            mDegreesToInchesRatio(degreesToInchesRatio) {}
 
         void SetPosition(double x, double y);
         void SetAngle(double angle);

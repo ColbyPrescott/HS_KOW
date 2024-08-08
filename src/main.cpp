@@ -70,7 +70,7 @@ int main() {
         DrawControllerMonitors();
 
         // Plot APS to screen
-        const double scale = 0.06;
+        const double scale = 0.95;
         Brain.Screen.setPenColor(white);
         Brain.Screen.drawPixel(480.0 / 2.0 + aps.GetX() * scale, 
                                 240.0 / 2.0 - aps.GetY() * scale);
