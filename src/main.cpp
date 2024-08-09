@@ -4,7 +4,7 @@
 
 #include "Subsystems/drivetrain.h"
 #include "Subsystems/mogoMover.h"
-#include "Subsystems/intakeConveyor.h"
+#include "Subsystems/intake.h"
 
 #include "Displays/controllerMonitors.h"
 
@@ -15,7 +15,7 @@ void pre_auton(void) {
     // Call the program initialization of each subsystem
     InitDrivetrain();
     InitMogoMover();
-    InitIntakeConveyor();
+    InitIntake();
 
     // Calibrate inertial sensor
     dualInertial.Calibrate();
@@ -43,13 +43,13 @@ void usercontrol(void) {
     // Call the driver initialization of each subsytem
     UserInitDrivetrain();
     UserInitMogoMover();
-    UserInitIntakeConveyor();
+    UserInitIntake();
 
     // Update each subsystem continuously during driver control
     while(true) {
         TickDrivetrain();
         TickMogoMover();
-        TickIntakeConveyor();
+        TickIntake();
         
         wait(20, msec);
     }

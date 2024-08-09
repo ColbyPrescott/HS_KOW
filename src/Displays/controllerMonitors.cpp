@@ -1,6 +1,6 @@
 #include "vex.h"
 
-#include "Subsystems/intakeConveyor.h"
+#include "Subsystems/intake.h"
 
 #include <string>
 #include "Backend/utilityMath.h"
@@ -19,7 +19,7 @@ void DrawControllerMonitors() {
     std::string mogoMoverStatus = mogoMover.value() == 0 ? "____" : "HOLD";
 
     // Intake / conveyor
-    std::string intakeConveyorStatus = intakeConveyorDirection == 0 ? "___" : (intakeConveyorDirection == 1 ? "IN " : "OUT");
+    std::string intakeConveyorStatus = intakeDirection == 0 ? "___" : (intakeDirection == 1 ? "IN " : "OUT");
 
     // Inertial sensor
     double heading = RadiansToDegrees(dualInertial.GetRotation());
