@@ -5,7 +5,8 @@
 
 using namespace vex;
 
-// Quick settings
+
+// #region Quick settings
 
 // Speed for the intake motor
 const double intakeRPM = 200;
@@ -34,13 +35,18 @@ const std::vector<double> intakeHookPositions = {
 // Encoder position where the reset hook will make a full loop back to the reset position
 const double intakeResetPosition = 5099;
 
+// #endregion
 
-// Variables needed for system functionality
+
+// #region Runtime variables
 
 // Whether or not a ring is waiting to be deposited on a mogo
 bool storingRing = false;
 
+// #endregion
 
+
+// #region Special intake functions
 
 // Move a hook a little ahead or closest behind one waypoint and move it forwards to a different target waypoint
 void MoveClosestHookToWaypoint(IWPs hook, IWPs waypoint) {
@@ -88,7 +94,10 @@ void TriggerIntake() {
     }
 }
 
+// #endregion
 
+
+// #region Subsystem template functions
 
 // Initialize intake at the start of the program
 void InitIntake() {
@@ -109,3 +118,5 @@ void UserInitIntake() {
 void TickIntake() {
     
 }
+
+// #endregion
