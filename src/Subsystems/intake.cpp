@@ -1,91 +1,108 @@
 #include "vex.h"
 
+#include <vector>
+#include "Backend/utilityMath.h"
+
 using namespace vex;
 
 // Quick settings
-// Speed for the intake motor, 0 - 1
+
+// Speed for the intake motor
 const double intakeRPM = 200;
+
+// How long to pause the intake at the depositRing position. 
+// This gives more time for the ring to fall onto the stake
+const double depositPauseMilliseconds = 1000;
+
+// List of motor encoder values where the reset hook is at significant positions
+enum class IntakeWaypointPositions {
+    waitForMogo = 1965, // Reset hook is at a position to store the ring, waiting to deposit it onto a mogo
+    depositRing = 2642, // Reset hook went around the top of the intake mechanism and is now completely horizontal
+    waitForRing = 4647  // Reset hook is a little above the tiles, almost about to pick up a ring
+};
+// Abbreviate name because it's long and repeated many times
+#define IWPs IntakeWaypointPositions
+
+// Motor encoder values where hooks will be in the reset position
+const std::vector<double> intakeHookPositions = {
+    0,
+    1136,
+    2460,
+    3783 
+};
+
+// Encoder position where the reset hook will make a full loop back to the reset position
+const double intakeResetPosition = 5099;
 
 
 // Variables needed for system functionality
-// Direction of the intake motor. -1 is backwards, 0 is stopped, and 1 is forwards
-int intakeDirection = 0;
 
-// Record of motor encoder values of different significant positions
-enum class IntakeDegreePositions {
-    lowest = 0, // Start encoder with standoffs at lowest possible position
-    highest = 2500, // Standoffs at highest possible position
-    startHorizontal = 2583, // Standoffs round the corner and now face perfectly horizontal
-    endHorizontal = 2800, // Last point where standoffs are horizontal
-    startPlexiglass = 3720, // Standoffs have rounded the corner and now start to touch the plexiglass
-    endPlexiglass = 4400, // Standoffs cleared the plexiglass and are now back to normal orientation
-    readyForDisk = 4600, // Standoff is at a good position to quickly pick up the next disk
-    fullLoop = 5040, // Standoff is at the lowest point again, having traveled a full entire loop
-};
+// Whether or not a ring is waiting to be deposited on a mogo
+bool storingRing = false;
 
-// Waypoints to stop at
-int intakeWaypoints[] = {
-    (int)IntakeDegreePositions::lowest,
-    (int)IntakeDegreePositions::highest,
-    (int)IntakeDegreePositions::startHorizontal,
-    (int)IntakeDegreePositions::endHorizontal,
-    (int)IntakeDegreePositions::startPlexiglass,
-    (int)IntakeDegreePositions::endPlexiglass,
-    (int)IntakeDegreePositions::readyForDisk,
-};
-// Current waypoint
-int intakeWaypointIndex = 0;
-// Total number of waypoints
-const int numIntakeWaypoints = 7;
+
+
+// Move a hook a little ahead or closest behind one waypoint and move it forwards to a different target waypoint
+void MoveClosestHookToWaypoint(IWPs hook, IWPs waypoint) {
+    // How far forwards to look for a hook before looking backwards
+    const double lookAheadDegrees = 30;
+
+    // Find closest hook to requested hook
+    // Calculate distance on each hook and update least distance and index if lower
+    int closestHookIndex = 0;
+    int closestHookDistance = intakeResetPosition;
+    for(int i = 0; i < intakeHookPositions.size(); i++) {
+        // Get distance from this hook to desired hook. FixedFMod ensures that distance must be positive. Going past the target hook position will wrap to max distance
+        double hookDistance = FixedFMod((double)hook - FixedFMod(intake.position(degrees) + intakeHookPositions[i] - lookAheadDegrees, intakeResetPosition), intakeResetPosition);
+        // Update closest hook if closer
+        if(hookDistance > closestHookDistance) continue;
+        closestHookDistance = hookDistance;
+        closestHookIndex = i;
+    }
+
+    // Spin intake to align hook with waypoint
+    int hookToWaypointDistance = FixedFMod((double)waypoint - FixedFMod(intakeHookPositions[closestHookIndex] + intake.position(degrees), intakeResetPosition), intakeResetPosition);
+    intake.spinFor(hookToWaypointDistance, degrees, true);
+}
+
+// Move the intake. Decide exactly how it will move
+void TriggerIntake() {
+    // If a ring is currently stored, deposit it, then wait for next ring
+    if(storingRing) {
+        MoveClosestHookToWaypoint(IWPs::waitForMogo, IWPs::depositRing);
+        wait(depositPauseMilliseconds, msec);
+        storingRing = false;
+        MoveClosestHookToWaypoint(IWPs::waitForRing, IWPs::waitForRing);
+        return;
+    }
+    
+    // A ring is not stored. If the mogo is ready, pick up and deposit a ring
+    if(mogoMover.value() == 0) {
+        MoveClosestHookToWaypoint(IWPs::waitForRing, IWPs::depositRing);
+        wait(depositPauseMilliseconds, vex::seconds);
+        MoveClosestHookToWaypoint(IWPs::waitForRing, IWPs::waitForRing);
+    // A ring is not stored, nor is the mogo ready. Pick up and store a ring
+    } else { 
+        MoveClosestHookToWaypoint(IWPs::waitForRing, IWPs::waitForMogo);
+        storingRing = true;
+    }
+}
+
 
 
 // Initialize intake at the start of the program
 void InitIntake() {
-    
+    // Set motor speeds
+    intake.setVelocity(intakeRPM, rpm);
 
+    // Rotate intake from the reset position to be ready for a ring
+    MoveClosestHookToWaypoint(IWPs::waitForRing, IWPs::waitForRing);
 }
 
 // Initialize intake at the start of driver control
 void UserInitIntake() {
     // Controls
-    // Start or stop intake moving forwards when the up arrow button is pressed
-    PrimaryController.ButtonUp.pressed([](){
-        // If already moving forwards, stop
-        if(intakeDirection == 1) {intake.stop(); intakeDirection = 0;}
-        // If stopped or moving backwards, spin forwards
-        else {intake.spin(forward, intakeRPM, rpm); intakeDirection = 1;}
-    });
-
-    // Start or stop intake moving backwards when the down arrow button is pressed
-    PrimaryController.ButtonDown.pressed([](){
-        // If already moving backwards, stop
-        if(intakeDirection == -1) {intake.stop(); intakeDirection = 0;}
-        // If stopped or moving forwards, spin backwards
-        else {intake.spin(reverse, intakeRPM, rpm); intakeDirection = -1;}
-    });
-
-    // TEST Slow down intake when the left arrow button is pressed
-    PrimaryController.ButtonLeft.pressed([](){
-        if(intakeDirection == 1) intake.spin(forward, intakeRPM * 0.5, rpm);
-        if(intakeDirection == -1) intake.spin(reverse, intakeRPM * 0.5, rpm);
-    });
-
-    PrimaryController.ButtonRight.pressed([](){
-        // Increment to next waypoint
-        intakeWaypointIndex++;
-        // If after last waypoint, jump back to the first waypoint
-        if(intakeWaypointIndex == numIntakeWaypoints) {
-            // Reset waypoint index to start
-            intakeWaypointIndex = 0;
-            // Subtract a full loop from the motor's encoder value
-            double oldEncoder = intake.position(degrees);
-            double fullLoop = (double)IntakeDegreePositions::fullLoop;
-            intake.setPosition(oldEncoder - fullLoop, degrees);
-        }
-        
-        // Spin to the next waypoint
-        intake.spinToPosition(intakeWaypoints[intakeWaypointIndex], degrees, intakeRPM, rpm, false);
-    });
+    PrimaryController.ButtonL1.pressed(TriggerIntake);
 }
 
 // Update intake during driver control

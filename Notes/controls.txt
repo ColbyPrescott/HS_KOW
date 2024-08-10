@@ -1,12 +1,12 @@
-L1: 
+L1: Trigger intake
 L2: Toggle mogo mover
 R1: 
 R2: 
 
-Up: Spin intake forwards or stop
-Down: Spin intake backwards or stop
-Left: Slow down intake
-Right: Next waypoint on intake
+Up: 
+Down: 
+Left: 
+Right: 
 
 X: 
 B: 
