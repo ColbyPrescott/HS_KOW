@@ -85,7 +85,7 @@ void TriggerIntake() {
     // A ring is not stored. If the mogo is ready, pick up and deposit a ring
     if(mogoMover.value() == 0) {
         MoveClosestHookToWaypoint(IWPs::waitForRing, IWPs::depositRing);
-        wait(depositPauseMilliseconds, vex::seconds);
+        wait(depositPauseMilliseconds, msec);
         MoveClosestHookToWaypoint(IWPs::waitForRing, IWPs::waitForRing);
     // A ring is not stored, nor is the mogo ready. Pick up and store a ring
     } else { 
