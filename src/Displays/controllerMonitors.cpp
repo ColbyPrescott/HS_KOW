@@ -1,7 +1,5 @@
 #include "vex.h"
 
-#include "Subsystems/intake.h"
-
 #include <string>
 #include "Backend/utilityMath.h"
 
@@ -16,10 +14,7 @@ void DrawControllerMonitors() {
     int rightWheelsSecondaryTemp = (int)rightWheelsSecondary.temperature(percent) / 10;
 
     // Mobile goal mover
-    std::string mogoMoverStatus = mogoMover.value() == 0 ? "____" : "HOLD";
-
-    // Intake / conveyor
-    std::string intakeConveyorStatus = intakeDirection == 0 ? "___" : (intakeDirection == 1 ? "IN " : "OUT");
+    std::string mogoMoverStatus = mogoMover.value() == 0 ? "HOLD" : "____";
 
     // Inertial sensor
     double heading = RadiansToDegrees(dualInertial.GetRotation());
@@ -34,6 +29,6 @@ void DrawControllerMonitors() {
     PrimaryController.Screen.setCursor(1, 1);
     PrimaryController.Screen.print("%d--%d  %.0f", leftWheelsPrimaryTemp, rightWheelsPrimaryTemp, heading); PrimaryController.Screen.newLine();
     PrimaryController.Screen.print("%d--%d  %.2f", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp, inertialTemp); PrimaryController.Screen.newLine();
-    // PrimaryController.Screen.print("%s  %s", mogoMoverStatus.c_str(), intakeConveyorStatus.c_str());
+    // PrimaryController.Screen.print("%s  %s", mogoMoverStatus.c_str());
     PrimaryController.Screen.print("%.1f, %.1f", apsX, apsY);
 }
