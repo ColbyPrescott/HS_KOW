@@ -31,8 +31,6 @@ void TickDrivetrain() {
     if(fabs(forwardInput) < driftThreshold) forwardInput = 0;
     if(fabs(rightwardInput) < driftThreshold) rightwardInput = 0; 
 
-    // if(forwardInput > 0.5) forwardInput = 0.5;
-
     // Apply speed
     forwardInput *= driveSpeed;
     rightwardInput *= turnSpeed;
@@ -41,23 +39,6 @@ void TickDrivetrain() {
     double rightWheelsVoltageBias = forwardInput >= 0 ? -0.03 : 0.03;
 
     // Set motor velocities
-    // // RPM control can't seem to drive super slowly, but the PID controller will keep the sides even better...
-    // leftWheels.spin(forward, fmin(fmax((forwardInput + rightwardInput) * 200, -200), 200), rpm);
-    // rightWheels.spin(forward, fmin(fmax((forwardInput - rightwardInput) * 200, -200), 200), rpm);
-    // Voltage control can be slower, but torque differences on both sides will skew average without any PID controller
     leftWheels.spin(forward, fmin(fmax((forwardInput + rightwardInput) * 12, -12), 12), volt);
     rightWheels.spin(forward, fmin(fmax((forwardInput - rightwardInput + rightWheelsVoltageBias) * 12, -12), 12), volt);
-
-
-    // 100 inch tests
-    // 0.3   forward,      0         volts,     -10     inches
-    // 0.3   forward,     -0.03      volts,     -0.75   inches
-    // 0.3   forward,     -0.0301    volts,      0.5    inches
-    // 0.3   forward,     -0.031     volts,      2.75   inches
-    // 0.3   forward,     -0.04      volts,      3      inches
-    // 0.3   forward,     -0.05      volts,      5.5    inches
-    // 0.3   forward,     -0.1       volts,      50     inches 
-
-    // 0.4   forward,     -0.03      volts,      0.5    inches
-    // 0.5   forward,     -0.03      volts,      0      inches
 }
