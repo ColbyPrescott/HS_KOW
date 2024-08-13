@@ -71,7 +71,7 @@ class AbsolutePositioningSystem {
 
         void SetDriving(bool driving);
         void AddPathPoint(PathPoint pathPoint);
-        void NextPathPoint(); // DEBUG
+        void EndPath();
         
 
         void Tick();

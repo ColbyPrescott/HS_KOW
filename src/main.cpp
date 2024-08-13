@@ -24,10 +24,14 @@ void pre_auton(void) {
 
     // Start APS
     aps.StartTicking(200);
+}
 
-
-    // #region Test autonomous
+// Called at start of autonomous
+void autonomous(void) {
     // Start one tile in from the center of a side
+    // Give drivetrain control to the APS
+    aps.SetDriving(true);
+
     // Clockwise loop around field
     aps.AddPathPoint({24 * 2    , 24 * 0});
     aps.AddPathPoint({24 * 2    , 24 * -4});
@@ -49,14 +53,12 @@ void pre_auton(void) {
     aps.AddPathPoint({24 * 2    , 24 * 0});
     aps.AddPathPoint({24 * 0    , 24 * 0});
 
-    // Start
-    aps.SetDriving(true);
-    // #endregion
-}
+    // Wait for path to be driven
+    aps.EndPath();
 
-// Called at start of autonomous
-void autonomous(void) {
-    
+    // Force enable user control
+    aps.SetDriving(false);
+    Competition.test_driver();
 }
 
 // Called at start of driver control
@@ -68,7 +70,7 @@ void usercontrol(void) {
 
     // Update each subsystem continuously during driver control
     while(true) {
-        // TickDrivetrain();
+        TickDrivetrain();
         TickMogoMover();
         TickIntake();
         
@@ -78,11 +80,16 @@ void usercontrol(void) {
 
 int main() {
     // Set up callbacks for autonomous and driver control periods.
-    Competition.autonomous(autonomous);
     Competition.drivercontrol(usercontrol);
+    Competition.autonomous(autonomous);
 
     // Run the pre-autonomous function.
     pre_auton();
+
+    // DEBUG
+    PrimaryController.ButtonA.pressed([](){
+        Competition.test_auton();
+    });
 
     // Prevent main from exiting with an infinite loop.
     while(true) {

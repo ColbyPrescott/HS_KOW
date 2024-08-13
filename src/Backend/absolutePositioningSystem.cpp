@@ -54,7 +54,8 @@ void AbsolutePositioningSystem::TickDriving() {
     double targetHeading = -atan2(targetPoint.y, targetPoint.x);
     // Convert to speed
     double rightwardInput = targetHeading;
-    rightwardInput /= M_2_PI; // Max turning is 90 degrees away
+    // Max turning is 90 degrees away
+    rightwardInput /= M_2_PI; 
     // Don't turn too much if position is super close
     if(targetPoint.x * targetPoint.x + targetPoint.y * targetPoint.y < 2 * 2) rightwardInput = Clamp(rightwardInput, -0.1, 0.1);
     // DEBUG Don't turn too fast
@@ -70,6 +71,12 @@ void AbsolutePositioningSystem::TickDriving() {
 
     // Remove point from buffer and move on to the next one if the robot has gotten close enough
     if(targetPoint.x * targetPoint.x + targetPoint.y * targetPoint.y < 10 * 10) mPath.erase(mPath.begin());
+    
+    // Stop wheels if the end of the buffered path was reached
+    if(mPath.empty()) {
+        leftWheels.stop();
+        rightWheels.stop();
+    }
 }
 
 // Manually set the absolute position in inches
@@ -114,6 +121,11 @@ void AbsolutePositioningSystem::SetDriving(bool driving) {
 // Add a point to the drive path
 void AbsolutePositioningSystem::AddPathPoint(PathPoint pathPoint) {
     mPath.push_back(pathPoint);
+}
+
+// Wait until the buffered path has been driven
+void AbsolutePositioningSystem::EndPath() {
+    while(!mPath.empty()) wait(50, vex::msec);
 }
 
 
