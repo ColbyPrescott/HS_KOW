@@ -18,7 +18,8 @@ void InitDrivetrain() {
 
 // Initialize drivetrain at the start of driver control
 void UserInitDrivetrain() {
-
+    // Ensure the APS isn't still trying to control the drivetrain
+    aps.SetDriving(false);  
 }
 
 // Update drivetrain during driver control
@@ -36,7 +37,7 @@ void TickDrivetrain() {
     rightwardInput *= turnSpeed;
 
     // Increase / decrease voltage of one side to help correct drifting caused by drivetrain friction or center of mass
-    double rightWheelsVoltageBias = forwardInput >= 0 ? -0.03 : 0.03;
+    double rightWheelsVoltageBias = forwardInput >= 0 ? -0.03 : 0.03; // TODO This runs even if there's no user input, causing the right side to lock up when controls stop
 
     // Set motor velocities
     leftWheels.spin(forward, fmin(fmax((forwardInput + rightwardInput) * 12, -12), 12), volt);

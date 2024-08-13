@@ -9,6 +9,11 @@ inline double FixedFMod(double a, double b) {
     return fmod(a + b * std::fabs(floor(a / b)), b);
 }
 
+// Set n to min or max if it is smaller or larger respectively
+inline double Clamp(double n, double min, double max) {
+    return fmin(fmax(n, min), max);
+}
+
 // Convert degrees to radians
 inline double DegreesToRadians(double degrees) {
     return degrees * M_PI / 180.0;

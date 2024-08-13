@@ -6,19 +6,30 @@
 
 #include "Backend/dualInertial.h"
 
+#include <vector>
+
+struct PathPoint {
+    double x = 0;
+    double y = 0;
+
+    PathPoint(double posX, double posY) : 
+        x(posX),
+        y(posY) {}
+};
+
 class AbsolutePositioningSystem {
     private:
         // Current absolute X coordinate in inches
         double mX = 0;
         // Current absolute Y coordinate in inches
         double mY = 0;
-        // Current absolute angle in radians
-        double mAngle = 0;
+        // Current absolute yaw angle in radians
+        double mRotation = 0;
 
         // A motor on the left side of the tank drivetrain
-        vex::motor* mLeftDrivetrainMotor;
+        vex::motor_group* mLeftDrivetrainMotors;
         // A motor on the right side of the tank drivetrain
-        vex::motor* mRightDrivetrainMotor;
+        vex::motor_group* mRightDrivetrainMotors;
         // Inertial sensors to use to improve tracking
         DualInertial* mInertialSensors;
 
@@ -30,21 +41,38 @@ class AbsolutePositioningSystem {
         double mPrevRightDrivetrainMotorPosition = 0;
         double mPrevInertialSensorAngle = 0;
 
+        void TickTracking();
+
+        
+        // Whether or not the APS is allowed to control the drivetrain
+        bool mDrivingEnabled = false;
+
+        // Buffered path to follow
+        std::vector<PathPoint> mPath;
+
+        void TickDriving();
+
     public:
-        AbsolutePositioningSystem(vex::motor* leftDrivetrainMotor, vex::motor* rightDrivetrainMotor, DualInertial* inertialSensors, double degreesToInchesRatio) : 
-            mLeftDrivetrainMotor(leftDrivetrainMotor),
-            mRightDrivetrainMotor(rightDrivetrainMotor),
+        AbsolutePositioningSystem(vex::motor_group* leftDrivetrainMotors, vex::motor_group* rightDrivetrainMotors, DualInertial* inertialSensors, double degreesToInchesRatio) : 
+            mLeftDrivetrainMotors(leftDrivetrainMotors),
+            mRightDrivetrainMotors(rightDrivetrainMotors),
             mInertialSensors(inertialSensors),
             mDegreesToInchesRatio(degreesToInchesRatio) {}
 
         void SetPosition(double x, double y);
-        void SetAngle(double angle);
+        void SetRotation(double rotation);
 
         double GetX();
         double GetY();
-        double GetAngle();
+        double GetRotation();
 
-        void StartTracking(double refreshRate = 50);
+        void StartTicking(double refreshRate = 50);
+
+
+        void SetDriving(bool driving);
+        void AddPathPoint(PathPoint pathPoint);
+        void NextPathPoint(); // DEBUG
+        
 
         void Tick();
 };

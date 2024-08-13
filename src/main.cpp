@@ -20,10 +20,27 @@ void pre_auton(void) {
     // Call the program initialization of each subsystem
     InitDrivetrain();
     InitMogoMover();
-    InitIntake();
+    // InitIntake();
 
     // Start APS
-    aps.StartTracking(200);
+    aps.StartTicking(200);
+
+
+    // #region Test autonomous
+    for(int i = 0; i < 5; i++) {
+        aps.AddPathPoint({24 * 2    , 24 * 0});
+        aps.AddPathPoint({24 * 2    , 24 * -4});
+        aps.AddPathPoint({24 * -0.5 , 24 * -4});
+        aps.AddPathPoint({24 * -2   , 24 * -2});
+        aps.AddPathPoint({24 * -2   , 24 * -1});
+        aps.AddPathPoint({24 * 0    , 24 * 0});
+    }
+    aps.SetDriving(true);
+
+    PrimaryController.ButtonA.pressed([](){
+        aps.NextPathPoint();
+    });
+    // #endregion
 }
 
 // Called at start of autonomous
@@ -40,7 +57,7 @@ void usercontrol(void) {
 
     // Update each subsystem continuously during driver control
     while(true) {
-        TickDrivetrain();
+        // TickDrivetrain();
         TickMogoMover();
         TickIntake();
         
