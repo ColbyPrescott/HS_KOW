@@ -12,25 +12,18 @@ using namespace vex;
 
 // Called at program start
 void pre_auton(void) {
-    // Call the program initialization of each subsystem
-    InitDrivetrain();
-    InitMogoMover();
-    InitIntake();
-
     // Calibrate inertial sensor
     dualInertial.Calibrate();
     while(dualInertial.GetCalibrating()) wait(0.2, seconds);
     PrimaryController.rumble(".");
 
+    // Call the program initialization of each subsystem
+    InitDrivetrain();
+    InitMogoMover();
+    InitIntake();
+
     // Start APS
     aps.StartTracking(200);
-
-    PrimaryController.ButtonX.pressed([](){
-        static int logNum = -1;
-        logNum++;
-
-        printf("%.3f, %d, %d, %.2f\n", Brain.Timer.system() / 1000.0, 360 * 5 * logNum, (int)RadiansToDegrees(dualInertial.GetRotation()), dualInertial.GetTemperature());
-    });
 }
 
 // Called at start of autonomous
