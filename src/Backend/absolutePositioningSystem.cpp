@@ -40,6 +40,7 @@ void AbsolutePositioningSystem::TickDriving() {
     targetPoint.x = tmpPoint.x * cos(-GetRotation()) - tmpPoint.y * sin(-GetRotation());
     targetPoint.y = tmpPoint.x * sin(-GetRotation()) + tmpPoint.y * cos(-GetRotation());
 
+
     // Calculate how fast to drive towards targetPoint
     // Get distance to target
     double forwardInput = targetPoint.x;
@@ -51,8 +52,6 @@ void AbsolutePositioningSystem::TickDriving() {
     // Calculate how fast to turn towards targetPoint
     // Get direction to target
     double targetHeading = -atan2(targetPoint.y, targetPoint.x);
-    // Aim to be driving backwards if turning more than 90 degrees
-    if(targetHeading > M_2_PI || targetHeading < -M_2_PI) targetHeading = M_PI - fabs(targetHeading);
     // Convert to speed
     double rightwardInput = targetHeading;
     rightwardInput /= M_2_PI; // Max turning is 90 degrees away
@@ -69,9 +68,8 @@ void AbsolutePositioningSystem::TickDriving() {
     leftWheels.spin(vex::forward, fmin(fmax((forwardInput + rightwardInput) * 12, -12), 12), vex::volt);
     rightWheels.spin(vex::forward, fmin(fmax((forwardInput - rightwardInput + rightWheelsVoltageBias) * 12, -12), 12), vex::volt);
 
-    // if(rand() % 50 == 0) printf("TX: %.1f, TY: %.1f, X: %.1f, Y: %.1f, F: %.2f, R: %.2f\n", targetPoint.x, targetPoint.y, GetX(), GetY(), forwardInput, rightwardInput);
-
-    if(targetPoint.x * targetPoint.x + targetPoint.y * targetPoint.y < 5 * 5) mPath.erase(mPath.begin());
+    // Remove point from buffer and move on to the next one if the robot has gotten close enough
+    if(targetPoint.x * targetPoint.x + targetPoint.y * targetPoint.y < 10 * 10) mPath.erase(mPath.begin());
 }
 
 // Manually set the absolute position in inches
@@ -116,11 +114,6 @@ void AbsolutePositioningSystem::SetDriving(bool driving) {
 // Add a point to the drive path
 void AbsolutePositioningSystem::AddPathPoint(PathPoint pathPoint) {
     mPath.push_back(pathPoint);
-}
-
-// DEBUG
-void AbsolutePositioningSystem::NextPathPoint() {
-    mPath.erase(mPath.begin());
 }
 
 

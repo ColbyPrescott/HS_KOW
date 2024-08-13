@@ -27,19 +27,30 @@ void pre_auton(void) {
 
 
     // #region Test autonomous
-    for(int i = 0; i < 5; i++) {
-        aps.AddPathPoint({24 * 2    , 24 * 0});
-        aps.AddPathPoint({24 * 2    , 24 * -4});
-        aps.AddPathPoint({24 * -0.5 , 24 * -4});
-        aps.AddPathPoint({24 * -2   , 24 * -2});
-        aps.AddPathPoint({24 * -2   , 24 * -1});
-        aps.AddPathPoint({24 * 0    , 24 * 0});
-    }
-    aps.SetDriving(true);
+    // Start one tile in from the center of a side
+    // Clockwise loop around field
+    aps.AddPathPoint({24 * 2    , 24 * 0});
+    aps.AddPathPoint({24 * 2    , 24 * -4});
+    aps.AddPathPoint({24 * -0.5 , 24 * -4});
+    aps.AddPathPoint({24 * -2   , 24 * -2});
+    aps.AddPathPoint({24 * -2   , 24 * -1});
+    aps.AddPathPoint({24 * 0    , 24 * 0});
 
-    PrimaryController.ButtonA.pressed([](){
-        aps.NextPathPoint();
-    });
+    // Turn around
+    aps.AddPathPoint({24 * 2    , 24 * -1});
+    aps.AddPathPoint({24 * 2    , 24 * 0});
+    aps.AddPathPoint({24 * 0    , 24 * 0});
+
+    // Counterclockwise loop around field
+    aps.AddPathPoint({24 * -2   , 24 * -1});
+    aps.AddPathPoint({24 * -2   , 24 * -2});
+    aps.AddPathPoint({24 * -0.5 , 24 * -4});
+    aps.AddPathPoint({24 * 2    , 24 * -4});
+    aps.AddPathPoint({24 * 2    , 24 * 0});
+    aps.AddPathPoint({24 * 0    , 24 * 0});
+
+    // Start
+    aps.SetDriving(true);
     // #endregion
 }
 
