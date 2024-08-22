@@ -20,7 +20,7 @@ void pre_auton(void) {
     // Call the program initialization of each subsystem
     InitDrivetrain();
     InitMogoMover();
-    // InitIntake();
+    InitIntake();
 
     // Start APS
     aps.StartTicking(200);

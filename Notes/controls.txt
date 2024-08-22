@@ -1,7 +1,7 @@
 L1: Trigger intake
-L2: Toggle mogo mover
+L2: 
 R1: 
-R2: 
+R2: Toggle mogo mover
 
 Up: 
 Down: 
