@@ -19,6 +19,7 @@ extern vex::motor intake;
 
 extern vex::pneumatics mogoMover;
 
+extern vex::bumper intakeAlignButton;
 extern DualInertial dualInertial;
 
 #endif

@@ -97,6 +97,46 @@ void TriggerIntake() {
 // #endregion
 
 
+// #region Intake align button functions
+
+// Function called when intakeAlignButton is pressed.
+// On first click, spin intake forwards until let go. On second click, set the zero position
+void PressIntakeAlign() {
+    // Keep track of which press this is
+    static int pressNum = -1;
+    pressNum++;
+
+    // If first press, spin forwards and return
+    if(pressNum % 2 == 0) {
+        intake.spin(forward);
+        return;
+    }
+
+    // Reset encoder position
+    intake.setPosition(0, degrees);
+    // Reset braking
+    intake.setStopping(hold);
+    // Rotate intake from the reset position to be ready for a ring
+    MoveClosestHookToWaypoint(IWPs::waitForRing, IWPs::waitForRing);
+}
+
+// Function called when intakeAlignButton is released.
+// On first release, stop the intake motor. On second click, do nothing
+void ReleaseIntakeAlign() {
+    // Keep track of which release this is
+    static int releaseNum = -1;
+    releaseNum++;
+
+    //  If first release, stop and let the motor be adjusted freely
+    if(releaseNum % 2 == 0) {
+        intake.setStopping(coast);
+        intake.stop();
+    }
+}
+
+// #endregion
+
+
 // #region Subsystem template functions
 
 // Initialize intake at the start of the program
@@ -104,8 +144,15 @@ void InitIntake() {
     // Set motor speeds
     intake.setVelocity(intakeRPM, rpm);
 
+    // Set motor brakings
+    intake.setStopping(hold);
+
     // Rotate intake from the reset position to be ready for a ring
     MoveClosestHookToWaypoint(IWPs::waitForRing, IWPs::waitForRing);
+
+    // Set up functions to help align the intake when a bumper button is pressed
+    intakeAlignButton.pressed(PressIntakeAlign);
+    intakeAlignButton.released(ReleaseIntakeAlign);
 }
 
 // Initialize intake at the start of driver control

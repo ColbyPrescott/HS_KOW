@@ -35,4 +35,5 @@ pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.H);
 
 
 // Sensors
+bumper intakeAlignButton = bumper(Brain.ThreeWirePort.A);
 DualInertial dualInertial = DualInertial(InertialIntercept(PORT3, vex::left, 18000.0 / 18099.0), InertialIntercept(PORT6, vex::left, 18000.0 / 17935));
