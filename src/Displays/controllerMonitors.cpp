@@ -16,9 +16,8 @@ void DrawControllerMonitors() {
     // Mobile goal mover
     std::string mogoMoverStatus = mogoMover.value() == 0 ? "HOLD" : "____";
 
-    // Inertial sensor
-    double heading = RadiansToDegrees(dualInertial.GetRotation());
-    double inertialTemp = dualInertial.GetTemperature();
+    // Intake temperature
+    int intakeTemp = (int)intake.temperature(percent) / 10;
 
     // APS
     double apsX = aps.GetX();
@@ -27,8 +26,8 @@ void DrawControllerMonitors() {
     // Draw to screen
     PrimaryController.Screen.clearScreen();
     PrimaryController.Screen.setCursor(1, 1);
-    PrimaryController.Screen.print("%d--%d  %.0f", leftWheelsPrimaryTemp, rightWheelsPrimaryTemp, heading); PrimaryController.Screen.newLine();
-    PrimaryController.Screen.print("%d--%d  %.2f", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp, inertialTemp); PrimaryController.Screen.newLine();
+    PrimaryController.Screen.print("%d--%d  %d", leftWheelsPrimaryTemp, rightWheelsPrimaryTemp, intakeTemp); PrimaryController.Screen.newLine();
+    PrimaryController.Screen.print("%d--%d", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp); PrimaryController.Screen.newLine();
     // PrimaryController.Screen.print("%s  %s", mogoMoverStatus.c_str());
     PrimaryController.Screen.print("%.1f, %.1f", apsX, apsY);
 }

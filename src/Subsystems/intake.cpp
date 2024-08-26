@@ -9,7 +9,7 @@ using namespace vex;
 // #region Quick settings
 
 // Speed for the intake motor
-const double intakeRPM = 300;
+const double intakeRPM = 200;
 
 // How long to pause the intake at the depositRing position. 
 // This gives more time for the ring to fall onto the stake
@@ -17,9 +17,9 @@ const double depositPauseMilliseconds = 1000;
 
 // List of motor encoder values where the reset hook is at significant positions
 enum class IntakeWaypointPositions {
-    waitForMogo = 1965, // Reset hook is at a position to store the ring, waiting to deposit it onto a mogo
-    depositRing = 2642, // Reset hook went around the top of the intake mechanism and is now completely horizontal
-    waitForRing = 4647  // Reset hook is a little above the tiles, almost about to pick up a ring
+    waitForMogo = 1800, // Reset hook is at a position to store the ring, waiting to deposit it onto a mogo
+    depositRing = 2630, // Reset hook went around the top of the intake mechanism and is now completely horizontal
+    waitForRing = 4600  // Reset hook is a little above the tiles, almost about to pick up a ring
 };
 // Abbreviate name because it's long and repeated many times
 #define IWPs IntakeWaypointPositions
@@ -27,13 +27,13 @@ enum class IntakeWaypointPositions {
 // Motor encoder values where hooks will be in the reset position
 const std::vector<double> intakeHookPositions = {
     0,
-    1136,
-    2460,
-    3783 
+    1147,
+    2408,
+    3722
 };
 
 // Encoder position where the reset hook will make a full loop back to the reset position
-const double intakeResetPosition = 5099;
+const double intakeResetPosition = 5040.2;
 
 // #endregion
 
@@ -47,6 +47,30 @@ bool storingRing = false;
 
 
 // #region Special intake functions
+
+// Rotate intake to position, temporarily reversing direction if it gets stuck
+void IntakeSpinForwardTo(double targetDegrees) {
+    // Start spinning to position
+    intake.spinFor(targetDegrees - intake.position(degrees), degrees, false);
+
+    // Wait for intake to accelerate
+    wait(0.2, seconds);
+
+    // Lock execution in this function until the intake finishes spinning
+    while(intake.isSpinning()) {
+        // Pause to let other threads run
+        wait(0.1, seconds);
+        // Continue spinning normally if not stuck
+        if(intake.velocity(rpm) >= 10) continue;
+
+        // If stuck, reverse direction for a short duration of time
+        intake.spinFor(reverse, 1, seconds);
+        // Start spinning to the target position again
+        intake.spinFor(targetDegrees - intake.position(degrees), degrees, false);
+        // Wait for intake to accelerate
+        wait(0.2, seconds);
+    }
+}
 
 // Move a hook a little ahead or closest behind one waypoint and move it forwards to a different target waypoint
 void MoveClosestHookToWaypoint(IWPs hook, IWPs waypoint) {
@@ -68,7 +92,7 @@ void MoveClosestHookToWaypoint(IWPs hook, IWPs waypoint) {
 
     // Spin intake to align hook with waypoint
     int hookToWaypointDistance = FixedFMod((double)waypoint - FixedFMod(intakeHookPositions[closestHookIndex] + intake.position(degrees), intakeResetPosition), intakeResetPosition);
-    intake.spinFor(hookToWaypointDistance, degrees, true);
+    IntakeSpinForwardTo(intake.position(degrees) + hookToWaypointDistance);
 }
 
 // Move the intake. Decide exactly how it will move
@@ -115,7 +139,7 @@ void PressIntakeAlign() {
     // Reset encoder position
     intake.setPosition(0, degrees);
     // Reset braking
-    intake.setStopping(hold);
+    intake.setStopping(brake);
     // Rotate intake from the reset position to be ready for a ring
     MoveClosestHookToWaypoint(IWPs::waitForRing, IWPs::waitForRing);
 }
@@ -145,7 +169,7 @@ void InitIntake() {
     intake.setVelocity(intakeRPM, rpm);
 
     // Set motor brakings
-    intake.setStopping(hold);
+    intake.setStopping(brake);
 
     // Rotate intake from the reset position to be ready for a ring
     MoveClosestHookToWaypoint(IWPs::waitForRing, IWPs::waitForRing);
