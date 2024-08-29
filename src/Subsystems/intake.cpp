@@ -9,7 +9,7 @@ using namespace vex;
 // #region Quick settings
 
 // Speed for the intake motor
-const double intakeRPM = 200;
+const double intakeRPM = 300;
 
 // How long to pause the intake at the depositRing position. 
 // This gives more time for the ring to fall onto the stake
@@ -183,6 +183,11 @@ void InitIntake() {
 void UserInitIntake() {
     // Controls
     PrimaryController.ButtonL1.pressed(TriggerIntake);
+
+    PrimaryController.ButtonUp.pressed([](){intake.spin(forward);});
+    PrimaryController.ButtonUp.released([](){intake.stop();});
+    PrimaryController.ButtonDown.pressed([](){intake.spin(reverse);});
+    PrimaryController.ButtonDown.released([](){intake.stop();});
 }
 
 // Update intake during driver control

@@ -3,8 +3,8 @@ L2:
 R1: 
 R2: Toggle mogo mover
 
-Up: 
-Down: 
+Up: Intake manual forwards
+Down: Intake manual backwards
 Left: 
 Right: 
 
