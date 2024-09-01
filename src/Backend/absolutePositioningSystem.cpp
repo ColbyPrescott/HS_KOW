@@ -3,6 +3,8 @@
 #include "vex.h"
 #include "Backend/utilityMath.h"
 
+// #region Main tick functions
+
 // Update the absolute position
 void AbsolutePositioningSystem::TickTracking() {
     // Find average travel distance
@@ -82,6 +84,11 @@ void AbsolutePositioningSystem::TickDriving() {
     }
 }
 
+// #endregion
+
+
+// #region Tracking setters and getters
+
 // Manually set the absolute position in inches
 void AbsolutePositioningSystem::SetPosition(double x, double y) {
     mX = x;
@@ -110,11 +117,10 @@ double AbsolutePositioningSystem::GetRotation() {
     return mRotation;
 }
 
+// #endregion
 
 
-
-
-
+// #region Driving setters, getters, and other functions
 
 // Set whether or not the APS is allowed to control the drivetrain
 void AbsolutePositioningSystem::SetDriving(bool driving) {
@@ -131,7 +137,10 @@ void AbsolutePositioningSystem::EndPath() {
     while(!mPath.empty()) wait(50, vex::msec);
 }
 
+// #endregion
 
+
+// #region Ticking setup
 
 // Assuming only one APS is running, create a global task function to call Tick() on a specific APS
 namespace {
@@ -160,3 +169,5 @@ void AbsolutePositioningSystem::Tick() {
     TickTracking();
     if(mDrivingEnabled) TickDriving();
 }
+
+// #endregion
