@@ -44,22 +44,24 @@ void AbsolutePositioningSystem::TickDriving() {
     // Calculate how fast to drive towards targetPoint
     // Get distance to target
     double forwardInput = targetPoint.x;
-    // 10 inches away is max speed
+    // 10 inches away is max speed TODO Calibrate
     forwardInput /= 10.0;
-    // DEBUG Don't drive too fast
-    forwardInput = Clamp(forwardInput, -0.3, 0.3);
+    // Clamp forward input depending on path point settings
+    forwardInput = Clamp(forwardInput, -targetPoint.maxDriveSpeed, targetPoint.maxDriveSpeed);
 
     // Calculate how fast to turn towards targetPoint
     // Get direction to target
     double targetHeading = -atan2(targetPoint.y, targetPoint.x);
+    // Flip target heading 180 degrees if driving backwards
+    if(targetPoint.driveBackwards) targetHeading = -atan2(targetPoint.x, targetPoint.y);
     // Convert to speed
     double rightwardInput = targetHeading;
-    // Max turning is 90 degrees away
+    // Max turning is 90 degrees away TODO Calibrate
     rightwardInput /= M_2_PI; 
-    // Don't turn too much if position is super close
+    // Don't turn too much if position is super close TODO Calibrate
     if(targetPoint.x * targetPoint.x + targetPoint.y * targetPoint.y < 2 * 2) rightwardInput = Clamp(rightwardInput, -0.1, 0.1);
-    // DEBUG Don't turn too fast
-    rightwardInput = Clamp(rightwardInput, -0.3, 0.3);
+    // Clamp turning input depending on path point settings
+    rightwardInput = Clamp(rightwardInput, -targetPoint.maxTurnSpeed, targetPoint.maxTurnSpeed);
     
 
     // Increase / decrease voltage of one side to help correct drifting caused by drivetrain friction or center of mass
@@ -69,8 +71,9 @@ void AbsolutePositioningSystem::TickDriving() {
     leftWheels.spin(vex::forward, fmin(fmax((forwardInput + rightwardInput) * 12, -12), 12), vex::volt);
     rightWheels.spin(vex::forward, fmin(fmax((forwardInput - rightwardInput + rightWheelsVoltageBias) * 12, -12), 12), vex::volt);
 
+
     // Remove point from buffer and move on to the next one if the robot has gotten close enough
-    if(targetPoint.x * targetPoint.x + targetPoint.y * targetPoint.y < 10 * 10) mPath.erase(mPath.begin());
+    if(targetPoint.x * targetPoint.x + targetPoint.y * targetPoint.y < targetPoint.distanceThreshold * targetPoint.distanceThreshold) mPath.erase(mPath.begin());
     
     // Stop wheels if the end of the buffered path was reached
     if(mPath.empty()) {
@@ -149,8 +152,6 @@ void AbsolutePositioningSystem::StartTicking(double refreshRate) {
     singleInstanceAPS = this;
     vex::task trackingLoop = vex::task(SingleInstanceTrackingLoop);
 }
-
-
 
 
 

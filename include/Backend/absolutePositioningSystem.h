@@ -9,12 +9,26 @@
 #include <vector>
 
 struct PathPoint {
-    double x = 0;
-    double y = 0;
+    // X coordinate in inches
+    double x;
+    // Y coordinate in inches
+    double y;
+    // Whether or not to drive backwards towards the point
+    bool driveBackwards;
+    // Maximum forwards input allowed
+    double maxDriveSpeed;
+    // Maximum turning input allowed
+    double maxTurnSpeed;
+    // How close the robot has to be in inches in order to jump to the next point
+    double distanceThreshold;
 
-    PathPoint(double posX, double posY) : 
-        x(posX),
-        y(posY) {}
+    PathPoint(double _x, double _y, bool _driveBackwards = false, double _maxDriveSpeed = 0.3, double _maxTurnSpeed = 0.3, double _distanceThreshold = 10) : 
+        x(_x),
+        y(_y),
+        driveBackwards(_driveBackwards),
+        maxDriveSpeed(_maxDriveSpeed),
+        maxTurnSpeed(_maxTurnSpeed),
+        distanceThreshold(_distanceThreshold) {}
 };
 
 class AbsolutePositioningSystem {
