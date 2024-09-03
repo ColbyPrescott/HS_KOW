@@ -57,14 +57,15 @@ void IntakeSpinForwardTo(double targetDegrees) {
     wait(0.2, seconds);
 
     // Lock execution in this function until the intake finishes spinning
-    while(intake.isSpinning()) {
+    while(intake.isSpinning() && (targetDegrees - intake.position(degrees)) > 360) {
         // Pause to let other threads run
         wait(0.1, seconds);
         // Continue spinning normally if not stuck
-        if(intake.velocity(rpm) >= 10) continue;
+        if(intake.velocity(rpm) >= 5) continue;
 
-        // If stuck, reverse direction for a short duration of time
-        intake.spinFor(reverse, 1, seconds);
+        // If stuck, reverse direction for a short distance
+        intake.spinFor(reverse, 1000, degrees, true);
+        wait(0.3, seconds);
         // Start spinning to the target position again
         intake.spinFor(targetDegrees - intake.position(degrees), degrees, false);
         // Wait for intake to accelerate
