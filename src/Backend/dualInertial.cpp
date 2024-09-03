@@ -8,6 +8,12 @@ void DualInertial::Calibrate() {
     mInertialB.Calibrate();
 }
 
+// Set the rotation for both inertial sensors in radians
+void DualInertial::SetRotation(double rotation) {
+    mInertialA.SetRotation(rotation);
+    mInertialB.SetRotation(rotation);
+}
+
 // Get the average absolute yaw angle of both inertial sensors in radians
 double DualInertial::GetRotation() {
     // Get the rotation values in radians

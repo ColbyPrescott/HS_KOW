@@ -85,6 +85,7 @@ class AbsolutePositioningSystem {
 
         void SetDriving(bool driving);
         void AddPathPoint(PathPoint pathPoint);
+        void AddPathPoint(double xInches, double yInches, bool driveBackwards = false, double maxDriveSpeed = 0.3, double maxTurnSpeed = 0.3, double distanceThreshold = 10);
         void EndPath();
         
 

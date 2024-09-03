@@ -9,6 +9,13 @@ void InertialIntercept::Calibrate() {
 
 
 
+// Set the rotation of the inertial sensor in radians
+void InertialIntercept::SetRotation(double rotation) {
+    vex::inertial::setRotation(DegreesToRadians(rotation), vex::degrees);
+}
+
+
+
 // Get the corrected rotation of the inertial sensor in radians
 double InertialIntercept::GetRotation() {
     return DegreesToRadians(vex::inertial::rotation() * mBias);

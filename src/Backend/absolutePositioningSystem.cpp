@@ -98,6 +98,7 @@ void AbsolutePositioningSystem::SetPosition(double x, double y) {
 // Manually set the absolute angle in radians
 void AbsolutePositioningSystem::SetRotation(double rotation) {
     mRotation = rotation;
+    mInertialSensors->SetRotation(rotation);
 }
 
 
@@ -130,6 +131,11 @@ void AbsolutePositioningSystem::SetDriving(bool driving) {
 // Add a point to the drive path
 void AbsolutePositioningSystem::AddPathPoint(PathPoint pathPoint) {
     mPath.push_back(pathPoint);
+}
+
+// Add a point to the drive path
+void AbsolutePositioningSystem::AddPathPoint(double xInches, double yInches, bool driveBackwards, double maxDriveSpeed, double maxTurnSpeed, double distanceThreshold) {
+    mPath.push_back(PathPoint(xInches, yInches, driveBackwards, maxDriveSpeed, maxTurnSpeed, distanceThreshold));
 }
 
 // Wait until the buffered path has been driven

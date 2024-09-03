@@ -15,6 +15,8 @@ class DualInertial {
         
         void Calibrate();
 
+        void SetRotation(double rotation);
+
         double GetRotation();
         double GetHeading();
         bool GetCalibrating();

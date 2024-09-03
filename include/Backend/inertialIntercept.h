@@ -25,6 +25,8 @@ class InertialIntercept : protected vex::inertial {
 
         void Calibrate();
 
+        void SetRotation(double rotation);
+
         double GetRotation();
         double GetHeading();
         bool GetInstalled();
