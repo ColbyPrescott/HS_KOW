@@ -9,7 +9,7 @@ using namespace vex;
 // #region Quick settings
 
 // Speed for the intake motor
-const double intakeRPM = 300;
+const double intakeRPM = 200;
 
 // How long to pause the intake at the depositRing position. 
 // This gives more time for the ring to fall onto the stake
