@@ -1,3 +1,5 @@
+#include "Subsystems/intake.h"
+
 #include "vex.h"
 
 #include <vector>
@@ -15,14 +17,7 @@ const double intakeRPM = 200;
 // This gives more time for the ring to fall onto the stake
 const double depositPauseMilliseconds = 1000;
 
-// List of motor encoder values where the reset hook is at significant positions
-enum class IntakeWaypointPositions {
-    waitForMogo = 1800, // Reset hook is at a position to store the ring, waiting to deposit it onto a mogo
-    depositRing = 2630, // Reset hook went around the top of the intake mechanism and is now completely horizontal
-    waitForRing = 4600  // Reset hook is a little above the tiles, almost about to pick up a ring
-};
-// Abbreviate name because it's long and repeated many times
-#define IWPs IntakeWaypointPositions
+// IntakeWaypointPositions defined in intake.h
 
 // Motor encoder values where hooks will be in the reset position
 const std::vector<double> intakeHookPositions = {
