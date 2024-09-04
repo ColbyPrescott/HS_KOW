@@ -16,13 +16,10 @@ void AutonLeftField() {
     // aps.AddPathPoint(12, 65);
     // aps.AddPathPoint(9, 72);
 
-    aps.SetPosition(-48, -24);
-    aps.SetRotation(DegreesToRadians(90));
-
-    aps.AddPathPoint(36, 0);
-    aps.AddPathPoint(36, -36);
-    aps.AddPathPoint(0, -36);
+    aps.AddPathPoint(-48, 0);
     aps.AddPathPoint(0, 0);
+
+    aps.AddPathPoint(-48, 0, true);
 
     // // Wait for path to be driven
     aps.EndPath();

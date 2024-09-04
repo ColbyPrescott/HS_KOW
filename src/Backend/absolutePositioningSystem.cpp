@@ -55,7 +55,7 @@ void AbsolutePositioningSystem::TickDriving() {
     // Get direction to target
     double targetHeading = -atan2(targetPoint.y, targetPoint.x);
     // Flip target heading 180 degrees if driving backwards
-    if(targetPoint.driveBackwards) targetHeading = -atan2(targetPoint.x, targetPoint.y);
+    if(targetPoint.driveBackwards) targetHeading = atan2(targetPoint.y, -targetPoint.x);
     // Convert to speed
     double rightwardInput = targetHeading;
     // Max turning is 90 degrees away TODO Calibrate
