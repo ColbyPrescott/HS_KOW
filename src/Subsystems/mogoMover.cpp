@@ -6,6 +6,8 @@ using namespace vex;
 void ToggleMogoMover() {
     // Get current state, invert it, then set the state
     mogoMover.set((!(bool)mogoMover.value()));
+
+    if(mogoMover.value() == 1) PrimaryController.rumble(".");
 }
 
 
