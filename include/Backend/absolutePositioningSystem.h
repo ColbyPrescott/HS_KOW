@@ -21,14 +21,18 @@ struct PathPoint {
     double maxTurnSpeed;
     // How close the robot has to be in inches in order to jump to the next point
     double distanceThreshold;
+    // Direction to face once distance threshold was reached
+    const static double noTargetHeading = -1000;
+    double targetHeading = noTargetHeading;
 
-    PathPoint(double _x, double _y, bool _driveBackwards = false, double _maxDriveSpeed = 0.3, double _maxTurnSpeed = 0.3, double _distanceThreshold = 10) : 
+    PathPoint(double _x, double _y, bool _driveBackwards = false, double _maxDriveSpeed = 0.3, double _maxTurnSpeed = 0.3, double _distanceThreshold = 10, double _targetHeading = noTargetHeading) : 
         x(_x),
         y(_y),
         driveBackwards(_driveBackwards),
         maxDriveSpeed(_maxDriveSpeed),
         maxTurnSpeed(_maxTurnSpeed),
-        distanceThreshold(_distanceThreshold) {}
+        distanceThreshold(_distanceThreshold),
+        targetHeading(_targetHeading) {}
 };
 
 class AbsolutePositioningSystem {
@@ -85,7 +89,7 @@ class AbsolutePositioningSystem {
 
         void SetDriving(bool driving);
         void AddPathPoint(PathPoint pathPoint);
-        void AddPathPoint(double xInches, double yInches, bool driveBackwards = false, double maxDriveSpeed = 0.3, double maxTurnSpeed = 0.3, double distanceThreshold = 10);
+        void AddPathPoint(double xInches, double yInches, bool driveBackwards = false, double maxDriveSpeed = 0.3, double maxTurnSpeed = 0.3, double distanceThreshold = 10, double targetHeading = PathPoint::noTargetHeading);
         void EndPath();
         
 

@@ -29,6 +29,7 @@ void AbsolutePositioningSystem::TickTracking() {
 
 // Update the wheel velocities
 void AbsolutePositioningSystem::TickDriving() {
+    static bool doneDrivingToTarget = false;
     // Don't continue if no path points are buffered
     if(mPath.empty()) return;
 
@@ -42,28 +43,63 @@ void AbsolutePositioningSystem::TickDriving() {
     targetPoint.x = tmpPoint.x * cos(-GetRotation()) - tmpPoint.y * sin(-GetRotation());
     targetPoint.y = tmpPoint.x * sin(-GetRotation()) + tmpPoint.y * cos(-GetRotation());
 
+    // Logic figuring out the current driving stage
+    // Update static doneDrivingToTarget if within distance threshold
+    if(targetPoint.x * targetPoint.x + targetPoint.y * targetPoint.y < targetPoint.distanceThreshold * targetPoint.distanceThreshold) doneDrivingToTarget = true;
+    // Determing if the robot should now be turning to face a specific heading
+    bool rotatingToHeading = doneDrivingToTarget && targetPoint.targetHeading != PathPoint::noTargetHeading && fabs(DifferenceBetweenHeadings(targetPoint.targetHeading, GetRotation())) > DegreesToRadians(10.0);
+    // Jump to next path point if there is nothing left to do for this one
+    if(doneDrivingToTarget && !rotatingToHeading) {
+        // Move to next path point
+        mPath.erase(mPath.begin());
+        doneDrivingToTarget = false;
 
-    // Calculate how fast to drive towards targetPoint
-    // Get distance to target
-    double forwardInput = targetPoint.x;
-    // 10 inches away is max speed TODO Calibrate
-    forwardInput /= 10.0;
-    // Clamp forward input depending on path point settings
-    forwardInput = Clamp(forwardInput, -targetPoint.maxDriveSpeed, targetPoint.maxDriveSpeed);
+        // Stop wheels if the end of the buffered path was reached
+        if(mPath.empty()) {
+            leftWheels.stop();
+            rightWheels.stop();
+        }
 
-    // Calculate how fast to turn towards targetPoint
-    // Get direction to target
-    double targetHeading = -atan2(targetPoint.y, targetPoint.x);
-    // Flip target heading 180 degrees if driving backwards
-    if(targetPoint.driveBackwards) targetHeading = atan2(targetPoint.y, -targetPoint.x);
-    // Convert to speed
-    double rightwardInput = targetHeading;
-    // Max turning is 90 degrees away TODO Calibrate
-    rightwardInput /= M_2_PI; 
-    // Don't turn too much if position is super close TODO Calibrate
-    if(targetPoint.x * targetPoint.x + targetPoint.y * targetPoint.y < 2 * 2) rightwardInput = Clamp(rightwardInput, -0.1, 0.1);
-    // Clamp turning input depending on path point settings
-    rightwardInput = Clamp(rightwardInput, -targetPoint.maxTurnSpeed, targetPoint.maxTurnSpeed);
+        // Skip rest of function to recalculate targetPoint
+        return;
+    }
+
+
+    double forwardInput;
+    double rightwardInput;
+    if(!rotatingToHeading) {
+        // Calculate how fast to drive towards targetPoint
+        // Get distance to target
+        forwardInput = targetPoint.x;
+        // 10 inches away is max speed TODO Calibrate
+        forwardInput /= 10.0;
+        // Clamp forward input depending on path point settings
+        forwardInput = Clamp(forwardInput, -targetPoint.maxDriveSpeed, targetPoint.maxDriveSpeed);
+
+        // Calculate how fast to turn towards targetPoint
+        // Get direction to target
+        double targetHeading = -atan2(targetPoint.y, targetPoint.x);
+        // Flip target heading 180 degrees if driving backwards
+        if(targetPoint.driveBackwards) targetHeading = atan2(targetPoint.y, -targetPoint.x);
+        // Convert to speed
+        rightwardInput = targetHeading;
+        // Max turning is 90 degrees away TODO Calibrate
+        rightwardInput /= M_2_PI; 
+        // Don't turn too much if position is super close TODO Calibrate
+        if(targetPoint.x * targetPoint.x + targetPoint.y * targetPoint.y < 2 * 2) rightwardInput = Clamp(rightwardInput, -0.1, 0.1);
+        // Clamp turning input depending on path point settings
+        rightwardInput = Clamp(rightwardInput, -targetPoint.maxTurnSpeed, targetPoint.maxTurnSpeed);
+    } else {
+        // Don't drive, just turn in place
+        forwardInput = 0;
+
+        // Convert direction and distance to target heading to speed
+        rightwardInput = DifferenceBetweenHeadings(targetPoint.targetHeading, GetRotation());
+        // Max turning is 90 degrees away TODO Calibrate
+        rightwardInput /= DegreesToRadians(30);
+        // Clamp turning input to stop sliding TODO Calibrate
+        rightwardInput = Clamp(rightwardInput, -0.3, 0.3);
+    }
     
 
     // Increase / decrease voltage of one side to help correct drifting caused by drivetrain friction or center of mass
@@ -72,16 +108,6 @@ void AbsolutePositioningSystem::TickDriving() {
     // Set motor velocities
     leftWheels.spin(vex::forward, fmin(fmax((forwardInput + rightwardInput) * 12, -12), 12), vex::volt);
     rightWheels.spin(vex::forward, fmin(fmax((forwardInput - rightwardInput + rightWheelsVoltageBias) * 12, -12), 12), vex::volt);
-
-
-    // Remove point from buffer and move on to the next one if the robot has gotten close enough
-    if(targetPoint.x * targetPoint.x + targetPoint.y * targetPoint.y < targetPoint.distanceThreshold * targetPoint.distanceThreshold) mPath.erase(mPath.begin());
-    
-    // Stop wheels if the end of the buffered path was reached
-    if(mPath.empty()) {
-        leftWheels.stop();
-        rightWheels.stop();
-    }
 }
 
 // #endregion
@@ -134,8 +160,8 @@ void AbsolutePositioningSystem::AddPathPoint(PathPoint pathPoint) {
 }
 
 // Add a point to the drive path
-void AbsolutePositioningSystem::AddPathPoint(double xInches, double yInches, bool driveBackwards, double maxDriveSpeed, double maxTurnSpeed, double distanceThreshold) {
-    mPath.push_back(PathPoint(xInches, yInches, driveBackwards, maxDriveSpeed, maxTurnSpeed, distanceThreshold));
+void AbsolutePositioningSystem::AddPathPoint(double xInches, double yInches, bool driveBackwards, double maxDriveSpeed, double maxTurnSpeed, double distanceThreshold, double targetHeading) {
+    mPath.push_back(PathPoint(xInches, yInches, driveBackwards, maxDriveSpeed, maxTurnSpeed, distanceThreshold, targetHeading));
 }
 
 // Wait until the buffered path has been driven
