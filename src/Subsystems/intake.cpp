@@ -79,7 +79,7 @@ void MoveClosestHookToWaypoint(IWPs hook, IWPs waypoint) {
     int closestHookDistance = intakeResetPosition;
     for(int i = 0; i < intakeHookPositions.size(); i++) {
         // Get distance from this hook to desired hook. FixedFMod ensures that distance must be positive. Going past the target hook position will wrap to max distance
-        double hookDistance = FixedFMod((double)hook - FixedFMod(intake.position(degrees) + intakeHookPositions[i] - lookAheadDegrees, intakeResetPosition), intakeResetPosition);
+        double hookDistance = FixedFMod((double)hook - FixedFMod(intake.position(degrees) - intakeHookPositions[i] - lookAheadDegrees, intakeResetPosition), intakeResetPosition);
         // Update closest hook if closer
         if(hookDistance > closestHookDistance) continue;
         closestHookDistance = hookDistance;
@@ -87,7 +87,7 @@ void MoveClosestHookToWaypoint(IWPs hook, IWPs waypoint) {
     }
 
     // Spin intake to align hook with waypoint
-    int hookToWaypointDistance = FixedFMod((double)waypoint - FixedFMod(intakeHookPositions[closestHookIndex] + intake.position(degrees), intakeResetPosition), intakeResetPosition);
+    int hookToWaypointDistance = FixedFMod((double)waypoint - FixedFMod(intake.position(degrees) - intakeHookPositions[closestHookIndex], intakeResetPosition), intakeResetPosition);
     IntakeSpinForwardTo(intake.position(degrees) + hookToWaypointDistance);
 }
 
