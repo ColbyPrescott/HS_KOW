@@ -3,10 +3,13 @@
 
 #include "v5.h"
 #include "v5_vcs.h"
+#include "vex_imu.h"
 
 // Class that will publicly expose the vex::inertial::temperature() protected function as GetTemperature()
-class InertialIntercept : protected vex::inertial {
+// class InertialIntercept : protected vex::inertial { // -fno-rtti
+class InertialIntercept { // -frtti
     private:
+        vex::inertial vexInertial;
         // The inertial sensor gains error the further away it is from 0 degrees. Multiply the raw rotation by this bias to correct for that
         double mBias = 1.0;
 
@@ -20,7 +23,8 @@ class InertialIntercept : protected vex::inertial {
         // 6. Note the current measured angle that may be different from 18000 degrees.
         // 7. Bias is equal to 18000 divided by the measured angle.
         InertialIntercept(int32_t index, vex::turnType dir = vex::turnType::right, double bias = 1.0) :
-            vex::inertial(index, dir),
+            // vex::inertial(index, dir),
+            vexInertial(vex::inertial(index, dir)),
             mBias(bias) {}
 
         void Calibrate();
