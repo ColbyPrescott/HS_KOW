@@ -4,6 +4,7 @@
 extern vex::competition Competition;
 extern vex::brain Brain;
 extern vex::controller PrimaryController;
+extern KOWGUI::GUI gui;
 
 extern AbsolutePositioningSystem aps;
 

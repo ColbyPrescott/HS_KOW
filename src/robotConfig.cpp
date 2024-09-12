@@ -3,6 +3,7 @@
 #include "Backend/absolutePositioningSystem.h"
 
 using namespace vex;
+using namespace KOWGUI;
 
 // VEX related global variables
 // I would love to use camelCase here like all of my other variables, but 
@@ -10,6 +11,7 @@ using namespace vex;
 competition Competition;
 brain Brain;
 controller PrimaryController;
+GUI gui = GUI(Brain);
 
 
 // Other global variables

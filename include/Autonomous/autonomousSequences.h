@@ -1,6 +1,7 @@
 #ifndef AUTONOMOUS_SEQUENCES_H
 #define AUTONOMOUS_SEQUENCES_H
 
-void AutonLeftField();
+void AutonTopRed();
+void AutonTopBlue();
 
 #endif

@@ -12,6 +12,7 @@
 #include "Backend/inertialIntercept.h"
 #include "Backend/dualInertial.h"
 #include "Backend/absolutePositioningSystem.h"
+#include "KOWGUI/kowgui.h"
 #include "robotConfig.h"
 
 #define waitUntil(condition)                                                   \

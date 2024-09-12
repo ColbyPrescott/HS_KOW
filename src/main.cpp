@@ -7,6 +7,7 @@
 #include "Subsystems/intake.h"
 
 #include "Autonomous/autonomousSequences.h"
+#include "Autonomous/autonomousSelector.h"
 
 #include "Displays/controllerMonitors.h"
 
@@ -17,7 +18,7 @@ void pre_auton(void) {
     // Calibrate inertial sensor
     dualInertial.Calibrate();
     while(dualInertial.GetCalibrating()) wait(0.2, seconds);
-    PrimaryController.rumble(".");
+    // PrimaryController.rumble(".");
 
     // Call the program initialization of each subsystem
     InitDrivetrain();
@@ -30,11 +31,12 @@ void pre_auton(void) {
 
 // Called at start of autonomous
 void autonomous(void) {
-    AutonLeftField();
+    // AutonTopRed();
+    selectedAutonSequence();
 
-    // Force enable user control
-    aps.SetDriving(false);
-    Competition.test_driver();
+    // // Force enable user control
+    // aps.SetDriving(false);
+    // Competition.test_driver();
 }
 
 // Called at start of driver control
@@ -59,19 +61,25 @@ int main() {
     Competition.drivercontrol(usercontrol);
     Competition.autonomous(autonomous);
 
+    InitAutonomousSelector();
+
     // Run the pre-autonomous function.
     pre_auton();
 
-    // DEBUG
-    PrimaryController.ButtonA.pressed([](){
-        Competition.test_auton();
-    });
+    // // DEBUG
+    // PrimaryController.ButtonA.pressed([](){
+    //     Competition.test_auton();
+    // });
 
     // Prevent main from exiting with an infinite loop.
+    int frameNum = 0;
     while(true) {
+        frameNum++;
 
         // Draw important information to the controller screen for easy monitoring
-        DrawControllerMonitors();
+        if(frameNum % 5 == 0) DrawControllerMonitors();
+
+        gui.Tick();
 
         // // Plot APS to screen
         // const double scale = 0.95;
@@ -79,6 +87,6 @@ int main() {
         // Brain.Screen.drawPixel(480.0 / 2.0 + aps.GetX() * scale, 
         //                         240.0 / 2.0 - aps.GetY() * scale);
 
-        wait(100, msec);
+        wait(20, msec);
     }
 }
