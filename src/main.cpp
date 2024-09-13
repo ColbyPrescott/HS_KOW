@@ -8,6 +8,7 @@
 
 #include "Autonomous/autonSequences.h"
 
+#include "Displays/screenManager.h"
 #include "Displays/autonSelector.h"
 #include "Displays/controllerMonitors.h"
 
@@ -20,6 +21,9 @@ void pre_auton(void) {
     // while(dualInertial.GetCalibrating()) wait(0.2, seconds);
     // wait(2.2, seconds);
     // PrimaryController.rumble(".");
+
+    InitScreens();
+    ShowScreen(screens.autonSelector);
 
     // Call the program initialization of each subsystem
     InitDrivetrain();
@@ -64,8 +68,6 @@ int main() {
     // Set up callbacks for autonomous and driver control periods.
     Competition.drivercontrol(usercontrol);
     Competition.autonomous(autonomous);
-
-    InitAutonSelector();
 
     // Run the pre-autonomous function.
     pre_auton();

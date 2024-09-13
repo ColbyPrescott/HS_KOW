@@ -1,11 +1,8 @@
 #ifndef AUTONOMOUS_SELECTOR_H
 #define AUTONOMOUS_SELECTOR_H
 
-#include "KOWGUI/kowgui.h"
+#include "KOWGUI/Nodes/Basic/group.h"
 
-extern KOWGUI::Group* autonSelectorUI;
 extern void (*selectedAutonSequence)();
-
-void InitAutonSelector();
 
 #endif

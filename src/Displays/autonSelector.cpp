@@ -1,20 +1,16 @@
 #include "vex.h"
 
 #include "Autonomous/autonSequences.h"
+#include "Displays/screenManager.h"
 
 using namespace KOWGUI;
-
-// Node containing all of the autonomous selection screen UI
-Group* autonSelectorUI = nullptr;
 
 // Current auton function to run when autonomous starts
 void (*selectedAutonSequence)() = AutonTopRed;
 
 // Initialize the UI for the autonomous selection screen
-void InitAutonSelector() {
-    autonSelectorUI = gui.root->AddChild(new Group);
-
-    autonSelectorUI->AddChildren({
+void InitScreenAutonSelector() {
+    screens.autonSelector->AddChildren({
         (new Clickable)->SetPosition(30, 50)->SetSize(200, 100)->SetRelease([](BaseNode* self){selectedAutonSequence = AutonTopRed;})->AddChildren({
             (new NSelected)->AddChildren({(new RoundedRectangle)->SetOutlineRadius(30)->SetFillColor(Color::red)}),
             (new Selected)->AddChildren({(new RoundedRectangle)->SetOutlineRadius(30)->SetFillColor(Color::darkRed)}),
