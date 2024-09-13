@@ -6,9 +6,9 @@
 #include "Subsystems/mogoMover.h"
 #include "Subsystems/intake.h"
 
-#include "Autonomous/autonomousSequences.h"
-#include "Autonomous/autonomousSelector.h"
+#include "Autonomous/autonSequences.h"
 
+#include "Displays/autonSelector.h"
 #include "Displays/controllerMonitors.h"
 
 using namespace vex;
@@ -65,7 +65,7 @@ int main() {
     Competition.drivercontrol(usercontrol);
     Competition.autonomous(autonomous);
 
-    InitAutonomousSelector();
+    InitAutonSelector();
 
     // Run the pre-autonomous function.
     pre_auton();

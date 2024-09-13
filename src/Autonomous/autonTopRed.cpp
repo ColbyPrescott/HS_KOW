@@ -21,6 +21,14 @@ void AutonTopRed() {
     // Clamp down onto the red ring that's at the top of the stack
     intake.spinToPosition(-50, degrees, false);
     wait(0.5, seconds);
+
+    // While driving, move the stored ring closer to the top of the intake
+    vex::task([](){
+        wait(1, seconds);
+        MoveClosestHookToWaypoint(IWPs::waitForMogo, IWPs::waitForMogo);
+        return 0;
+    });
+
     // Back up to pull in red ring and line up for pushing blue rings
     aps.AddPathPoint(15, 90, true, 0.3, 0.3, 4);
     // Push blue rings out of the way

@@ -3,9 +3,9 @@
 
 #include "KOWGUI/kowgui.h"
 
-extern KOWGUI::Group* autonomousSelectorUI;
+extern KOWGUI::Group* autonSelectorUI;
 extern void (*selectedAutonSequence)();
 
-void InitAutonomousSelector();
+void InitAutonSelector();
 
 #endif
