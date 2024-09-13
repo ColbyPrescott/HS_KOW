@@ -57,7 +57,7 @@ void AutonTopBlue() {
     });
 
     // Drive to and pick up mogo
-    aps.AddPathPoint(MirrorX(MirrorX(aps.GetX()) - 5), aps.GetY(), true, 0.2, 0.3, 3); // Push into alliance stake
+    // aps.AddPathPoint(MirrorX(MirrorX(aps.GetX()) - 5), aps.GetY(), true, 0.2, 0.3, 3); // Push into alliance stake
     aps.AddPathPoint(MirrorX(48), 96, true, 0.3, 0.3, 1);
     aps.EndPath();
     mogoMover.close();
