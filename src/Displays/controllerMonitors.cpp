@@ -24,11 +24,14 @@ void DrawControllerMonitors() {
     double apsY = aps.GetY();
     double rotation = RadiansToDegrees(aps.GetRotation());
 
+    // Intake
+    double intakePos = intake.position(degrees);
+
     // Draw to screen
     PrimaryController.Screen.clearScreen();
     PrimaryController.Screen.setCursor(1, 1);
     PrimaryController.Screen.print("%d--%d  %d", leftWheelsPrimaryTemp, rightWheelsPrimaryTemp, intakeTemp); PrimaryController.Screen.newLine();
     PrimaryController.Screen.print("%d--%d  %d", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp, (int)rotation); PrimaryController.Screen.newLine();
     // PrimaryController.Screen.print("%s  %s", mogoMoverStatus.c_str());
-    PrimaryController.Screen.print("%.1f, %.1f", apsX, apsY);
+    PrimaryController.Screen.print("%.1f, %.1f, %.0f", apsX, apsY, intakePos);
 }

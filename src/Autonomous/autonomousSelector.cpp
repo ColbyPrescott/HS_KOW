@@ -6,7 +6,7 @@ using namespace KOWGUI;
 
 Group* autonomousSelectorUI = nullptr;
 
-void (*selectedAutonSequence)() = AutonTopBlue;
+void (*selectedAutonSequence)() = AutonTopRed;
 
 void InitAutonomousSelector() {
     autonomousSelectorUI = gui.root->AddChild(new Group);

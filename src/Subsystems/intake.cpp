@@ -166,13 +166,6 @@ void InitIntake() {
 
     // Set motor brakings
     intake.setStopping(brake);
-
-    // Rotate intake from the reset position to be ready for a ring
-    MoveClosestHookToWaypoint(IWPs::waitForRing, IWPs::waitForRing);
-
-    // Set up functions to help align the intake when a bumper button is pressed
-    intakeAlignButton.pressed(PressIntakeAlign);
-    intakeAlignButton.released(ReleaseIntakeAlign);
 }
 
 // Initialize intake at the start of driver control
@@ -184,6 +177,12 @@ void UserInitIntake() {
     PrimaryController.ButtonUp.released([](){intake.stop();});
     PrimaryController.ButtonDown.pressed([](){intake.spin(reverse);});
     PrimaryController.ButtonDown.released([](){intake.stop();});
+
+    intakeAlignButton.pressed(PressIntakeAlign);
+    intakeAlignButton.released(ReleaseIntakeAlign);
+
+    // Rotate intake from the reset position to be ready for a ring
+    // MoveClosestHookToWaypoint(IWPs::waitForRing, IWPs::waitForRing);
 }
 
 // Update intake during driver control

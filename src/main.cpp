@@ -17,7 +17,8 @@ using namespace vex;
 void pre_auton(void) {
     // Calibrate inertial sensor
     dualInertial.Calibrate();
-    while(dualInertial.GetCalibrating()) wait(0.2, seconds);
+    // while(dualInertial.GetCalibrating()) wait(0.2, seconds);
+    // wait(2.2, seconds);
     // PrimaryController.rumble(".");
 
     // Call the program initialization of each subsystem
@@ -26,12 +27,15 @@ void pre_auton(void) {
     InitIntake();
 
     // Start APS
-    aps.StartTicking(200);
+    // aps.StartTicking(200);
 }
 
 // Called at start of autonomous
 void autonomous(void) {
-    // AutonTopRed();
+    // Start tracking and driving with APS
+    aps.StartTicking(200);
+
+    // Call the autonomous function that was selected
     selectedAutonSequence();
 
     // // Force enable user control
