@@ -5,10 +5,6 @@
 
 using namespace vex;
 
-double MirrorX(double x) {
-    return 144.0 - x;
-}
-
 void AutonTopBlue() {
     aps.SetPosition(MirrorX(14), 96);
     aps.SetRotation(DegreesToRadians(270));

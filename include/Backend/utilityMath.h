@@ -29,4 +29,8 @@ inline double DifferenceBetweenHeadings(double radiansA, double radiansB) {
     return FixedFMod(radiansB - radiansA + M_PI, M_PI * 2.0) - M_PI;
 }
 
+inline double MirrorX(double x) {
+    return 144.0 - x;
+}
+
 #endif
