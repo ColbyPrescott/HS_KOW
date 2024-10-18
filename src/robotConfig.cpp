@@ -21,12 +21,12 @@ AbsolutePositioningSystem aps = AbsolutePositioningSystem(&leftWheels, &rightWhe
 
 
 // Motors
-motor leftWheelsPrimary = motor(PORT14, ratio18_1, false);
-motor leftWheelsSecondary = motor(PORT20, ratio18_1, true);
+motor leftWheelsPrimary = motor(PORT14, ratio36_1, false);
+motor leftWheelsSecondary = motor(PORT20, ratio36_1, true);
 motor_group leftWheels = motor_group(leftWheelsPrimary, leftWheelsSecondary);
 
-motor rightWheelsPrimary = motor(PORT5, ratio18_1, true);
-motor rightWheelsSecondary = motor(PORT9, ratio18_1, false);
+motor rightWheelsPrimary = motor(PORT5, ratio36_1, true);
+motor rightWheelsSecondary = motor(PORT9, ratio36_1, false);
 motor_group rightWheels = motor_group(rightWheelsPrimary, rightWheelsSecondary);
 
 motor intake = motor(PORT8, ratio18_1, true);
