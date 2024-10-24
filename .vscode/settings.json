@@ -4,6 +4,8 @@
 	],
 	"files.associations": {
 		"vector": "cpp",
-		"random": "cpp"
+		"random": "cpp",
+		"chrono": "cpp",
+		"regex": "cpp"
 	}
 }

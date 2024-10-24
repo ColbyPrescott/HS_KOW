@@ -1,4 +1,4 @@
-1: 
+1: Left lift
 2: 
 3: Inertial sensor A (upright)
 4: 
@@ -6,17 +6,17 @@
 
 6: Inertial sensor B (upside down)
 7: BROKEN
-8: Intake
+8: Right lift
 9: Right wheels secondary
 10: BROKEN
 
-11: 
-12: 
-13: 
+11: WEIRD
+12: Intake
+13: Claw
 14: Left wheels primary
 15: BROKEN
 
-16: 
+16: Hooks
 17: 
 18: 
 19: 
@@ -24,11 +24,11 @@
 
 21: 
 
-A: 
+A: Mogo mover
 B: 
 C: 
 D: 
 E: 
 F: 
 G: 
-H: Mogo mover
+H: 

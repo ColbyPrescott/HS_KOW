@@ -1,21 +1,20 @@
 #include "vex.h"
 
-#include "Subsystems/intake.h"
 #include "Backend/utilityMath.h"
 
 using namespace vex;
 
 void AutonPositiveRed() {
-    aps.SetPosition(14, 48);
-    aps.SetRotation(270);
-    storingRing = true;
+    // aps.SetPosition(14, 48);
+    // aps.SetRotation(270);
+    // storingRing = true;
     
-    aps.SetDriving(true);
+    // aps.SetDriving(true);
 
-    aps.AddPathPoint(8, 72, true, 0.2, 0.3, 3, DegreesToRadians(0));
-    aps.EndPath();
+    // aps.AddPathPoint(8, 72, true, 0.2, 0.3, 3, DegreesToRadians(0));
+    // aps.EndPath();
 
-    TriggerIntake();
+    // TriggerIntake();
 }
 
 // void AutonPositiveRed() {

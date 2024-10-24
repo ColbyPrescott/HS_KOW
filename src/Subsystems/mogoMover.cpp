@@ -19,8 +19,8 @@ void InitMogoMover() {
 // Initialize mogo mover at the start of driver control
 void UserInitMogoMover() {
     // Controls
-    // Toggle mogo mover state when R2 is pressed
-    PrimaryController.ButtonR2.pressed(ToggleMogoMover);
+    // Toggle mogo mover state when Y is pressed
+    PrimaryController.ButtonY.pressed(ToggleMogoMover);
 }
 
 // Update mogo mover during driver control

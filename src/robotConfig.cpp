@@ -29,13 +29,20 @@ motor rightWheelsPrimary = motor(PORT5, ratio36_1, true);
 motor rightWheelsSecondary = motor(PORT9, ratio36_1, false);
 motor_group rightWheels = motor_group(rightWheelsPrimary, rightWheelsSecondary);
 
-motor intake = motor(PORT8, ratio18_1, true);
+motor leftLift = motor(PORT1, ratio6_1, false);
+motor rightLift = motor(PORT8, ratio6_1, false);
+motor_group lift = motor_group(leftLift, rightLift);
+
+motor claw = motor(PORT13, false);
+
+motor intake = motor(PORT12, true);
+
+motor hooks = motor(PORT16, ratio18_1, false);
 
 
 // Pneumatics
-pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.H);
+pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.A);
 
 
 // Sensors
-bumper intakeAlignButton = bumper(Brain.ThreeWirePort.A);
 DualInertial dualInertial = DualInertial(InertialIntercept(PORT3, vex::left, 18000.0 / 18099.0), InertialIntercept(PORT6, vex::left, 18000.0 / 17935.0));

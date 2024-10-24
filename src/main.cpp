@@ -5,6 +5,9 @@
 #include "Subsystems/drivetrain.h"
 #include "Subsystems/mogoMover.h"
 #include "Subsystems/intake.h"
+#include "Subsystems/hooks.h"
+#include "Subsystems/lift.h"
+#include "Subsystems/claw.h"
 
 #include "Autonomous/autonSequences.h"
 
@@ -29,6 +32,9 @@ void pre_auton(void) {
     InitDrivetrain();
     InitMogoMover();
     InitIntake();
+    InitHooks();
+    InitLift();
+    InitClaw();
 
     // Start APS
     // aps.StartTicking(200);
@@ -53,12 +59,18 @@ void usercontrol(void) {
     UserInitDrivetrain();
     UserInitMogoMover();
     UserInitIntake();
+    UserInitHooks();
+    UserInitLift();
+    UserInitClaw();
 
     // Update each subsystem continuously during driver control
     while(true) {
         TickDrivetrain();
         TickMogoMover();
         TickIntake();
+        TickHooks();
+        TickLift();
+        TickClaw();
         
         wait(20, msec);
     }

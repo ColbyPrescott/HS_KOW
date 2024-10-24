@@ -1,19 +1,19 @@
-L1: Trigger intake
-L2: 
-R1: 
-R2: Toggle mogo mover
+L1: Lift up
+L2: Lift down
+R1: Claw out
+R2: Claw in
 
-Up: Intake manual forwards
-Down: Intake manual backwards
-Left: 
-Right: 
+Up: Manual hooks forward
+Down: Move stored ring to claw
+Left: Manual hooks backward
+Right: Toggle intake
 
 X: 
-B: 
-Y: 
+B: Move stored ring to mobile goal
+Y: Toggle mogo mover
 A: 
 
-Axis 1: Drivetrain left right
+Axis 1: Turn left right
 Axis 2: 
-Axis 3: Drivetrain forward backward
+Axis 3: Drife forward back
 Axis 4: 

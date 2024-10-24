@@ -16,11 +16,18 @@ extern vex::motor rightWheelsPrimary;
 extern vex::motor rightWheelsSecondary;
 extern vex::motor_group rightWheels;
 
+extern vex::motor leftLift;
+extern vex::motor rightLift;
+extern vex::motor_group lift;
+
+extern vex::motor claw;
+
 extern vex::motor intake;
+
+extern vex::motor hooks;
 
 extern vex::pneumatics mogoMover;
 
-extern vex::bumper intakeAlignButton;
 extern DualInertial dualInertial;
 
 #endif
