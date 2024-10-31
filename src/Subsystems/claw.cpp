@@ -6,6 +6,10 @@ using namespace vex;
 void InitClaw() {
     // Don't let claw fall down when not being actively moved
     claw.setStopping(hold);
+
+    claw.setMaxTorque(100, percent);
+
+    claw.setVelocity(20, percent);
 }
 
 // Initialize claw at the start of driver control

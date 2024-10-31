@@ -13,18 +13,16 @@ using namespace vex;
 // Speed for the hook motor
 const double hookRPM = 200;
 
-// IntakeWaypointPositions defined in intake.h
+// HookWaypointPositions defined in hooks.h
 
 // Motor encoder values where hooks will be in the reset position
 const std::vector<double> hookPositions = {
     0,
-    1147,
-    2408,
-    3722
+    951,
 };
 
 // Encoder position where the reset hook will make a full loop back to the reset position
-const double hookResetPosition = 5040.2;
+const double hookResetPosition = 2760.389;
 
 // #endregion
 
@@ -48,11 +46,13 @@ void HooksSpinForwardTo(double targetDegrees) {
     wait(0.2, seconds);
 
     // Lock execution in this function until the hooks finish spinning
-    while(hooks.isSpinning() && (targetDegrees - hooks.position(degrees)) > 360) {
+    while(hooks.isSpinning()) {
         // Pause to let other threads run
         wait(0.1, seconds);
         // Continue spinning normally if not stuck
         if(hooks.velocity(rpm) >= 5) continue;
+        // Continue spinning normally is simply slowing down because it's almost at the target
+        if((targetDegrees - hooks.position(degrees)) < 360) continue;
 
         // If stuck, reverse direction for a short distance
         hooks.spinFor(reverse, 1000, degrees, true);
@@ -75,7 +75,7 @@ void MoveClosestHookToWaypoint(IWPs hook, IWPs waypoint) {
     int closestHookDistance = hookResetPosition;
     for(int i = 0; i < hookPositions.size(); i++) {
         // Get distance from this hook to desired hook. FixedFMod ensures that distance must be positive. Going past the target hook position will wrap to max distance
-        double hookDistance = FixedFMod((double)hook - FixedFMod(intake.position(degrees) - hookPositions[i] - lookAheadDegrees, hookResetPosition), hookResetPosition);
+        double hookDistance = FixedFMod((double)hook - FixedFMod(hooks.position(degrees) - hookPositions[i] - lookAheadDegrees, hookResetPosition), hookResetPosition);
         // Update closest hook if closer
         if(hookDistance > closestHookDistance) continue;
         closestHookDistance = hookDistance;
@@ -83,16 +83,21 @@ void MoveClosestHookToWaypoint(IWPs hook, IWPs waypoint) {
     }
 
     // Spin hooks to align closest hook with waypoint
-    int hookToWaypointDistance = FixedFMod((double)waypoint - FixedFMod(intake.position(degrees) - hookPositions[closestHookIndex], hookResetPosition), hookResetPosition);
+    int hookToWaypointDistance = FixedFMod((double)waypoint - FixedFMod(hooks.position(degrees) - hookPositions[closestHookIndex], hookResetPosition), hookResetPosition);
     HooksSpinForwardTo(hooks.position(degrees) + hookToWaypointDistance);
 }
 
 void MoveStoredRingToMogo() {
-
+    MoveClosestHookToWaypoint(IWPs::belowStoredRing, IWPs::despositMogo);
+    MoveClosestHookToWaypoint(IWPs::belowStoredRing, IWPs::belowStoredRing);
 }
 
 void MoveStoredRingToClaw() {
-    
+    double originalPosition = hooks.position(degrees);
+    MoveClosestHookToWaypoint(IWPs::belowStoredRing, IWPs::aboveTrapdoor);
+    hooks.setVelocity(100, rpm);
+    hooks.spinFor(reverse, hooks.position(degrees) - originalPosition, degrees, true);
+    hooks.setVelocity(hookRPM, rpm);
 }
 
 // #endregion

@@ -7,31 +7,32 @@ using namespace vex;
 
 // Draw important information that is useful to monitor to the controller screen
 void DrawControllerMonitors() {
-    // Drivetrain temperatures
+    // Drivetrain temperatures 0 to 10
     int leftWheelsPrimaryTemp = (int)leftWheelsPrimary.temperature(percent) / 10;
     int leftWheelsSecondaryTemp = (int)leftWheelsSecondary.temperature(percent) / 10;
     int rightWheelsPrimaryTemp = (int)rightWheelsPrimary.temperature(percent) / 10;
     int rightWheelsSecondaryTemp = (int)rightWheelsSecondary.temperature(percent) / 10;
 
-    // Mobile goal mover
-    std::string mogoMoverStatus = mogoMover.value() == 0 ? "HOLD" : "____";
-
-    // Intake temperature
+    // Intake temperature 0 to 10
     int intakeTemp = (int)intake.temperature(percent) / 10;
 
-    // APS
-    double apsX = aps.GetX();
-    double apsY = aps.GetY();
-    double rotation = RadiansToDegrees(aps.GetRotation());
+    // Hooks temperature 0 to 10
+    int hooksTemp = (int)hooks.temperature(percent) / 10;
 
-    // Intake
-    double intakePos = intake.position(degrees);
+    // Lift temperatures 0 to 10
+    int leftLiftTemp = (int)leftLift.temperature(percent) / 10;
+    int rightLiftTemp = (int)rightLift.temperature(percent) / 10;
+
+    // Claw temperature 0 to 10
+    int clawTemp = (int)claw.temperature(percent) / 10;
+
+    // State of whether or not the mogo mover is holding a mogo
+    std::string mogoMoverStatus = mogoMover.value() == 0 ? "HOLD" : "____";
 
     // Draw to screen
     PrimaryController.Screen.clearScreen();
     PrimaryController.Screen.setCursor(1, 1);
-    PrimaryController.Screen.print("%d--%d  %d", leftWheelsPrimaryTemp, rightWheelsPrimaryTemp, intakeTemp); PrimaryController.Screen.newLine();
-    PrimaryController.Screen.print("%d--%d  %d", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp, (int)rotation); PrimaryController.Screen.newLine();
-    // PrimaryController.Screen.print("%s  %s", mogoMoverStatus.c_str());
-    PrimaryController.Screen.print("%.1f, %.1f, %.0f", apsX, apsY, intakePos);
+    PrimaryController.Screen.print("%d--%d   %d--%d", leftWheelsPrimaryTemp, rightWheelsPrimaryTemp, leftLiftTemp, rightLiftTemp); PrimaryController.Screen.newLine();
+    PrimaryController.Screen.print("%d--%d   %d", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp, clawTemp); PrimaryController.Screen.newLine();
+    PrimaryController.Screen.print("%d %d", intakeTemp, hooksTemp);
 }
