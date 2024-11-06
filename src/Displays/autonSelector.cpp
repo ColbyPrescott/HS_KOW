@@ -6,7 +6,7 @@
 using namespace KOWGUI;
 
 // Current auton function to run when autonomous starts
-void (*selectedAutonSequence)() = AutonSkills;
+void (*selectedAutonSequence)() = AutonTopRed;
 
 // Initialize the UI for the autonomous selection screen
 void InitScreenAutonSelector() {

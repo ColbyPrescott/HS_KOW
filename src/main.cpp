@@ -14,6 +14,7 @@
 #include "Displays/screenManager.h"
 #include "Displays/autonSelector.h"
 #include "Displays/controllerMonitors.h"
+#include "Displays/timeWarnings.h"
 
 using namespace vex;
 
@@ -58,6 +59,8 @@ void usercontrol(void) {
     UserInitLift();
     UserInitClawPivot();
     UserInitClaw();
+
+    UserInitTimeWarnings();
 
     // Update each subsystem continuously during driver control
     while(true) {
