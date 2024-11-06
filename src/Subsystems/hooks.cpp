@@ -117,8 +117,7 @@ void InitHooks() {
 // Initialize hooks at the start of driver control
 void UserInitHooks() {
     // Controls
-    PrimaryController.ButtonB.pressed(MoveStoredRingToMogo);
-    PrimaryController.ButtonDown.pressed(MoveStoredRingToClaw);
+    // TODO Auto hook button
 
     PrimaryController.ButtonUp.pressed([](){hooks.spin(forward);});
     PrimaryController.ButtonUp.released([](){hooks.stop();});

@@ -11,14 +11,14 @@
 10: BROKEN
 
 11: WEIRD
-12: Intake
-13: Claw
+12: 
+13: Claw pivot
 14: Left wheels primary
 15: BROKEN
 
 16: Hooks
 17: 
-18: 
+18: Claw
 19: 
 20: Left wheels secondary
 

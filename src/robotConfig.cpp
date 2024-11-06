@@ -33,9 +33,8 @@ motor leftLift = motor(PORT1, ratio6_1, false);
 motor rightLift = motor(PORT8, ratio6_1, false);
 motor_group lift = motor_group(leftLift, rightLift);
 
-motor claw = motor(PORT13, false);
-
-motor intake = motor(PORT12, true);
+motor clawPivot = motor(PORT13, false);
+motor claw = motor(PORT18, false);
 
 motor hooks = motor(PORT16, ratio18_1, false);
 

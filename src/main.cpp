@@ -4,9 +4,9 @@
 
 #include "Subsystems/drivetrain.h"
 #include "Subsystems/mogoMover.h"
-#include "Subsystems/intake.h"
 #include "Subsystems/hooks.h"
 #include "Subsystems/lift.h"
+#include "Subsystems/clawPivot.h"
 #include "Subsystems/claw.h"
 
 #include "Autonomous/autonSequences.h"
@@ -20,7 +20,7 @@ using namespace vex;
 // Called at program start
 void pre_auton(void) {
     // Calibrate inertial sensor
-    dualInertial.Calibrate();
+    // dualInertial.Calibrate();
     // while(dualInertial.GetCalibrating()) wait(0.2, seconds);
     // wait(2.2, seconds);
     // PrimaryController.rumble(".");
@@ -31,9 +31,9 @@ void pre_auton(void) {
     // Call the program initialization of each subsystem
     InitDrivetrain();
     InitMogoMover();
-    InitIntake();
     InitHooks();
     InitLift();
+    InitClawPivot();
     InitClaw();
 
     // Start APS
@@ -47,10 +47,6 @@ void autonomous(void) {
 
     // Call the autonomous function that was selected
     selectedAutonSequence();
-
-    // // Force enable user control
-    // aps.SetDriving(false);
-    // Competition.test_driver();
 }
 
 // Called at start of driver control
@@ -58,18 +54,18 @@ void usercontrol(void) {
     // Call the driver initialization of each subsytem
     UserInitDrivetrain();
     UserInitMogoMover();
-    UserInitIntake();
     UserInitHooks();
     UserInitLift();
+    UserInitClawPivot();
     UserInitClaw();
 
     // Update each subsystem continuously during driver control
     while(true) {
         TickDrivetrain();
         TickMogoMover();
-        TickIntake();
         TickHooks();
         TickLift();
+        TickClawPivot();
         TickClaw();
         
         wait(20, msec);
@@ -83,11 +79,6 @@ int main() {
 
     // Run the pre-autonomous function.
     pre_auton();
-
-    // // DEBUG
-    // PrimaryController.ButtonA.pressed([](){
-    //     Competition.test_auton();
-    // });
 
     // Prevent main from exiting with an infinite loop.
     int frameNum = 0;

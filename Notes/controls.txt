@@ -1,15 +1,15 @@
 L1: Lift up
 L2: Lift down
-R1: Claw out
-R2: Claw in
+R1: Claw pivot up
+R2: Claw pivot down
 
 Up: Manual hooks forward
-Down: Move stored ring to claw
+Down: 
 Left: Manual hooks backward
-Right: Toggle intake
+Right: Auto hooks
 
 X: 
-B: Move stored ring to mobile goal
+B: Toggle claw
 Y: Toggle mogo mover
 A: 
 

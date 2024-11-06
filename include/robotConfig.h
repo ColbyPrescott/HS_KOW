@@ -20,9 +20,8 @@ extern vex::motor leftLift;
 extern vex::motor rightLift;
 extern vex::motor_group lift;
 
+extern vex::motor clawPivot;
 extern vex::motor claw;
-
-extern vex::motor intake;
 
 extern vex::motor hooks;
 
