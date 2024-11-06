@@ -17,7 +17,7 @@ void AutonSkills() {
 
     // // Put preload onto alliance stake
     // // TriggerIntake();
-    // MoveClosestHookToWaypoint(IWPs::waitForMogo, IWPs::depositRing);
+    // MoveClosestHookToWaypoint(HWPs::waitForMogo, HWPs::depositRing);
     // wait(2, seconds);
     // intake.spinFor(-600, degrees);
 

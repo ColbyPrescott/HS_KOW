@@ -13,16 +13,20 @@ using namespace vex;
 // Speed for the hook motor
 const double hookRPM = 200;
 
+// How long to pause the intake at the depositRing position. 
+// This gives more time for the ring to fall onto the stake
+const double depositPauseMilliseconds = 1000;
+
 // HookWaypointPositions defined in hooks.h
 
 // Motor encoder values where hooks will be in the reset position
 const std::vector<double> hookPositions = {
     0,
-    951,
+    951, // TODO Add hooks
 };
 
 // Encoder position where the reset hook will make a full loop back to the reset position
-const double hookResetPosition = 2760.389;
+const double hookResetPosition = 5040.2; // TODO Remeasure
 
 // #endregion
 
@@ -65,7 +69,7 @@ void HooksSpinForwardTo(double targetDegrees) {
 }
 
 // Move a hook a little ahead or closest behind one waypoint and move it forwards to a different target waypoint
-void MoveClosestHookToWaypoint(IWPs hook, IWPs waypoint) {
+void MoveClosestHookToWaypoint(HWPs hook, HWPs waypoint) {
     // How far forwards to look for a hook before looking backwards
     const double lookAheadDegrees = 30;
 
@@ -87,17 +91,27 @@ void MoveClosestHookToWaypoint(IWPs hook, IWPs waypoint) {
     HooksSpinForwardTo(hooks.position(degrees) + hookToWaypointDistance);
 }
 
-void MoveStoredRingToMogo() {
-    MoveClosestHookToWaypoint(IWPs::belowStoredRing, IWPs::despositMogo);
-    MoveClosestHookToWaypoint(IWPs::belowStoredRing, IWPs::belowStoredRing);
-}
-
-void MoveStoredRingToClaw() {
-    double originalPosition = hooks.position(degrees);
-    MoveClosestHookToWaypoint(IWPs::belowStoredRing, IWPs::aboveTrapdoor);
-    hooks.setVelocity(100, rpm);
-    hooks.spinFor(reverse, hooks.position(degrees) - originalPosition, degrees, true);
-    hooks.setVelocity(hookRPM, rpm);
+// Move the hooks based on some simple logic
+void TriggerAutoHooks() {
+    // If a ring is currently stored, deposit it, then wait for next ring
+    if(storingRing) {
+        MoveClosestHookToWaypoint(HWPs::waitForMogo, HWPs::depositRingOnMogo);
+        wait(depositPauseMilliseconds, msec);
+        storingRing = false;
+        MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::waitForRing);
+        return;
+    }
+    
+    // A ring is not stored. If the mogo is ready, pick up and deposit a ring
+    if(mogoMover.value() == 0) {
+        MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::depositRingOnMogo);
+        wait(depositPauseMilliseconds, msec);
+        MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::waitForRing);
+    // A ring is not stored, nor is the mogo ready. Pick up and store a ring
+    } else { 
+        MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::waitForMogo);
+        storingRing = true;
+    }
 }
 
 // #endregion
@@ -117,7 +131,7 @@ void InitHooks() {
 // Initialize hooks at the start of driver control
 void UserInitHooks() {
     // Controls
-    // TODO Auto hook button
+    PrimaryController.ButtonRight.pressed(TriggerAutoHooks);
 
     PrimaryController.ButtonUp.pressed([](){hooks.spin(forward);});
     PrimaryController.ButtonUp.released([](){hooks.stop();});

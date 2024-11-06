@@ -24,7 +24,7 @@ void AutonTopRed() {
     // // While driving, move the stored ring closer to the top of the intake
     // vex::task([](){
     //     wait(1, seconds);
-    //     MoveClosestHookToWaypoint(IWPs::waitForMogo, IWPs::waitForMogo);
+    //     MoveClosestHookToWaypoint(HWPs::waitForMogo, HWPs::waitForMogo);
     //     return 0;
     // });
 
@@ -36,7 +36,7 @@ void AutonTopRed() {
     // aps.AddPathPoint(8, 72, true, 0.2, 0.3, 3, DegreesToRadians(0)); 
     // aps.EndPath();
     // // Put red pre load onto alliance stake
-    // MoveClosestHookToWaypoint(IWPs::waitForMogo, IWPs::depositRing);
+    // MoveClosestHookToWaypoint(HWPs::waitForMogo, HWPs::depositRing);
     // // Wait for red ring to get onto red alliance stake
     // wait(0.5, seconds);
     // // Back up hook to make sure it isn't caught while driving away
@@ -47,7 +47,7 @@ void AutonTopRed() {
     // // While driving, move the stored ring closer to the top of the intake
     // vex::task([](){
     //     wait(0.5, seconds);
-    //     MoveClosestHookToWaypoint(IWPs::waitForMogo, IWPs::waitForMogo);
+    //     MoveClosestHookToWaypoint(HWPs::waitForMogo, HWPs::waitForMogo);
     //     return 0;
     // });
 
@@ -58,7 +58,7 @@ void AutonTopRed() {
     // mogoMover.close();
 
     // // Put ring onto mogo
-    // MoveClosestHookToWaypoint(IWPs::waitForMogo, IWPs::depositRing);
+    // MoveClosestHookToWaypoint(HWPs::waitForMogo, HWPs::depositRing);
     // wait(1, seconds);
 
     // // Drop mogo

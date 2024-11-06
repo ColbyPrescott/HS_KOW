@@ -3,19 +3,19 @@
 
 // List of motor encoder values where the reset hook is at significant positions
 enum class HookWaypointPositions {
-    aboveTrapdoor = 1100, // Reset hook is holding a ring high enough for the trapdoor to fall back down
-    despositMogo = 1456, // Reset hook went around the top of the hook mechanism and is now completely horizontal
-    belowStoredRing = 2600, // Reset hook is about to pick up the stored ring
+    waitForMogo = 1800, // Reset hook is at a position to store the ring, waiting to deposit it onto a mogo
+    depositRingOnMogo = 2630, // Reset hook went around the top of the hook mechanism and is now completely horizontal
+    waitForRing = 4600  // Reset hook is a little above the tiles, almost about to pick up a ring
 };
 // Abbreviate name because it's long and repeated many times
-#define IWPs HookWaypointPositions
+#define HWPs HookWaypointPositions
 
 extern bool storingRing;
 
-void MoveClosestHookToWaypoint(IWPs hook, IWPs waypoint);
+void HooksSpinForwardTo(double targetDegrees);
+void MoveClosestHookToWaypoint(HWPs hook, HWPs waypoint);
 
-void MoveStoredRingToClaw();
-void MoveStoredRingToMogo();
+void TriggerAutoHooks();
 
 void InitHooks();
 void UserInitHooks();
