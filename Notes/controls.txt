@@ -1,7 +1,7 @@
-L1: Lift up
-L2: Lift down
-R1: Claw pivot up
-R2: Claw pivot down
+L1: Lift and clawPivot up
+L2: Lift and clawPivot down
+R1: 
+R2: 
 
 Up: Manual hooks forward
 Down: 
@@ -13,7 +13,7 @@ B: Toggle claw
 Y: Toggle mogo mover
 A: Reset lift, clawPivot, and claw
 
-Axis 1: Turn left right
+Axis 1: Turn left & right
 Axis 2: 
-Axis 3: Drife forward back
+Axis 3: Drive forward & back
 Axis 4: 

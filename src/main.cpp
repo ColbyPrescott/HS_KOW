@@ -62,6 +62,10 @@ void usercontrol(void) {
 
     UserInitTimeWarnings();
 
+    // PrimaryController.ButtonX.pressed([](){
+    //     printf("Lift: %d, ClawPivot: %d\n", (int)lift.position(degrees), (int)clawPivot.position(degrees));
+    // });
+
     // Update each subsystem continuously during driver control
     while(true) {
         TickDrivetrain();
