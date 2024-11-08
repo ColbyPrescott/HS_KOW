@@ -62,12 +62,19 @@ void InitClawPivot() {
 
 // Initialize claw pivot at the start of driver control
 void UserInitClawPivot() {
-    // Controls
+    // Controls linked with lift
     PrimaryController.ButtonL1.pressed([](){clawPivot.spinToPosition(wallStakePositionDegrees, degrees, false);});
     PrimaryController.ButtonL2.pressed([](){clawPivot.spinToPosition(groundPositionDegrees, degrees, false);});
     PrimaryController.ButtonL1.released([](){clawPivot.stop();});
     PrimaryController.ButtonL2.released([](){clawPivot.stop();});
 
+    // Manual controls
+    PrimaryController.ButtonR1.pressed([](){clawPivot.spin(forward);});
+    PrimaryController.ButtonR2.pressed([](){clawPivot.spin(reverse);});
+    PrimaryController.ButtonR1.released([](){clawPivot.stop();});
+    PrimaryController.ButtonR2.released([](){clawPivot.stop();});
+
+    // Other controls
     PrimaryController.ButtonA.released(ResetClawPivot);
 }
 
