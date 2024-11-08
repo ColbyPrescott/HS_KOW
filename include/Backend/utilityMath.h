@@ -29,8 +29,14 @@ inline double DifferenceBetweenHeadings(double radiansA, double radiansB) {
     return FixedFMod(radiansB - radiansA + M_PI, M_PI * 2.0) - M_PI;
 }
 
-inline double MirrorX(double x) {
-    return 144.0 - x;
+// Flip an X coordinate from one side of the field to the other
+inline double MirrorX(double inches) {
+    return 144.0 - inches;
+}
+
+// Flip an angle from one side of the field to the other
+inline double MirrorHeading(double radians) {
+    return M_PI - radians;
 }
 
 #endif

@@ -27,7 +27,7 @@ void AutonPositiveRed() {
 
 //     // Drive to mogo
 //     aps.AddPathPoint(24, 36, true, 0.3, 0.3, 10);
-//     aps.AddPathPoint(48, 48, true, 0.3, 0.3, 4); // EZ TEMPLATE
+//     aps.AddPathPoint(48, 48, true, 0.3, 0.3, 4);
 //     aps.EndPath();
 //     // Pickup mogo
 //     mogoMover.close();

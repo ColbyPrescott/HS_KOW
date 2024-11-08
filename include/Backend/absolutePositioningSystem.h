@@ -65,6 +65,9 @@ class AbsolutePositioningSystem {
         // Whether or not the APS is allowed to control the drivetrain
         bool mDrivingEnabled = false;
 
+        // Whether or not to flip coordinates and angles to the opposite side of the field
+        bool mMirrorPath = false;
+
         // Buffered path to follow
         std::vector<PathPoint> mPath;
 
@@ -88,6 +91,7 @@ class AbsolutePositioningSystem {
 
 
         void SetDriving(bool driving);
+        void SetMirrored(bool mirrored);
         void AddPathPoint(PathPoint pathPoint);
         void AddPathPoint(double xInches, double yInches, bool driveBackwards = false, double maxDriveSpeed = 0.3, double maxTurnSpeed = 0.3, double distanceThreshold = 10, double targetHeading = PathPoint::noTargetHeading);
         void EndPath();

@@ -35,6 +35,11 @@ void AbsolutePositioningSystem::TickDriving() {
 
     // Get a copy of the point to drive to
     PathPoint targetPoint = mPath.front();
+    // Mirror if enabled
+    if(mMirrorPath) {
+        targetPoint.x = MirrorX(targetPoint.x);
+        if(targetPoint.targetHeading != PathPoint::noTargetHeading) targetPoint.targetHeading = MirrorHeading(targetPoint.targetHeading);
+    }
     // Transform to local position
     targetPoint.x -= GetX();
     targetPoint.y -= GetY();
@@ -152,6 +157,11 @@ double AbsolutePositioningSystem::GetRotation() {
 // Set whether or not the APS is allowed to control the drivetrain
 void AbsolutePositioningSystem::SetDriving(bool driving) {
     mDrivingEnabled = driving;
+}
+
+// Set whether or not coordinates and angles are flipped to the opposite side of the field
+void AbsolutePositioningSystem::SetMirrored(bool mirrored) {
+    mMirrorPath = mirrored;
 }
 
 // Add a point to the drive path
