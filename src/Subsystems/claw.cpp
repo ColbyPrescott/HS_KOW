@@ -2,10 +2,15 @@
 
 using namespace vex;
 
+// #region Runtime variables
+
 // Whether or not the claw is currently opened
 bool clawOpen = false;
 
+// #endregion
 
+
+// #region Claw-specific functions
 
 // Start rotating the claw to the open position
 void OpenClaw() {
@@ -30,7 +35,10 @@ void ToggleClaw() {
     else CloseClaw();
 }
 
+// #endregion
 
+
+// #region Subsystem template functions
 
 // Initialize claw at the start of the program
 void InitClaw() {
@@ -51,3 +59,5 @@ void UserInitClaw() {
 void TickClaw() {
     
 }
+
+// #endregion

@@ -4,13 +4,18 @@
 
 using namespace vex;
 
+// #region Quick settings
+
 // Where the clawPivot tries to rotate to when picking up a ring
 const double groundPositionDegrees = -876.0;
 
 // Where the clawPivot tries to rotate to when depositing a ring onto a high wall stake
 const double wallStakePositionDegrees = -1034.0;
 
+// #endregion
 
+
+// #region ClawPivot-specific functions
 
 // Move claw into a known location and reset the encoder
 void ResetClawPivot() {
@@ -33,9 +38,15 @@ void ResetClawPivot() {
 
     // Reset stopping, speed, and torque to normal
     InitClawPivot();
+
+    // Vibrate controller to signify that the reset process finished and motors can be controlled again
+    PrimaryController.rumble(".");
 }
 
+// #endregion
 
+
+// #region Subsystem template functions
 
 // Initialize claw pivot at the start of the program
 void InitClawPivot() {
@@ -64,3 +75,5 @@ void UserInitClawPivot() {
 void TickClawPivot() {
     
 }
+
+// #endregion

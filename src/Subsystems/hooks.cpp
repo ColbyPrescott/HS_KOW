@@ -7,11 +7,10 @@
 
 using namespace vex;
 
-
 // #region Quick settings
 
 // Speed for the hook motor
-const double hookRPM = 200;
+const double hookRPM = 150;
 
 // How long to pause the intake at the depositRing position. 
 // This gives more time for the ring to fall onto the stake
@@ -39,7 +38,7 @@ bool storingRing = false;
 // #endregion
 
 
-// #region Special hook functions
+// #region Hook-specific functions
 
 // Rotate hooks to position, temporarily reversing direction if it gets stuck
 void HooksSpinForwardTo(double targetDegrees) {
