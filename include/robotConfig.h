@@ -16,11 +16,11 @@ extern vex::motor rightWheelsPrimary;
 extern vex::motor rightWheelsSecondary;
 extern vex::motor_group rightWheels;
 
-extern vex::motor leftLift;
-extern vex::motor rightLift;
-extern vex::motor_group lift;
-
+extern vex::motor leftArm;
+extern vex::motor rightArm;
+extern vex::motor_group arm;
 extern vex::motor clawPivot;
+
 extern vex::motor claw;
 
 extern vex::motor hooks;

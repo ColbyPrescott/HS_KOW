@@ -5,8 +5,7 @@
 #include "Subsystems/drivetrain.h"
 #include "Subsystems/mogoMover.h"
 #include "Subsystems/hooks.h"
-#include "Subsystems/lift.h"
-#include "Subsystems/clawPivot.h"
+#include "Subsystems/clawArm.h"
 #include "Subsystems/claw.h"
 
 #include "Autonomous/autonSequences.h"
@@ -33,8 +32,7 @@ void pre_auton(void) {
     InitDrivetrain();
     InitMogoMover();
     InitHooks();
-    InitLift();
-    InitClawPivot();
+    InitClawArm();
     InitClaw();
 
     // Start APS
@@ -56,8 +54,7 @@ void usercontrol(void) {
     UserInitDrivetrain();
     UserInitMogoMover();
     UserInitHooks();
-    UserInitLift();
-    UserInitClawPivot();
+    UserInitClawArm();
     UserInitClaw();
 
     UserInitTimeWarnings();
@@ -71,8 +68,7 @@ void usercontrol(void) {
         TickDrivetrain();
         TickMogoMover();
         TickHooks();
-        TickLift();
-        TickClawPivot();
+        TickClawArm();
         TickClaw();
         
         wait(20, msec);
