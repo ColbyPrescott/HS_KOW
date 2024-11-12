@@ -108,7 +108,7 @@ void AbsolutePositioningSystem::TickDriving() {
     
 
     // Increase / decrease voltage of one side to help correct drifting caused by drivetrain friction or center of mass
-    double rightWheelsVoltageBias = forwardInput >= 0 ? -0.03 : 0.03; // TODO This runs even if there's no input, causing the right side to lock up when controls stop
+    double rightWheelsVoltageBias = forwardInput >= 0 ? -0.025 : 0.025; // TODO This runs even if there's no input, causing the right side to lock up when controls stop
 
     // Set motor velocities
     leftWheels.spin(vex::forward, fmin(fmax((forwardInput + rightwardInput) * 12, -12), 12), vex::volt);
