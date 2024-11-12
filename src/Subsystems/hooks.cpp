@@ -21,11 +21,12 @@ const double depositPauseMilliseconds = 1000;
 // Motor encoder values where hooks will be in the reset position
 const std::vector<double> hookPositions = {
     0,
-    951, // TODO Add hooks
+    928,
+    1748
 };
 
 // Encoder position where the reset hook will make a full loop back to the reset position
-const double hookResetPosition = 5040.2; // TODO Remeasure
+const double hookResetPosition = 2610.72;
 
 // #endregion
 
@@ -102,7 +103,7 @@ void TriggerAutoHooks() {
     }
     
     // A ring is not stored. If the mogo is ready, pick up and deposit a ring
-    if(mogoMover.value() == 0) {
+    if(mogoMover.value() == 1) {
         MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::depositRingOnMogo);
         wait(depositPauseMilliseconds, msec);
         MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::waitForRing);
