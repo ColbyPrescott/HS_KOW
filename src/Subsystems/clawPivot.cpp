@@ -8,9 +8,13 @@ using namespace vex;
 
 // Where the clawPivot tries to rotate to when picking up a ring
 const double groundPositionDegrees = -876.0;
-
 // Where the clawPivot tries to rotate to when depositing a ring onto a high wall stake
 const double wallStakePositionDegrees = -1034.0;
+// Speed of the clawPivot as it moves with the lift
+const double moveWithLiftRPM = 26;
+
+// Speed of the clawPivot as it's moved with manual controls
+const double manualRPM = 60;
 
 // #endregion
 
@@ -55,22 +59,19 @@ void InitClawPivot() {
 
     // Use all possible force to lift the ring
     clawPivot.setMaxTorque(100, percent);
-
-    // Rotate at a speed where the clawPivot goes from ground to wallStakePositionDegrees in slightly less time than it takes the lift to travel
-    clawPivot.setVelocity(13, percent);
 }
 
 // Initialize claw pivot at the start of driver control
 void UserInitClawPivot() {
     // Controls linked with lift
-    PrimaryController.ButtonL1.pressed([](){clawPivot.spinToPosition(wallStakePositionDegrees, degrees, false);});
-    PrimaryController.ButtonL2.pressed([](){clawPivot.spinToPosition(groundPositionDegrees, degrees, false);});
+    PrimaryController.ButtonL1.pressed([](){clawPivot.setVelocity(moveWithLiftRPM, rpm); clawPivot.spinToPosition(wallStakePositionDegrees, degrees, false);});
+    PrimaryController.ButtonL2.pressed([](){clawPivot.setVelocity(moveWithLiftRPM, rpm); clawPivot.spinToPosition(groundPositionDegrees, degrees, false);});
     PrimaryController.ButtonL1.released([](){clawPivot.stop();});
     PrimaryController.ButtonL2.released([](){clawPivot.stop();});
 
     // Manual controls
-    PrimaryController.ButtonR1.pressed([](){clawPivot.spin(forward);});
-    PrimaryController.ButtonR2.pressed([](){clawPivot.spin(reverse);});
+    PrimaryController.ButtonR1.pressed([](){clawPivot.setVelocity(manualRPM, rpm); clawPivot.spin(forward);});
+    PrimaryController.ButtonR2.pressed([](){clawPivot.setVelocity(manualRPM, rpm); clawPivot.spin(reverse);});
     PrimaryController.ButtonR1.released([](){clawPivot.stop();});
     PrimaryController.ButtonR2.released([](){clawPivot.stop();});
 
