@@ -7,6 +7,7 @@ using namespace vex;
 
 // Set up events to vibrate the controller and show other indicators at specific times throughout a match
 void UserInitTimeWarnings() {
+    return; // DEBUG
     // Set up indicators for a normal 1:45 driver control match
     if(selectedAutonSequence != AutonSkills) {
         // Rumble controller in the last 20 seconds of a competition match (Multiple packets because packets have a size limit and are sometimes missed)

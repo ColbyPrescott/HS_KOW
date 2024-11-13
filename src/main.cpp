@@ -71,7 +71,7 @@ void usercontrol(void) {
         TickClawArm();
         TickClaw();
         
-        wait(20, msec);
+        wait(200, msec);
     }
 }
 
