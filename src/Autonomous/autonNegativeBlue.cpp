@@ -4,7 +4,7 @@
 
 using namespace vex;
 
-void AutonTopBlue() {
+void AutonNegativeBlue() {
     // aps.SetPosition(MirrorX(14), 96);
     // aps.SetRotation(DegreesToRadians(270));
     // intake.spinToPosition(600, degrees, false);

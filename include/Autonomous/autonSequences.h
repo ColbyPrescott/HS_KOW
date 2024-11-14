@@ -1,8 +1,8 @@
 #ifndef AUTONOMOUS_SEQUENCES_H
 #define AUTONOMOUS_SEQUENCES_H
 
-void AutonTopRed();
-void AutonTopBlue();
+void AutonNegativeRed();
+void AutonNegativeBlue();
 void AutonPositiveRed();
 void AutonPositiveBlue();
 

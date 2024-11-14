@@ -24,11 +24,11 @@
 
 21: 
 
-A: Mogo mover
+A: 
 B: 
 C: 
 D: 
 E: 
 F: 
 G: 
-H: 
+H: Mogo mover

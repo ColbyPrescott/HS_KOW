@@ -40,7 +40,7 @@ motor hooks = motor(PORT16, ratio18_1, false);
 
 
 // Pneumatics
-pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.A);
+pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.H);
 
 
 // Sensors

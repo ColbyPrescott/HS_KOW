@@ -118,10 +118,10 @@ void UserInitClawArm() {
     });
 
     // Manual controls
-    PrimaryController.ButtonR1.pressed([](){clawPivot.setVelocity(clawPivotManualRPM, rpm); clawPivot.spin(forward);});
-    PrimaryController.ButtonR2.pressed([](){clawPivot.setVelocity(clawPivotManualRPM, rpm); clawPivot.spin(reverse);});
-    PrimaryController.ButtonR1.released([](){clawPivot.stop();});
-    PrimaryController.ButtonR2.released([](){clawPivot.stop();});
+    // PrimaryController.ButtonR1.pressed([](){clawPivot.setVelocity(clawPivotManualRPM, rpm); clawPivot.spin(forward);});
+    // PrimaryController.ButtonR2.pressed([](){clawPivot.setVelocity(clawPivotManualRPM, rpm); clawPivot.spin(reverse);});
+    // PrimaryController.ButtonR1.released([](){clawPivot.stop();});
+    // PrimaryController.ButtonR2.released([](){clawPivot.stop();});
 
     // Other controls
     PrimaryController.ButtonA.released(ResetClawArm);

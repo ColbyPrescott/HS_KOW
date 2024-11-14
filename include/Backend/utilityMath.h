@@ -4,6 +4,8 @@
 #include <math.h>
 #include <cmath>
 
+#define tiles 24
+
 // fmod but negative numbers will wrap around to positive range
 inline double FixedFMod(double a, double b) {
     return fmod(a + b * std::fabs(floor(a / b)), b);
