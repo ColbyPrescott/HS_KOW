@@ -10,7 +10,8 @@ using namespace vex;
 // #region Quick settings
 
 // Speed for the hook motor
-const double hookRPM = 150;
+const double hookMainRPM = 150;
+const double hookFloorRPM = 100;
 
 // How long to pause the intake at the depositRing position. 
 // This gives more time for the ring to fall onto the stake
@@ -95,6 +96,7 @@ void MoveClosestHookToWaypoint(HWPs hook, HWPs waypoint) {
 void TriggerAutoHooks() {
     // If a ring is currently stored, deposit it, then wait for next ring
     if(storingRing) {
+        hooks.setVelocity(hookMainRPM, rpm);
         MoveClosestHookToWaypoint(HWPs::waitForMogo, HWPs::depositRingOnMogo);
         wait(depositPauseMilliseconds, msec);
         storingRing = false;
@@ -103,13 +105,19 @@ void TriggerAutoHooks() {
     }
     
     // A ring is not stored. If the mogo is ready, pick up and deposit a ring
-    if(mogoMover.value() == 1) {
-        MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::depositRingOnMogo);
+    if(mogoMover.value() == 0) {
+        hooks.setVelocity(hookFloorRPM, rpm);
+        MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::grabbedRing);
+        hooks.setVelocity(hookMainRPM, rpm);
+        MoveClosestHookToWaypoint(HWPs::grabbedRing, HWPs::depositRingOnMogo);
         wait(depositPauseMilliseconds, msec);
         MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::waitForRing);
     // A ring is not stored, nor is the mogo ready. Pick up and store a ring
     } else { 
-        MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::waitForMogo);
+        hooks.setVelocity(hookFloorRPM, rpm);
+        MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::grabbedRing);
+        hooks.setVelocity(hookMainRPM, rpm);
+        MoveClosestHookToWaypoint(HWPs::grabbedRing, HWPs::waitForMogo);
         storingRing = true;
     }
 }
@@ -122,7 +130,7 @@ void TriggerAutoHooks() {
 // Initialize hooks at the start of the program
 void InitHooks() {
     // Set motor speeds
-    hooks.setVelocity(hookRPM, rpm);
+    hooks.setVelocity(hookMainRPM, rpm);
 
     // Set motor brakings
     hooks.setStopping(brake);
@@ -133,9 +141,9 @@ void UserInitHooks() {
     // Controls
     PrimaryController.ButtonRight.pressed(TriggerAutoHooks);
 
-    PrimaryController.ButtonUp.pressed([](){hooks.spin(forward);});
+    PrimaryController.ButtonUp.pressed([](){hooks.setVelocity(hookMainRPM, rpm); hooks.spin(forward);});
     PrimaryController.ButtonUp.released([](){hooks.stop();});
-    PrimaryController.ButtonLeft.pressed([](){hooks.spin(reverse);});
+    PrimaryController.ButtonLeft.pressed([](){hooks.setVelocity(hookMainRPM, rpm); hooks.spin(reverse);});
     PrimaryController.ButtonLeft.released([](){hooks.stop();});
 }
 

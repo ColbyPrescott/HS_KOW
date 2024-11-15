@@ -3,6 +3,7 @@
 
 // List of motor encoder values where the reset hook is at significant positions
 enum class HookWaypointPositions {
+    grabbedRing = 360, // Reset hook went around the first gear and is ready to speed up
     waitForMogo = 800, // Reset hook is at a position to store the ring, waiting to deposit it onto a mogo
     depositRingOnMogo = 1379, // Reset hook went around the top of the hook mechanism and is now completely horizontal
     waitForRing = 2309  // Reset hook is a little above the tiles, almost about to pick up a ring

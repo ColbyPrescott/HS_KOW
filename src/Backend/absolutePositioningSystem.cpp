@@ -122,12 +122,18 @@ void AbsolutePositioningSystem::TickDriving() {
 
 // Manually set the absolute position in inches
 void AbsolutePositioningSystem::SetPosition(double x, double y) {
+    // Mirror if enabled
+    if(mMirrorPath) x = MirrorX(x);
+
     mX = x;
     mY = y;
 }
 
 // Manually set the absolute angle in radians
 void AbsolutePositioningSystem::SetRotation(double rotation) {
+    // Mirror if enabled
+    if(mMirrorPath) rotation = MirrorHeading(rotation);
+    
     mRotation = rotation;
     mInertialSensors->SetRotation(rotation);
 }
