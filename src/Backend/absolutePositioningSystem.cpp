@@ -35,11 +35,6 @@ void AbsolutePositioningSystem::TickDriving() {
 
     // Get a copy of the point to drive to
     PathPoint targetPoint = mPath.front();
-    // Mirror if enabled
-    if(mMirrorPath) {
-        targetPoint.x = MirrorX(targetPoint.x);
-        if(targetPoint.targetHeading != PathPoint::noTargetHeading) targetPoint.targetHeading = MirrorHeading(targetPoint.targetHeading);
-    }
     // Transform to local position
     targetPoint.x -= GetX();
     targetPoint.y -= GetY();
@@ -172,12 +167,19 @@ void AbsolutePositioningSystem::SetMirrored(bool mirrored) {
 
 // Add a point to the drive path
 void AbsolutePositioningSystem::AddPathPoint(PathPoint pathPoint) {
+    // Mirror if enabled
+    if(mMirrorPath) {
+        pathPoint.x = MirrorX(pathPoint.x);
+        if(pathPoint.targetHeading != PathPoint::noTargetHeading) pathPoint.targetHeading = MirrorHeading(pathPoint.targetHeading);
+    }
+
+    // Add pathPoint to the buffered path
     mPath.push_back(pathPoint);
 }
 
 // Add a point to the drive path
 void AbsolutePositioningSystem::AddPathPoint(double xInches, double yInches, bool driveBackwards, double maxDriveSpeed, double maxTurnSpeed, double distanceThreshold, double targetHeading) {
-    mPath.push_back(PathPoint(xInches, yInches, driveBackwards, maxDriveSpeed, maxTurnSpeed, distanceThreshold, targetHeading));
+    AddPathPoint(PathPoint(xInches, yInches, driveBackwards, maxDriveSpeed, maxTurnSpeed, distanceThreshold, targetHeading));
 }
 
 // Wait until the buffered path has been driven
