@@ -42,7 +42,7 @@ void AutonNegativeRed() {
     task([](){TriggerAutoHooks(); return 0;});
     wait(3.5, seconds);
 
-
+    // Running out of time!! Just drive to the ladder for now and hope that the other robot can get the last ring
 
     // Drive to touch ladder
     aps.AddPathPoint(2.5*tiles, 3.5*tiles, true, 0.5, 0.5, 2);

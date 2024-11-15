@@ -1,7 +1,7 @@
 L1: Lift and clawPivot up
 L2: Lift and clawPivot down
-R1: Manual claw pivot up
-R2: Manual claw pivot down
+R1: 
+R2: 
 
 Up: Manual hooks forward
 Down: 

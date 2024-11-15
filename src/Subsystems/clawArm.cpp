@@ -45,11 +45,9 @@ void MoveClawArmToExtensionSegment(ClawArmExtensionSegment target) {
     // Spin by revolutions to move / minutes to move so that motors will land at their targets after x minutes
     arm.spinToPosition(target.armPositionDegrees, degrees, armRevolutionsToMove / minutesToMove, rpm, false);
     clawPivot.spinToPosition(target.clawPivotPositionDegrees, degrees, clawPivotRevolutionsToMove / minutesToMove, rpm, false);
-
-    // printf("%.0f, Moving to %.0f, armRevs: %.1f, clawPivot: %.1f, mins: %.2f\n", clawArmExtendedPercent, target.percent, armRevolutionsToMove, clawPivotRevolutionsToMove, minutesToMove);
 }
 
-// Move claw into a known location and reset the encoder
+// Move claw and arm into a known location and reset the encoders
 void ResetClawArm() {
     // Don't break gears or excessively bend metal
     arm.setMaxTorque(10, percent);
@@ -69,10 +67,6 @@ void ResetClawArm() {
     // Reset encoders
     arm.setPosition(0, degrees);
     clawPivot.setPosition(0, degrees);
-
-    // // Spin claw back outwards
-    // clawPivot.setVelocity(40, percent);
-    // clawPivot.spinToPosition(groundPositionDegrees, degrees, false);
 
     // Reset stopping, speed, and torque to normal
     InitClawArm();
