@@ -43,10 +43,11 @@ void AutonNegativeRed() {
     wait(3.5, seconds);
 
     // Running out of time!! Just drive to the ladder for now and hope that the other robot can get the last ring
+    // Never mind, AWP won't be possible in elimination rounds and it just bends the hooks
 
-    // Drive to touch ladder
-    aps.AddPathPoint(2.5*tiles, 3.5*tiles, true, 0.5, 0.5, 2);
-    aps.EndPath();
+    // // Drive to touch ladder
+    // aps.AddPathPoint(2.5*tiles, 3.5*tiles, true, 0.5, 0.5, 2);
+    // aps.EndPath();
 
 
 

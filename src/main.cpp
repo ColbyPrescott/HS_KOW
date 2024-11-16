@@ -43,6 +43,7 @@ void pre_auton(void) {
 void autonomous(void) {
     // Start tracking and driving with APS
     aps.StartTicking(200);
+    aps.SetMirrored(false); // DEBUG Does this fix the issue?
 
     // Call the autonomous function that was selected
     selectedAutonSequence();

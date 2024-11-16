@@ -22,12 +22,12 @@ const double depositPauseMilliseconds = 1000;
 // Motor encoder values where hooks will be in the reset position
 const std::vector<double> hookPositions = {
     0,
-    928,
-    1748
+    988,
+    1801
 };
 
 // Encoder position where the reset hook will make a full loop back to the reset position
-const double hookResetPosition = 2610.72;
+const double hookResetPosition = 2638.56;
 
 // #endregion
 
@@ -145,6 +145,11 @@ void UserInitHooks() {
     PrimaryController.ButtonUp.released([](){hooks.stop();});
     PrimaryController.ButtonLeft.pressed([](){hooks.setVelocity(hookMainRPM, rpm); hooks.spin(reverse);});
     PrimaryController.ButtonLeft.released([](){hooks.stop();});
+
+    PrimaryController.ButtonR1.pressed([](){hooks.setVelocity(hookMainRPM, rpm); hooks.spin(forward);});
+    PrimaryController.ButtonR1.released([](){hooks.stop();});
+    PrimaryController.ButtonR2.pressed([](){hooks.setVelocity(hookMainRPM, rpm); hooks.spin(reverse);});
+    PrimaryController.ButtonR2.released([](){hooks.stop();});
 }
 
 // Update hooks during driver control

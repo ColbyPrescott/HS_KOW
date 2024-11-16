@@ -32,7 +32,7 @@ motor_group rightWheels = motor_group(rightWheelsPrimary, rightWheelsSecondary);
 motor leftArm = motor(PORT1, ratio6_1, false);
 motor rightArm = motor(PORT8, ratio6_1, false);
 motor_group arm = motor_group(leftArm, rightArm);
-motor clawPivot = motor(PORT13, true);
+motor clawPivot = motor(PORT4, true);
 
 motor claw = motor(PORT18, false);
 

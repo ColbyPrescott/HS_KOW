@@ -8,7 +8,7 @@ using namespace vex;
 
 const double clawArmExtensionSpeed = 25; // Percent per second
 
-const double clawPivotManualRPM = 60;
+// const double clawPivotManualRPM = 60;
 
 // Break the extension into several different segments that move the arm and clawPivot at different speeds
 struct ClawArmExtensionSegment {
@@ -20,7 +20,7 @@ std::vector<ClawArmExtensionSegment> clawArmExtensionSegments = {
     {  0,  200,  -800},
     { 25,  200,  -381},
     { 50, 2166,  -511},
-    {100, 4325, -950}
+    {100, 4325, -1039}
 };
 
 // #endregion
@@ -120,12 +120,12 @@ void UserInitClawArm() {
     // Other controls
     PrimaryController.ButtonA.released(ResetClawArm);
 
-    // // Debug code to measure the degree positions for each extension segment
-    // PrimaryController.ButtonX.pressed([](){
-    //     arm.setStopping(coast);
-    //     clawPivot.setStopping(coast);
-    //     printf("arm: %.0f, clawPivot: %.0f\n", arm.position(degrees), clawPivot.position(degrees));
-    // });
+    // Debug code to measure the degree positions for each extension segment
+    PrimaryController.ButtonX.pressed([](){
+        arm.setStopping(coast);
+        clawPivot.setStopping(coast);
+        printf("arm: %.0f, clawPivot: %.0f\n", arm.position(degrees), clawPivot.position(degrees));
+    });
 }
 
 // Update clawArm during driver control

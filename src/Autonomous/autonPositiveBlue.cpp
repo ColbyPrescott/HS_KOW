@@ -2,8 +2,11 @@
 
 #include "Backend/utilityMath.h"
 
+#include "Autonomous/autonSequences.h"
+
 using namespace vex;
 
 void AutonPositiveBlue() {
-    // Not written
+    aps.SetMirrored(true);
+    AutonPositiveRed();
 }
