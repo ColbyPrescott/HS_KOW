@@ -1,5 +1,5 @@
-L1: Lift and clawPivot up
-L2: Lift and clawPivot down
+L1: 
+L2: 
 R1: 
 R2: 
 
@@ -11,7 +11,7 @@ Right: Auto hooks
 X: 
 B: Toggle claw
 Y: Toggle mogo mover
-A: Reset lift, clawPivot, and claw
+A: 
 
 Axis 1: Turn left & right
 Axis 2: 

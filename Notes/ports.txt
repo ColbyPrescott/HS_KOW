@@ -1,12 +1,12 @@
-1: Left lift
+1: 
 2: 
 3: Inertial sensor A (upright)
-4: Claw pivot
+4: 
 5: Right wheels primary
 
 6: Inertial sensor B (upside down)
 7: BROKEN
-8: Right lift
+8: 
 9: Right wheels secondary
 10: BROKEN
 
