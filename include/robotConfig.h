@@ -16,11 +16,18 @@ extern vex::motor rightWheelsPrimary;
 extern vex::motor rightWheelsSecondary;
 extern vex::motor_group rightWheels;
 
+extern vex::motor leftClawLift;
+extern vex::motor rightClawLift;
+extern vex::motor_group clawLift;
+
 extern vex::motor claw;
 
 extern vex::motor hooks;
 
 extern vex::pneumatics mogoMover;
+
+extern vex::pneumatics leftClawLiftPiston;
+extern vex::pneumatics rightClawLiftPiston;
 
 extern DualInertial dualInertial;
 

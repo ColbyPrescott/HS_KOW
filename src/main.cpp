@@ -5,6 +5,7 @@
 #include "Subsystems/drivetrain.h"
 #include "Subsystems/mogoMover.h"
 #include "Subsystems/hooks.h"
+#include "Subsystems/clawLift.h"
 #include "Subsystems/claw.h"
 
 #include "Autonomous/autonSequences.h"
@@ -18,12 +19,6 @@ using namespace vex;
 
 // Called at program start
 void pre_auton(void) {
-    // Calibrate inertial sensor
-    // dualInertial.Calibrate();
-    // while(dualInertial.GetCalibrating()) wait(0.2, seconds);
-    // wait(2.2, seconds);
-    // PrimaryController.rumble(".");
-
     InitScreens();
     ShowScreen(screens.autonSelector);
 
@@ -31,10 +26,8 @@ void pre_auton(void) {
     InitDrivetrain();
     InitMogoMover();
     InitHooks();
+    InitClawLift();
     InitClaw();
-
-    // Start APS
-    // aps.StartTicking(200);
 }
 
 // Called at start of autonomous
@@ -53,22 +46,20 @@ void usercontrol(void) {
     UserInitDrivetrain();
     UserInitMogoMover();
     UserInitHooks();
+    UserInitClawLift();
     UserInitClaw();
 
     UserInitTimeWarnings();
-
-    // PrimaryController.ButtonX.pressed([](){
-    //     printf("Lift: %d, ClawPivot: %d\n", (int)lift.position(degrees), (int)clawPivot.position(degrees));
-    // });
 
     // Update each subsystem continuously during driver control
     while(true) {
         TickDrivetrain();
         TickMogoMover();
         TickHooks();
+        TickClawLift();
         TickClaw();
         
-        wait(200, msec);
+        wait(20, msec);
     }
 }
 
@@ -80,21 +71,18 @@ int main() {
     // Run the pre-autonomous function.
     pre_auton();
 
-    // Prevent main from exiting with an infinite loop.
+    // Keep track of current screen frame number for screen related timing
     int frameNum = 0;
+    // Prevent main from exiting with an infinite loop.
     while(true) {
         frameNum++;
 
         // Draw important information to the controller screen for easy monitoring
+        // Don't call every frame so that the radio link isn't overloaded
         if(frameNum % 5 == 0) DrawControllerMonitors();
 
+        // Render the next frame on the brain's screen with KOWGUI
         gui.Tick();
-
-        // // Plot APS to screen
-        // const double scale = 0.95;
-        // Brain.Screen.setPenColor(white);
-        // Brain.Screen.drawPixel(480.0 / 2.0 + aps.GetX() * scale, 
-        //                         240.0 / 2.0 - aps.GetY() * scale);
 
         wait(20, msec);
     }
