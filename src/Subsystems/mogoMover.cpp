@@ -2,7 +2,7 @@
 
 using namespace vex;
 
-// #region MogoMover-specific functions
+#pragma region MogoMover-specific functions
 
 // Invert state of the mogo mover pneumatic piston
 void ToggleMogoMover() {
@@ -13,10 +13,9 @@ void ToggleMogoMover() {
     if(mogoMover.value() == 1) PrimaryController.rumble(".");
 }
 
-// #endregion
+#pragma endregion
 
-
-// #region Subsystem template functions
+#pragma region Subsystem template functions
 
 // Initialize mogo mover at the start of the program
 void InitMogoMover() {
@@ -38,4 +37,4 @@ void TickMogoMover() {
 
 }
 
-// #endregion
+#pragma endregion

@@ -4,7 +4,7 @@
 
 using namespace vex;
 
-// #region clawLift-specific functions
+#pragma region clawLift-specific functions
 
 // Invert the state of the clawLift pneumatic pistons
 void ToggleClawLiftPistons() {
@@ -16,10 +16,9 @@ void ToggleClawLiftPistons() {
     rightClawLiftPiston.set(newState);
 }
 
-// #endregion
+#pragma endregion
 
-
-// #region Subsystem template functions
+#pragma region Subsystem template functions
 
 // Initialize clawLift at the start of the program
 void InitClawLift() {
@@ -49,4 +48,4 @@ void TickClawLift() {
     
 }
 
-// #endregion
+#pragma endregion

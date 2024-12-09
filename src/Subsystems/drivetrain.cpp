@@ -2,7 +2,7 @@
 
 using namespace vex;
 
-// #region Quick settings
+#pragma region Quick settings
 
 // Drivetrain motor speed going forwards and backwards, 0 - 1
 const double driveSpeed = 1;
@@ -13,10 +13,9 @@ const double turnSpeed = 0.5;
 // Value that controller joystick axes must exceed to avoid being considered joystick drift, 0 - 1
 const double driftThreshold = 0.08;
 
-// #endregion
+#pragma endregion
 
-
-// #region Subsystem template functions
+#pragma region Subsystem template functions
 
 // Initialize drivetrain at the start of the program
 void InitDrivetrain() {
@@ -51,4 +50,4 @@ void TickDrivetrain() {
     rightWheels.spin(forward, fmin(fmax((forwardInput - rightwardInput + rightWheelsVoltageBias) * 12, -12), 12), volt);
 }
 
-// #endregion
+#pragma endregion

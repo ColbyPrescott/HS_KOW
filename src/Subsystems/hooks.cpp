@@ -7,7 +7,7 @@
 
 using namespace vex;
 
-// #region Quick settings
+#pragma region Quick settings
 
 // Speed for the hook motor
 const double hookMainRPM = 150;
@@ -29,18 +29,16 @@ const std::vector<double> hookPositions = {
 // Encoder position where the reset hook will make a full loop back to the reset position
 const double hookResetPosition = 2638.56;
 
-// #endregion
+#pragma endregion
 
-
-// #region Runtime variables
+#pragma region Runtime variables
 
 // Whether or not a ring is waiting to be deposited on a mogo or the claw
 bool storingRing = false;
 
-// #endregion
+#pragma endregion
 
-
-// #region Hook-specific functions
+#pragma region Hook-specific functions
 
 // Rotate hooks to position, temporarily reversing direction if it gets stuck
 void HooksSpinForwardTo(double targetDegrees) {
@@ -122,10 +120,9 @@ void TriggerAutoHooks() {
     }
 }
 
-// #endregion
+#pragma endregion
 
-
-// #region Subsystem template functions
+#pragma region Subsystem template functions
 
 // Initialize hooks at the start of the program
 void InitHooks() {
@@ -157,4 +154,4 @@ void TickHooks() {
     
 }
 
-// #endregion
+#pragma endregion
