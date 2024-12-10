@@ -33,7 +33,7 @@ motor leftClawLift = motor(PORT1, ratio36_1, true);
 motor rightClawLift = motor(PORT8, ratio36_1, false);
 motor_group clawLift = motor_group(leftClawLift, rightClawLift);
 
-motor claw = motor(PORT18, false);
+motor claw = motor(PORT18, ratio36_1, false);
 
 motor hooks = motor(PORT16, ratio18_1, false);
 

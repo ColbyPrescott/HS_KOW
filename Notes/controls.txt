@@ -1,7 +1,7 @@
 L1: Lift claw up
 L2: Lift claw down
-R1: 
-R2: 
+R1: Manual hooks forward
+R2: Manual hooks backward
 
 Up: Manual hooks forward
 Down: 
@@ -9,8 +9,8 @@ Left: Manual hooks backward
 Right: Auto hooks
 
 X: 
-B: Toggle claw
-Y: Toggle mogo mover
+B: Toggle mogo mover
+Y: Toggle claw
 A: Toggle claw lift pistons
 
 Axis 1: Turn left & right

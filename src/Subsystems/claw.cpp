@@ -16,7 +16,7 @@ void OpenClaw() {
     clawOpen = true;
     // Stop the spring from closing the claw again
     claw.setStopping(hold);
-    claw.spinToPosition(156, degrees, false);
+    claw.spinToPosition(33, degrees, false);
 }
 
 // Start rotating the claw to the closed position, grip anything that might be in the claw
@@ -50,7 +50,7 @@ void InitClaw() {
 // Initialize claw at the start of driver control
 void UserInitClaw() {
     // Controls
-    PrimaryController.ButtonB.pressed(ToggleClaw);
+    PrimaryController.ButtonY.pressed(ToggleClaw);
 }
 
 // Update claw during driver control

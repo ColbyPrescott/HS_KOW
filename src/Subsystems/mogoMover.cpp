@@ -26,7 +26,7 @@ void InitMogoMover() {
 void UserInitMogoMover() {
     // Controls
     // Toggle mogo mover state when Y is pressed
-    PrimaryController.ButtonY.pressed(ToggleMogoMover);
+    PrimaryController.ButtonB.pressed(ToggleMogoMover);
     
     // Open by default
     mogoMover.open();
