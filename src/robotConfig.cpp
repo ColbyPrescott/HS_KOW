@@ -29,8 +29,8 @@ motor rightWheelsPrimary = motor(PORT5, ratio36_1, true);
 motor rightWheelsSecondary = motor(PORT9, ratio36_1, false);
 motor_group rightWheels = motor_group(rightWheelsPrimary, rightWheelsSecondary);
 
-motor leftClawLift = motor(PORT1, ratio36_1, false);
-motor rightClawLift = motor(PORT8, ratio36_1, true);
+motor leftClawLift = motor(PORT1, ratio36_1, true);
+motor rightClawLift = motor(PORT8, ratio36_1, false);
 motor_group clawLift = motor_group(leftClawLift, rightClawLift);
 
 motor claw = motor(PORT18, false);
