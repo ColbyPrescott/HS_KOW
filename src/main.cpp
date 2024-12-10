@@ -37,7 +37,7 @@ void autonomous(void) {
     aps.SetMirrored(false); // DEBUG Does this fix the issue?
 
     // Call the autonomous function that was selected
-    selectedAutonSequence();
+    if(selectedAutonSequence != nullptr) selectedAutonSequence();
 }
 
 // Called at start of driver control

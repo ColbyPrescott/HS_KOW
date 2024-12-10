@@ -7,8 +7,10 @@ using namespace vex;
 
 // Set up events to vibrate the controller and show other indicators at specific times throughout a match
 void UserInitTimeWarnings() {
+    // Don't do anything if autonomous was not selected and the program is on for testing instead of competition
+    if(selectedAutonSequence == nullptr) return;
     // Set up indicators for a normal 1:45 driver control match
-    if(selectedAutonSequence != AutonSkills) {
+    else if(selectedAutonSequence != AutonSkills) {
         // Rumble controller in the last 20 seconds of a competition match (Multiple packets because packets have a size limit and are sometimes missed)
         Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 + 45 - 20) * 1000);
         Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 + 45 - 15) * 1000);
