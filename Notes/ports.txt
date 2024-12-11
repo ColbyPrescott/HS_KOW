@@ -1,4 +1,4 @@
-1: Left claw lift
+1: Right claw lift
 2: 
 3: Inertial sensor A (upright)
 4: 
@@ -6,7 +6,7 @@
 
 6: Inertial sensor B (upside down)
 7: BROKEN
-8: Right claw lift
+8: Left claw lift
 9: Right wheels secondary
 10: BROKEN
 

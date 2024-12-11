@@ -28,8 +28,8 @@ void InitClawLift() {
     // Raising the claw directly against gravity, use all power available
     clawLift.setMaxTorque(100, percent);
 
-    // Stop gravity from pulling the claw back down when the clawLift motors stop
-    clawLift.setStopping(hold);
+    // Preserve temperature. Lift already has enough friction to keep its place
+    clawLift.setStopping(coast);
 }
 
 // Initialize clawLift at the start of driver control
