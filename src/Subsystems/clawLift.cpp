@@ -4,6 +4,15 @@
 
 using namespace vex;
 
+#pragma region Quick settings
+
+// Default speed that the clawLift moves at
+const double clawLiftRPM = 100;
+
+const double manualRightClawLiftRPM = 30;
+
+#pragma endregion
+
 #pragma region clawLift-specific functions
 
 // Invert the state of the clawLift pneumatic pistons
@@ -23,7 +32,7 @@ void ToggleClawLiftPistons() {
 // Initialize clawLift at the start of the program
 void InitClawLift() {
     // Slow motor with slow gear needs to travel a large distance, do it as fast as possible
-    clawLift.setVelocity(100, rpm);
+    clawLift.setVelocity(clawLiftRPM, rpm);
 
     // Raising the claw directly against gravity, use all power available
     clawLift.setMaxTorque(100, percent);
@@ -45,7 +54,20 @@ void UserInitClawLift() {
 
 // Update clawLift during driver control
 void TickClawLift() {
-    
+    // Get the position of the controller axis last and this tick
+    static int prevAxisPosition = 0;
+    static int axisPosition = 0;
+    prevAxisPosition = axisPosition;
+    axisPosition = PrimaryController.Axis2.position(percent);
+
+    // Position that the axis must cross to consider 
+    const int axisThreshold = 80;
+
+    // Start or stop rightClawLift if the axis crosses a threshold
+    if(prevAxisPosition < axisThreshold && axisPosition >= axisThreshold)        {rightClawLift.setVelocity(manualRightClawLiftRPM, rpm); rightClawLift.spin(forward);}
+    else if(prevAxisPosition >= axisThreshold && axisPosition < axisThreshold)   {rightClawLift.setVelocity(clawLiftRPM, rpm);            rightClawLift.stop();}
+    else if(prevAxisPosition > -axisThreshold && axisPosition <= -axisThreshold) {rightClawLift.setVelocity(manualRightClawLiftRPM, rpm); rightClawLift.spin(reverse);}
+    else if(prevAxisPosition <= -axisThreshold && axisPosition > -axisThreshold) {rightClawLift.setVelocity(clawLiftRPM, rpm);            rightClawLift.stop();}
 }
 
 #pragma endregion
