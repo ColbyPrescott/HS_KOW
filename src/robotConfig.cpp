@@ -35,11 +35,11 @@ motor_group clawLift = motor_group(leftClawLift, rightClawLift);
 
 motor claw = motor(PORT18, ratio36_1, false);
 
-motor hooks = motor(PORT16, ratio18_1, false);
+motor hooks = motor(PORT4, ratio18_1, false);
 
 
 // Pneumatics
-pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.H);
+pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.C);
 
 pneumatics leftClawLiftPiston = pneumatics(Brain.ThreeWirePort.A);
 pneumatics rightClawLiftPiston = pneumatics(Brain.ThreeWirePort.B);

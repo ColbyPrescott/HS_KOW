@@ -1,7 +1,7 @@
 1: Right claw lift
 2: 
 3: Inertial sensor A (upright)
-4: 
+4: Hooks
 5: Right wheels primary
 
 6: Inertial sensor B (upside down)
@@ -16,7 +16,7 @@
 14: Left wheels primary
 15: BROKEN
 
-16: Hooks
+16: 
 17: 
 18: Claw
 19: 
@@ -26,9 +26,9 @@
 
 A: Left claw lift piston
 B: Right claw lift piston
-C: 
+C: Mogo mover
 D: 
 E: 
 F: 
 G: 
-H: Mogo mover
+H: 
