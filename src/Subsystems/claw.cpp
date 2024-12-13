@@ -4,7 +4,10 @@ using namespace vex;
 
 #pragma region Quick settings
 
-const double clawClosedPosition = -33;
+// Position of the claw motor encoder when the claw is closed
+const double clawClosedPosition = -26;
+
+// Position of the claw motor encoder when the claw is open
 const double clawOpenedPosition = 0;
 
 #pragma endregion
@@ -22,7 +25,7 @@ bool clawOpen = false;
 void OpenClaw() {
     clawOpen = true;
     // Stop the spring from closing the claw again
-    claw.setStopping(hold);
+    claw.setStopping(brake);
     claw.spinToPosition(clawOpenedPosition, degrees, false);
 }
 
@@ -30,7 +33,7 @@ void OpenClaw() {
 void CloseClaw() {
     clawOpen = false;
     // Don't strain the motor when it's doing nothing
-    claw.setStopping(coast);
+    claw.setStopping(hold);
     claw.spinToPosition(clawClosedPosition, degrees, false);
 }
 
