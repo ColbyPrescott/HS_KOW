@@ -5,7 +5,7 @@ using namespace vex;
 #pragma region Quick settings
 
 // Position of the claw motor encoder when the claw is closed
-const double clawClosedPosition = -26;
+const double clawClosedPosition = -68;
 
 // Position of the claw motor encoder when the claw is open
 const double clawOpenedPosition = 0;
