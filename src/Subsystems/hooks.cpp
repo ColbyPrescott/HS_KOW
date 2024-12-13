@@ -22,12 +22,14 @@ const double depositPauseMilliseconds = 1000;
 // Motor encoder values where hooks will be in the reset position
 const std::vector<double> hookPositions = {
     0,
-    988,
-    1801
+    567,
+    1134,
+    1614,
+    2183
 };
 
 // Encoder position where the reset hook will make a full loop back to the reset position
-const double hookResetPosition = 2638.56;
+const double hookResetPosition = 2639.3;
 
 #pragma endregion
 
