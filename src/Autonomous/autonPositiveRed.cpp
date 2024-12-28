@@ -5,7 +5,7 @@
 using namespace vex;
 
 void AutonPositiveRed() {
-    // 1 Set up robot in top left of field facing into west wall
+    // 1 Set up robot in bottom left of field facing into west wall
     aps.SetPosition(0, 0);
     aps.SetRotation(DegreesToRadians(0));
 

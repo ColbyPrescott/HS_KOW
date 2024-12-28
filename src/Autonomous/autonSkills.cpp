@@ -7,65 +7,73 @@
 using namespace vex;
 
 void AutonSkills() {
-    // Setup robot next to alliance stake facing away from wall
+    // 1 Setup robot next to alliance stake facing away from wall
     aps.SetPosition(8, 72);
     aps.SetRotation(DegreesToRadians(0));
     storingRing = true;
     mogoMover.open();
 
-    // Give drivetrain control to the APS
+    // 1 Give drivetrain control to the APS
     aps.SetDriving(true);
 
-    // Put preload onto alliance stake
+    // 2 Put preload onto alliance stake
     MoveClosestHookToWaypoint(HWPs::waitForMogo, HWPs::depositRingOnMogo);
-    hooks.spinFor(-600, degrees);
+    hooks.spinFor(-300, degrees);
 
-    // Drive to bottom left mogo
+    // 3 Drive to bottom left mogo
     aps.AddPathPoint(1.5*tiles, 3.5*tiles, false, 0.3, 0.3, 3);
-    aps.AddPathPoint(1*tiles, 3*tiles, true, 0.3, 0.3, 3);
-    aps.AddPathPoint(1*tiles, 2*tiles, true, 0.3, 0.3, 3);
+    aps.AddPathPoint(1*tiles, 3*tiles, true, 0.35, 0.35, 3);
+    aps.AddPathPoint(1*tiles, 2*tiles, true, 0.35, 0.35, 3);
+    aps.AddPathPoint(1*tiles, 2*tiles - 5, true, 0.35, 0.35, 3);
     aps.EndPath();
-    // Pickup mogo
+    // 3 Pickup mogo
     mogoMover.close();
 
-    // Drive to the ring in the bottom left corner
-    aps.AddPathPoint(2*tiles, 2*tiles, true, 0.3, 0.3, 3);
-    aps.AddPathPoint(1*tiles, 1*tiles, false, 0.3, 0.3, 3);
+    // 4 Drive to the ring in the bottom left corner
+    aps.AddPathPoint(2*tiles, 2*tiles, true, 0.35, 0.35, 3);
+    aps.AddPathPoint(1*tiles, 1*tiles, false, 0.35, 0.35, 3);
     aps.EndPath();
-
-    // Pick up the ring
+    // 4 Pick up the ring
     MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::depositRingOnMogo);
-    hooks.spinFor(-600, degrees);
+    hooks.spinFor(-300, degrees);
 
-    // Drive mogo into the bottom left corner
-    aps.AddPathPoint(1*tiles, 1*tiles, true, 0.3, 0.3, 10, DegreesToRadians(45));
-    aps.AddPathPoint(0.5*tiles, 0.5*tiles, true, 0.3, 0.3, 3);
+    // 5 Drive mogo into the bottom left corner
+    aps.AddPathPoint(1*tiles, 1*tiles, true, 0.35, 0.35, 10, DegreesToRadians(45));
+    aps.AddPathPoint(0.5*tiles, 0.5*tiles, true, 0.35, 0.35, 3);
     aps.EndPath();
-    // Drop mogo in the bottom left corner
+    // 5 Drop mogo in the bottom left corner
     mogoMover.open();
 
 
-    // Drive to top left mogo
-    aps.AddPathPoint(2*tiles, 1*tiles, false, 0.3, 0.3, 3);
-    aps.AddPathPoint(1*tiles, 4*tiles, true, 0.3, 0.3, 3);
+    // 6 Drive to ring in the bottom left quadrant
+    aps.AddPathPoint(2*tiles, 1*tiles, false, 0.35, 0.35, 3);
     aps.EndPath();
-    // Pickup mogo
+    // 6 Pick up the ring
+    MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::waitForMogo);
+
+    // 7 Drive to top left mogo
+    aps.AddPathPoint(1*tiles, 2*tiles, true, 0.35, 0.35, 3);
+    aps.AddPathPoint(1*tiles, 4*tiles, true, 0.35, 0.35, 3);
+    aps.EndPath();
+    // 7 Pickup mogo
     mogoMover.close();
+    // 7 Deposit stored ring onto mogo
+    MoveClosestHookToWaypoint(HWPs::waitForMogo, HWPs::depositRingOnMogo);
+    hooks.spinFor(-300, degrees);
 
-    // Drive to the ring in the top left corner
-    aps.AddPathPoint(2*tiles, 4*tiles, true, 0.3, 0.3, 3);
-    aps.AddPathPoint(1*tiles, 5*tiles, false, 0.3, 0.3, 3);
+    // 8 Drive to the ring in the top left corner
+    aps.AddPathPoint(2*tiles, 4*tiles, true, 0.35, 0.35, 3);
+    aps.AddPathPoint(1*tiles, 5*tiles, false, 0.35, 0.35, 3);
     aps.EndPath();
-
-    // Pick up the ring
+    // 8 Pick up the ring
     MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::depositRingOnMogo);
-    hooks.spinFor(-600, degrees);
+    hooks.spinFor(-300, degrees);
 
-    // Drive mogo into the top left corner
-    aps.AddPathPoint(1*tiles, 5*tiles, false, 0.3, 0.3, 10, DegreesToRadians(315));
-    aps.AddPathPoint(0.5*tiles, 5.5*tiles, true, 0.3, 0.3, 3);
+    // 9 Drive mogo into the top left corner
+    aps.AddPathPoint(1*tiles, 5*tiles, false, 0.35, 0.35, 10, DegreesToRadians(315));
+    aps.AddPathPoint(0.5*tiles, 5.5*tiles, true, 0.35, 0.35, 3);
     aps.EndPath();
-    // Drop mogo in the top left corner
+    // 9 Drop mogo in the top left corner
     mogoMover.open();
 
 }
