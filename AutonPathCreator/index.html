@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Autonomous Path Creator</title>
+        <style>
+            body {
+                margin: 0px; /* Place the canvas in the top left corner */
+                overflow: hidden; /* Don't let the fullscreen canvas create scrollbars */
+
+                background-color: black; /* Blend in with the canvas clear color */
+            }
+
+            canvas {
+                /* Create a small border to differentiate between the canvas and background */
+                outline-width: 1px;
+                outline-color: white;
+                outline-style: dashed;
+
+                /* Offset the border by 1px so that it's invisible along the minimum edge */
+                padding-right: 1px;
+                padding-bottom: 1px;
+            }
+        </style>
+    </head>
+    <body>
+        <script src="utility.js"></script>
+        <script src="theme.js"></script>
+        <script src="input.js"></script>
+        <script src="pathSection.js"></script>
+        <script src="path.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>
