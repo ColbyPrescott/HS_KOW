@@ -12,6 +12,7 @@ class Vec2 {
         }
     }
 
+    // Move this Vec2 by another Vec2
     Translate(vec) {
         this.x += vec.x;
         this.y += vec.y;
@@ -19,6 +20,7 @@ class Vec2 {
         return this;
     }
 
+    // Rotate this Vec2 counter-clockwise around (0, 0)
     Rotate(radians) {
         const cos = Math.cos(radians);
         const sin = Math.sin(radians);
@@ -31,6 +33,7 @@ class Vec2 {
         return this;
     }
 
+    // Scale the Vec2 toward or away from (0, 0) by a number or another Vec2
     Scale(a) {
         // Scale(Vec2 a)
         if(a instanceof Vec2) {

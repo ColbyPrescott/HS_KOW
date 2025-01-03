@@ -26,6 +26,8 @@ class PathSection {
         ctx.strokeStyle = theme.pathColor;
         ctx.lineWidth = theme.pathWidth;
 
+        if(this == mouse.selectedPathSection) ctx.strokeStyle = theme.selectedPathColor;
+
         ctx.beginPath();
         ctx.moveTo(this.p0.x, this.p0.y);
         for(let i = 0; i <= theme.pathQuality; i++) {
