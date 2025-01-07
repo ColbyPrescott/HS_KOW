@@ -7,28 +7,50 @@
             body {
                 margin: 0px; /* Place the canvas in the top left corner */
                 overflow: hidden; /* Don't let the fullscreen canvas create scrollbars */
-
-                background-color: black; /* Blend in with the canvas clear color */
             }
 
-            canvas {
-                /* Create a small border to differentiate between the canvas and background */
-                outline-width: 1px;
-                outline-color: white;
-                outline-style: dashed;
+            #splitPanel {
+                display: flex; /* Allow child elements to resize themselves */
+                flex-direction: row; /* Place sidePanel to the right or bottom, updated in JS */
 
-                /* Offset the border by 1px so that it's invisible along the minimum edge */
-                padding-right: 1px;
-                padding-bottom: 1px;
+                height: 100vh; /* All parent tags inherit 100% width but not height. Make sure height takes 100% of the screen */
+            }
+
+            #sidePanel {
+                background-color: darkslategray; /* Color of the panel */
+                color: white; /* Default color of text in the panel */
+
+                flex-grow: 1; /* Grow to fill all available space */
+                padding: 10px; /* Space contents away from the edges of the screen */
+            }
+
+            div.numberSetting > p {
+                display: inline; /* Keep text on the same line as the input fields */
+                padding-right: 10px /* Small amount of space between the text and the input fields */
+            }
+            div.numberSetting > input {
+                width: 7em;
             }
         </style>
     </head>
     <body>
+        <div id="splitPanel">
+            <canvas id="mainCanvas" tabindex="1"></canvas> <!-- tabindex makes it possible to target the canvas in keyboard events -->
+            <div id="sidePanel">
+                <div class="numberSetting"><p>Anchor A</p><input id="p0XInput" type="number" placeholder="X inches" onchange="OnEditUI(this);" /><input id="p0YInput" type="number" placeholder="Y inches" onchange="OnEditUI(this);" /></div>
+                <div class="numberSetting"><p>Anchor B</p><input id="p3XInput" type="number" placeholder="X inches" onchange="OnEditUI(this);" /><input id="p3YInput" type="number" placeholder="Y inches" onchange="OnEditUI(this);" /></div>
+                <br>
+                <div class="numberSetting"><p>Control A</p><input id="p1XInput" type="number" placeholder="X inches" onchange="OnEditUI(this);" /><input id="p1YInput" type="number" placeholder="Y inches" onchange="OnEditUI(this);" /></div>
+                <div class="numberSetting"><p>Control B</p><input id="p2XInput" type="number" placeholder="X inches" onchange="OnEditUI(this);" /><input id="p2YInput" type="number" placeholder="Y inches" onchange="OnEditUI(this);" /></div>
+            </div>
+        </div>
+
         <script src="utility.js"></script>
         <script src="theme.js"></script>
         <script src="input.js"></script>
         <script src="pathSection.js"></script>
         <script src="path.js"></script>
+        <script src="userInterface.js"></script>
         <script src="main.js"></script>
     </body>
 </html>

@@ -30,5 +30,6 @@ extern vex::pneumatics leftClawLiftPiston;
 extern vex::pneumatics rightClawLiftPiston;
 
 extern DualInertial dualInertial;
+extern vex::gps gpsSensor;
 
 #endif

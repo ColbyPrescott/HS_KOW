@@ -17,7 +17,7 @@
 15: BROKEN
 
 16: 
-17: 
+17: GPS sensor
 18: Claw
 19: 
 20: Left wheels secondary

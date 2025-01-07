@@ -46,4 +46,5 @@ pneumatics rightClawLiftPiston = pneumatics(Brain.ThreeWirePort.B);
 
 
 // Sensors
-DualInertial dualInertial = DualInertial(InertialIntercept(PORT3, vex::left, 18000.0 / 18099.0), InertialIntercept(PORT6, vex::left, 18000.0 / 17935.0));
+DualInertial dualInertial = DualInertial(InertialIntercept(PORT3, left, 18000.0 / 18099.0), InertialIntercept(PORT6, left, 18000.0 / 17935.0));
+gps gpsSensor = gps(PORT17, 0, 0, inches, 0, left);

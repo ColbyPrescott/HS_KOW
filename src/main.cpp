@@ -82,7 +82,12 @@ int main() {
         if(frameNum % 5 == 0) DrawControllerMonitors();
 
         // Render the next frame on the brain's screen with KOWGUI
-        gui.Tick();
+        // gui.Tick();
+
+        Brain.Screen.clearScreen();
+        Brain.Screen.printAt(40, 40, "%.1f, %.1f", gpsSensor.xPosition(inches), gpsSensor.yPosition(inches));
+        Brain.Screen.printAt(40, 70, "%d", (int)gpsSensor.heading(degrees));
+        Brain.Screen.printAt(40, 100, "%d", gpsSensor.quality());
 
         wait(20, msec);
     }

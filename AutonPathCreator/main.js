@@ -3,8 +3,7 @@ const fieldSize = new Vec2(24 * 6, 24 * 6);
 
 // Set up canvas
 // Canvas element that can be drawn on
-const canvas = document.createElement("canvas");
-document.body.appendChild(canvas);
+const canvas = document.getElementById("mainCanvas");
 // The rendering context that contains canvas draw functions
 const ctx = canvas.getContext("2d");
 
@@ -18,9 +17,18 @@ function ResizeCanvas() {
     ctx.reset();
     ctx.scale(canvas.width / fieldSize.x, -canvas.height / fieldSize.y);
     ctx.translate(0, -fieldSize.y);
+
+    // Update whether the sidePanel is to the right or bottom of the canvas
+    document.getElementById("splitPanel").style.flexDirection = (window.innerWidth > window.innerHeight) ? "row" : "column";
 }
 window.addEventListener("resize", ResizeCanvas);
 ResizeCanvas();
+
+// Don't let the browser cache the input values beween page refreshes
+ClearUI();
+
+// Setup different inputs to trigger their functions
+input.InitEventListeners();
 
 
 

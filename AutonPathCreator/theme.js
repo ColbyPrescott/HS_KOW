@@ -13,5 +13,7 @@ const theme = {
     controlPointRadius: 1.25,
 
     controlLineColor: "#fcaf5880", // Transparent orange
-    controlLineWidth: 0.25
+    controlLineWidth: 0.25,
+
+    uiDecimals: 2,
 };
