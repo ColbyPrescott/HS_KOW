@@ -1,7 +1,7 @@
 // Normal: https://coolors.co/46bbd8-ffffff-f9c784-fcaf58-ff8c42
 
 const theme = {
-    pathColor: "#ffffff", // White
+    pathColor: "#000000", // White
     selectedPathColor: "#46BBD8", // Blue
     pathWidth: 0.75,
     pathQuality: 30,

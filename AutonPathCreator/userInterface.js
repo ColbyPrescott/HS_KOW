@@ -1,12 +1,14 @@
 // Get the dynamic DOM elements
 const domElements = {
+    fieldSelect: document.getElementById("fieldSelect"),
+
+    p3XInput: document.getElementById("p3XInput"),
     p0XInput: document.getElementById("p0XInput"),
     p0YInput: document.getElementById("p0YInput"),
     p1XInput: document.getElementById("p1XInput"),
     p1YInput: document.getElementById("p1YInput"),
     p2XInput: document.getElementById("p2XInput"),
     p2YInput: document.getElementById("p2YInput"),
-    p3XInput: document.getElementById("p3XInput"),
     p3YInput: document.getElementById("p3YInput")
 };
 
@@ -49,4 +51,7 @@ function OnEditUI(element) {
     else if(element == domElements.p1XInput || element == domElements.p1YInput) input.MoveSelectedP1(new Vec2(parseFloat(domElements.p1XInput.value), parseFloat(domElements.p1YInput.value)));
     else if(element == domElements.p2XInput || element == domElements.p2YInput) input.MoveSelectedP2(new Vec2(parseFloat(domElements.p2XInput.value), parseFloat(domElements.p2YInput.value)));
     else if(element == domElements.p3XInput || element == domElements.p3YInput) input.MoveSelectedP3(new Vec2(parseFloat(domElements.p3XInput.value), parseFloat(domElements.p3YInput.value)));
+
+    // Since other points were moved as well, update the entire UI
+    UpdateUI();
 }

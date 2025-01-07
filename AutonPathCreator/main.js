@@ -44,9 +44,8 @@ function Frame() {
     // Schedule Frame() to be run again
     window.requestAnimationFrame(Frame);
 
-    // Clear the background, stopping frames from being rendered on top of each other
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Draw the field as the image that stops frames from drawing on top of each other
+    ctx.drawImage(document.getElementById(domElements.fieldSelect.value), 0, 0, fieldSize.x, fieldSize.y);
 
     path.Draw();
 }
