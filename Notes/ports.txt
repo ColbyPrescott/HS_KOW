@@ -1,31 +1,31 @@
 1: 
-2: 
-3: Inertial sensor A (upright)
-4: Hooks
+2: WEIRD (maybe)
+3: Hooks
+4: 
 5: Right wheels primary
 
-6: Inertial sensor B (upside down)
+6: Right winch
 7: BROKEN
-8: 
+8: Left winch
 9: Right wheels secondary
 10: BROKEN
 
 11: WEIRD
-12: 
+12: Inertial sensor A (upright)
 13: 
 14: Left wheels primary
 15: BROKEN
 
 16: 
 17: GPS sensor
-18: Claw
+18: Neutral flip
 19: 
 20: Left wheels secondary
 
 21: 
 
-A: 
-B: 
+A: Left elevation piston
+B: Right elevation piston
 C: Mogo mover
 D: 
 E: 

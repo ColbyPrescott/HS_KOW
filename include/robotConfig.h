@@ -18,6 +18,15 @@ extern vex::motor_group rightWheels;
 
 extern vex::motor hooks;
 
+extern vex::motor neutralFlip;
+
+extern vex::motor leftWinch;
+extern vex::motor rightWinch;
+extern vex::motor_group winch;
+
+extern vex::pneumatics leftElevationPiston;
+extern vex::pneumatics rightElevationPiston;
+
 extern vex::pneumatics mogoMover;
 
 extern DualInertial dualInertial;

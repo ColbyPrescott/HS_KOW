@@ -29,16 +29,22 @@ motor rightWheelsPrimary = motor(PORT5, ratio36_1, true);
 motor rightWheelsSecondary = motor(PORT9, ratio36_1, false);
 motor_group rightWheels = motor_group(rightWheelsPrimary, rightWheelsSecondary);
 
-motor hooks = motor(PORT4, ratio18_1, false);
+motor hooks = motor(PORT3, ratio18_1, false);
+
+motor neutralFlip = motor(PORT18, ratio18_1, false);
+
+motor leftWinch = motor(PORT8, ratio36_1, false);
+motor rightWinch = motor(PORT6, ratio36_1, false);
+motor_group winch = motor_group(leftWinch, rightWinch);
 
 
 // Pneumatics
 pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.C);
 
-pneumatics leftClawLiftPiston = pneumatics(Brain.ThreeWirePort.A);
-pneumatics rightClawLiftPiston = pneumatics(Brain.ThreeWirePort.B);
+pneumatics leftElevationPiston = pneumatics(Brain.ThreeWirePort.A);
+pneumatics rightElevationPiston = pneumatics(Brain.ThreeWirePort.B);
 
 
 // Sensors
-DualInertial dualInertial = DualInertial(InertialIntercept(PORT3, left, 18000.0 / 18099.0), InertialIntercept(PORT6, left, 18000.0 / 17935.0));
+DualInertial dualInertial = DualInertial(InertialIntercept(PORT12, left, 18000.0 / 18099.0), InertialIntercept(PORT6, left, 18000.0 / 17935.0));
 gps gpsSensor = gps(PORT17, 0, 0, inches, 0, left);
