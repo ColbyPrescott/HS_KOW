@@ -35,7 +35,7 @@ const double hookResetPosition = 2639.3;
 
 #pragma region Runtime variables
 
-// Whether or not a ring is waiting to be deposited on a mogo or the claw
+// Whether or not a ring is waiting to be deposited on a mogo
 bool storingRing = false;
 
 #pragma endregion

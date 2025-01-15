@@ -5,8 +5,6 @@
 #include "Subsystems/drivetrain.h"
 #include "Subsystems/mogoMover.h"
 #include "Subsystems/hooks.h"
-#include "Subsystems/clawLift.h"
-#include "Subsystems/claw.h"
 
 #include "Autonomous/autonSequences.h"
 
@@ -26,8 +24,6 @@ void pre_auton(void) {
     InitDrivetrain();
     InitMogoMover();
     InitHooks();
-    InitClawLift();
-    InitClaw();
 }
 
 // Called at start of autonomous
@@ -46,8 +42,6 @@ void usercontrol(void) {
     UserInitDrivetrain();
     UserInitMogoMover();
     UserInitHooks();
-    UserInitClawLift();
-    UserInitClaw();
 
     UserInitTimeWarnings();
 
@@ -56,8 +50,6 @@ void usercontrol(void) {
         TickDrivetrain();
         TickMogoMover();
         TickHooks();
-        TickClawLift();
-        TickClaw();
         
         wait(20, msec);
     }

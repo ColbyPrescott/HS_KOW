@@ -3,7 +3,6 @@
 #include "Backend/utilityMath.h"
 
 #include "Subsystems/hooks.h"
-#include "Subsystems/claw.h"
 
 using namespace vex;
 
