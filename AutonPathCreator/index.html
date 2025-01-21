@@ -26,6 +26,9 @@
 
                 flex-grow: 1; /* Grow to fill all available space */
                 padding: 10px; /* Space contents away from the edges of the screen */
+
+                display: flex;
+                flex-direction: column;
             }
 
             div.numberSetting > p {
@@ -35,23 +38,45 @@
             div.numberSetting > input {
                 width: 7em;
             }
+
+            #inOutDiv {
+                flex-grow: 1; /* Take up all remaining height in the sidePanel */
+
+                display: flex; /* Dynamically resize the child textareas */
+                flex-direction: row; /* Place the child textareas next to each other */
+            }
+
+            #inOutDiv > textarea {
+                flex-grow: 1; /* Expand to equally fit as much width as possible */
+                width: 0px; /* For some reason, this works instead of min-width to set the minimum width */
+
+                font-size: 8px; /* Make the text very small so more of the data can fit on screen */
+                
+                resize: none; /* Don't let the user resize the textarea, it has some odd behavior */
+            }
         </style>
     </head>
     <body>
         <div id="splitPanel">
             <canvas id="mainCanvas" tabindex="1"></canvas> <!-- tabindex makes it possible to target the canvas in keyboard events -->
             <div id="sidePanel">
-                <label>Field: </label>
-                <select id="fieldSelect">
-                    <option value="matchFieldImg">Match</option>
-                    <option value="skillsFieldImg">Skills</option>
-                </select>
-                <br /><br />
-                <div class="numberSetting"><p>Anchor A</p><input id="p0XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p0YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
-                <div class="numberSetting"><p>Anchor B</p><input id="p3XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p3YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
-                <br />
-                <div class="numberSetting"><p>Control A</p><input id="p1XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p1YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
-                <div class="numberSetting"><p>Control B</p><input id="p2XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p2YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
+                <div>
+                    <label>Field: </label>
+                    <select id="fieldSelect">
+                        <option value="matchFieldImg">Match</option>
+                        <option value="skillsFieldImg">Skills</option>
+                    </select>
+                    <br /><br />
+                    <div class="numberSetting"><p>Anchor A</p><input id="p0XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p0YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
+                    <div class="numberSetting"><p>Anchor B</p><input id="p3XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p3YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
+                    <br />
+                    <div class="numberSetting"><p>Control A</p><input id="p1XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p1YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
+                    <div class="numberSetting"><p>Control B</p><input id="p2XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p2YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
+                </div>
+                <div id="inOutDiv">
+                    <textarea id="jsonTextarea" placeholder="Paste JSON data here" onchange="OnEditUI(this);"></textarea>
+                    <textarea id="cppTextarea" placeholder="Copy C++ code here" onchange="OnEditUI(this);"></textarea>
+                </div>
             </div>
         </div>
 

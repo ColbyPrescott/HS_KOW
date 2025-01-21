@@ -1,13 +1,13 @@
 class PathSection {
-    constructor() {
+    constructor(p0, p1, p2, p3) {
         // First anchor point of the cubic bezier curve
-        this.p0 = new Vec2(0, 0);
+        this.p0 = p0 || new Vec2(0, 0);
         // First control point of the cubic bezier curve
-        this.p1 = new Vec2(24, 0);
+        this.p1 = p1 || new Vec2(24, 0);
         // Second control point of the cubic bezier curve
-        this.p2 = new Vec2(24, 24);
+        this.p2 = p2 || new Vec2(24, 24);
         // Second anchor point of the cubic bezier curve
-        this.p3 = new Vec2(0, 24);
+        this.p3 = p3 || new Vec2(0, 24);
     }
 
     // Get a point along the cubic bezier curve at percentage t

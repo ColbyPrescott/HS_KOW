@@ -25,7 +25,7 @@ window.addEventListener("resize", ResizeCanvas);
 ResizeCanvas();
 
 // Don't let the browser cache the input values beween page refreshes
-ClearUI();
+ClearAllUI();
 
 // Setup different inputs to trigger their functions
 input.InitEventListeners();

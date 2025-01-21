@@ -10,12 +10,18 @@ class Vec2 {
             this.x = a || 0;
             this.y = b || 0;
         }
+
+        this.x = RoundPrecision(this.x, theme.decimals);
+        this.y = RoundPrecision(this.y, theme.decimals);
     }
 
     // Move this Vec2 by another Vec2
     Translate(vec) {
         this.x += vec.x;
         this.y += vec.y;
+
+        this.x = RoundPrecision(this.x, theme.decimals);
+        this.y = RoundPrecision(this.y, theme.decimals);
 
         return this;
     }
@@ -29,6 +35,9 @@ class Vec2 {
 
         this.x = cos * x - sin * y;
         this.y = sin * x + cos * y;
+
+        this.x = RoundPrecision(this.x, theme.decimals);
+        this.y = RoundPrecision(this.y, theme.decimals);
         
         return this;
     }
@@ -45,6 +54,9 @@ class Vec2 {
             this.y *= a;
         }
 
+        this.x = RoundPrecision(this.x, theme.decimals);
+        this.y = RoundPrecision(this.y, theme.decimals);
+
         return this;
     }
 }
@@ -58,4 +70,9 @@ function Map(n, min1, max1, min2, max2) {
 function Lerp(a, b, t) {
     if(a instanceof Vec2) return new Vec2(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t);
     else return a + (b - a) * t;
+}
+
+// Round a number to a certain number of decimals
+function RoundPrecision(num, decimals) {
+    return Math.round(num * Math.pow(10, decimals)) / Math.pow(10, decimals);
 }

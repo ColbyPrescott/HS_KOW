@@ -2,7 +2,7 @@
 
 const theme = {
     pathColor: "#000000", // White
-    selectedPathColor: "#46BBD8", // Blue
+    selectedPathColor: "#3333ff", // Blue
     pathWidth: 0.75,
     pathQuality: 30,
 
@@ -15,5 +15,5 @@ const theme = {
     controlLineColor: "#fcaf5880", // Transparent orange
     controlLineWidth: 0.25,
 
-    uiDecimals: 2,
+    decimals: 2,
 };
