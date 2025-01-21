@@ -7,7 +7,10 @@ const theme = {
     pathQuality: 30,
 
     anchorPointColor: "#ffffff", // White
-    anchorPointRadius: 1.75,
+    anchorPointRadius: 1.5,
+
+    codePointColor: "#ff5555",
+    codePointRadius: 2,
 
     controlPointColor: "#fcaf58", // Orange
     controlPointRadius: 1.25,

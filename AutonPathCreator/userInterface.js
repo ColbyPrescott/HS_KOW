@@ -10,6 +10,7 @@ const domElements = {
     p2XInput: document.getElementById("p2XInput"),
     p2YInput: document.getElementById("p2YInput"),
     p3YInput: document.getElementById("p3YInput"),
+    codeTextarea: document.getElementById("codeTextarea"),
 
     jsonTextarea: document.getElementById("jsonTextarea"),
     cppTextarea: document.getElementById("cppTextarea")
@@ -25,6 +26,7 @@ function ClearPointUI() {
     domElements.p2YInput.value = "";
     domElements.p3XInput.value = "";
     domElements.p3YInput.value = "";
+    domElements.codeTextarea.value = "";
 }
 
 // Clear all inputs
@@ -48,6 +50,7 @@ function UpdateUI() {
         domElements.p2YInput.value = Math.round(input.selectedPathSection.p2.y * Math.pow(10, theme.decimals)) / Math.pow(10, theme.decimals);
         domElements.p3XInput.value = Math.round(input.selectedPathSection.p3.x * Math.pow(10, theme.decimals)) / Math.pow(10, theme.decimals);
         domElements.p3YInput.value = Math.round(input.selectedPathSection.p3.y * Math.pow(10, theme.decimals)) / Math.pow(10, theme.decimals);
+        domElements.codeTextarea.value = input.selectedPathSection.code;
     }
 
     // Update the JSON textarea with the latest PathSection data
@@ -61,6 +64,7 @@ function OnEditUI(element) {
         else if(element == domElements.p1XInput || element == domElements.p1YInput) input.MoveSelectedP1(new Vec2(parseFloat(domElements.p1XInput.value), parseFloat(domElements.p1YInput.value)));
         else if(element == domElements.p2XInput || element == domElements.p2YInput) input.MoveSelectedP2(new Vec2(parseFloat(domElements.p2XInput.value), parseFloat(domElements.p2YInput.value)));
         else if(element == domElements.p3XInput || element == domElements.p3YInput) input.MoveSelectedP3(new Vec2(parseFloat(domElements.p3XInput.value), parseFloat(domElements.p3YInput.value)));
+        else if(element == domElements.codeTextarea) input.selectedPathSection.code = domElements.codeTextarea.value;
     }
 
     // Convert the JSON input into PathSection objects

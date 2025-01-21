@@ -39,6 +39,12 @@
                 width: 7em;
             }
 
+            #codeTextarea {
+                width: calc(100% - 10px); /* Take up the full width of the side panel, and account for the textarea borders */
+
+                resize: vertical; /* Only let the user resize the height */
+            }
+
             #inOutDiv {
                 flex-grow: 1; /* Take up all remaining height in the sidePanel */
 
@@ -72,7 +78,10 @@
                     <br />
                     <div class="numberSetting"><p>Control A</p><input id="p1XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p1YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
                     <div class="numberSetting"><p>Control B</p><input id="p2XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p2YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
+                    <br />
+                    <textarea id="codeTextarea" placeholder="C++ code to execute after driving the PathSection" oninput="OnEditUI(this);"></textarea>
                 </div>
+                <div style="height: 10px;"></div>
                 <div id="inOutDiv">
                     <textarea id="jsonTextarea" placeholder="Paste JSON data here" onchange="OnEditUI(this);"></textarea>
                     <textarea id="cppTextarea" placeholder="Copy C++ code here" onchange="OnEditUI(this);"></textarea>

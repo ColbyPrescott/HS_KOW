@@ -1,5 +1,5 @@
 class PathSection {
-    constructor(p0, p1, p2, p3) {
+    constructor(p0, p1, p2, p3, code) {
         // First anchor point of the cubic bezier curve
         this.p0 = p0 || new Vec2(0, 0);
         // First control point of the cubic bezier curve
@@ -8,6 +8,8 @@ class PathSection {
         this.p2 = p2 || new Vec2(24, 24);
         // Second anchor point of the cubic bezier curve
         this.p3 = p3 || new Vec2(0, 24);
+        // C++ code to execute after driving the curve
+        this.code = code || "";
     }
 
     // Get a point along the cubic bezier curve at percentage t
@@ -66,11 +68,18 @@ class PathSection {
 
     DrawAnchorPoints() {
         ctx.fillStyle = theme.anchorPointColor;
-
         ctx.beginPath();
         ctx.arc(this.p0.x, this.p0.y, theme.anchorPointRadius, 0, Math.PI * 2);
         ctx.fill();
 
+        if(this.code != "") {
+            ctx.fillStyle = theme.codePointColor;
+            ctx.beginPath();
+            ctx.arc(this.p3.x, this.p3.y, theme.codePointRadius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        ctx.fillStyle = theme.anchorPointColor;
         ctx.beginPath();
         ctx.arc(this.p3.x, this.p3.y, theme.anchorPointRadius, 0, Math.PI * 2);
         ctx.fill();
