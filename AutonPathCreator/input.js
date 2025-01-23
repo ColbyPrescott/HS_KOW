@@ -172,7 +172,7 @@ const input = {
         if(event.key == "ArrowLeft") path.PrependPathSection();
         else if(event.key == "ArrowRight") path.AppendPathSection();
         else if(event.key == "ArrowDown" && this.selectedPathSection != undefined) path.SplitPathSection(this.selectedPathSection);
-        else if(event.key = "Backspace" && this.selectedPathSection != undefined) {
+        else if(event.key == "Backspace" && this.selectedPathSection != undefined) {
             path.RemovePathSectionPoint(this.selectedPathSection, this.selectedPathSectionPoint);
             this.DeselectPathSection();
         }

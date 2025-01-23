@@ -75,6 +75,9 @@ const path = {
     },
 
     RemovePathSectionPoint(targetPathSection, targetPathSectionPoint) {
+        // Don't remove anything if a control point is selected
+        if(targetPathSectionPoint == targetPathSection.p1 || targetPathSectionPoint == targetPathSection.p2) return;
+
         // Simply delete a PathSection if the path's entire beginning or end is selected
         if(targetPathSectionPoint == this.pathSections[0].p0) {
             this.pathSections.shift();

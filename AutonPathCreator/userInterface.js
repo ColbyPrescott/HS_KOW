@@ -83,6 +83,7 @@ function OnEditUI(element) {
             }
         } catch(err) {
             domElements.jsonTextarea.value = "Invalid JSON";
+            return;
         }
     }
 
