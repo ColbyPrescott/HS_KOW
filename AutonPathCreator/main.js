@@ -30,6 +30,9 @@ ClearAllUI();
 // Setup different inputs to trigger their functions
 input.InitEventListeners();
 
+// In case the controls are ever forgotten, make them easy to read in the console
+input.PrintControls();
+
 
 
 // Set up main ticking loop

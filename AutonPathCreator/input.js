@@ -20,6 +20,14 @@ const input = {
     // Whether or not the selectedPathSectionPoint is actively being moved around
     draggingSelectedPathSectionPoint: false,
 
+    DeselectPathSection() {
+        this.selectedPathSectionPoint = undefined;
+        this.selectedPathSection = undefined;
+        this.selectedPrevPathSection = undefined;
+        this.selectedNextPathSection = undefined;
+        this.draggingSelectedPathSectionPoint = false;
+    },
+
     MoveSelectedP0(newPosition) {
         // Don't move if nothing is selected
         if(this.selectedPathSection == undefined) return;
@@ -120,11 +128,7 @@ const input = {
         if(this.draggingSelectedPathSectionPoint) return;
 
         // Deselect the object that is currently held
-        this.selectedPathSectionPoint = undefined;
-        this.selectedPathSection = undefined;
-        this.selectedPrevPathSection = undefined;
-        this.selectedNextPathSection = undefined;
-        this.draggingSelectedPathSectionPoint = false;
+        this.DeselectPathSection();
 
         // Loop through every PathSection and attempt to grab something
         for(let i = 0; i < path.pathSections.length; i++) {
@@ -165,7 +169,13 @@ const input = {
     },
 
     OnKeyDown(event) {
-        if(event.key == " ") path.AddPathSection();
+        if(event.key == "ArrowLeft") path.PrependPathSection();
+        else if(event.key == "ArrowRight") path.AppendPathSection();
+        else if(event.key == "ArrowDown" && this.selectedPathSection != undefined) path.SplitPathSection(this.selectedPathSection);
+        else if(event.key = "Backspace" && this.selectedPathSection != undefined) {
+            path.RemovePathSectionPoint(this.selectedPathSection, this.selectedPathSectionPoint);
+            this.DeselectPathSection();
+        }
 
         UpdateUI();
     },
@@ -176,6 +186,16 @@ const input = {
         document.body.addEventListener("mousedown", (event) => {if(event.target == canvas) this.OnMouseDown(event)});
         document.body.addEventListener("mouseup", (event) => {if(event.target == canvas) this.OnMouseUp(event)});
         document.body.addEventListener("keydown", (event) => {if(event.target == canvas) this.OnKeyDown(event)});
+    },
+
+    PrintControls() {
+        let controls = [
+            "Left arrow: Add new path section to start of path",
+            "Right arrow: Add new path section to end of path",
+            "Down arrow: Split selected path section",
+            "Backspace: Delete selected path point"
+        ];
+        console.log(controls.join("\n"));
     }
 
 };

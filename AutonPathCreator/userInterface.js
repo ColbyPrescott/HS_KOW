@@ -77,7 +77,8 @@ function OnEditUI(element) {
                     new Vec2(jsonPathSection.p0.x, jsonPathSection.p0.y),
                     new Vec2(jsonPathSection.p1.x, jsonPathSection.p1.y),
                     new Vec2(jsonPathSection.p2.x, jsonPathSection.p2.y),
-                    new Vec2(jsonPathSection.p3.x, jsonPathSection.p3.y)
+                    new Vec2(jsonPathSection.p3.x, jsonPathSection.p3.y),
+                    jsonPathSection.code
                 ));
             }
         } catch(err) {
