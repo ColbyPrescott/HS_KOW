@@ -56,7 +56,7 @@
                 flex-grow: 1; /* Expand to equally fit as much width as possible */
                 width: 0px; /* For some reason, this works instead of min-width to set the minimum width */
 
-                font-size: 8px; /* Make the text very small so more of the data can fit on screen */
+                font-size: 7px; /* Make the text very small so more of the data can fit on screen */
                 
                 resize: none; /* Don't let the user resize the textarea, it has some odd behavior */
             }
@@ -79,11 +79,11 @@
                     <div class="numberSetting"><p>Control A</p><input id="p1XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p1YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
                     <div class="numberSetting"><p>Control B</p><input id="p2XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p2YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
                     <br />
-                    <textarea id="codeTextarea" placeholder="C++ code to execute after driving the PathSection" oninput="OnEditUI(this);"></textarea>
+                    <textarea id="codeTextarea" placeholder="C++ code to execute after driving the path section" oninput="OnEditUI(this);"></textarea>
                 </div>
                 <div style="height: 10px;"></div>
                 <div id="inOutDiv">
-                    <textarea id="jsonTextarea" placeholder="Paste JSON data here" onchange="OnEditUI(this);"></textarea>
+                    <textarea id="jsonTextarea" placeholder="Start by pasting JSON data here.&#10;&#10;Make sure to save by copying this JSON back into the file!" onchange="OnEditUI(this);"></textarea>
                     <textarea id="cppTextarea" placeholder="Copy C++ code here" onchange="OnEditUI(this);"></textarea>
                 </div>
             </div>

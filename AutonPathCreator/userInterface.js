@@ -55,6 +55,28 @@ function UpdateUI() {
 
     // Update the JSON textarea with the latest PathSection data
     jsonTextarea.value = JSON.stringify(path.pathSections);
+
+    // Generate C++ code
+    cppTextarea.value = "";
+    if(path.pathSections.length > 0) {
+        // Setup APS
+        let start = path.pathSections[0];
+        let startHeading = Math.atan2(start.p1.y - start.p0.y, start.p1.x - start.p0.x);
+        if(startHeading < 0) startHeading = Math.PI * 2 + startHeading;
+        
+        cppTextarea.value += `aps.SetPosition(${start.p0.x}, ${start.p0.y});\n`;
+        cppTextarea.value += `aps.SetRotation(${startHeading}));\n`;
+        cppTextarea.value += "aps.SetDriving(true);\n";
+
+        // Body of the autonomous sequence
+        for(let pathSection of path.pathSections) {
+            cppTextarea.value += `aps.AddPathSection(${pathSection.p0.x}, ${pathSection.p0.y}, ${pathSection.p1.x}, ${pathSection.p1.y}, ${pathSection.p2.x}, ${pathSection.p2.y}, ${pathSection.p3.x}, ${pathSection.p3.y});\n`;
+            if(pathSection.code == "") continue;
+
+            cppTextarea.value += "aps.EndPath();\n";
+            cppTextarea.value += pathSection.code + "\n";
+        }
+    }
 }
 
 function OnEditUI(element) {
