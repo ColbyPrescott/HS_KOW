@@ -21,5 +21,6 @@ const theme = {
     controlLineColor: "#fcaf5880", // Transparent orange
     controlLineWidth: 0.25,
 
-    decimals: 2, // How many decimals are used in coordinates
+    decimals: 2,
+    canvasQualityMultiplier: 3,
 };

@@ -10,8 +10,8 @@ const ctx = canvas.getContext("2d");
 // Ensure that the canvas always scales to fit the screen
 function ResizeCanvas() {
     // Update size to fill as much of the screen as possible while remaining square
-    canvas.width = Math.min(window.innerWidth, window.innerHeight);
-    canvas.height = Math.min(window.innerWidth, window.innerHeight);
+    canvas.width = Math.min(window.innerWidth, window.innerHeight) * theme.canvasQualityMultiplier;
+    canvas.height = Math.min(window.innerWidth, window.innerHeight) * theme.canvasQualityMultiplier;
 
     // Transform coordinate space so that (0, 0) is the bottom left in order to match the rest of the APS system
     ctx.reset();

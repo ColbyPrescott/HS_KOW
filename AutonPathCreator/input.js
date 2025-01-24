@@ -100,8 +100,8 @@ const input = {
         this.mouse.prevPosition = new Vec2(this.mouse.position);
         // Update mouse position, converting screen coordinates to the canvas's field coordinates
         this.mouse.position = new Vec2(
-            Map(event.clientX, 0, canvas.width, 0, fieldSize.x),
-            Map(event.clientY, 0, canvas.height, fieldSize.y, 0)
+            Map(event.clientX, 0, canvas.width / theme.canvasQualityMultiplier, 0, fieldSize.x),
+            Map(event.clientY, 0, canvas.height / theme.canvasQualityMultiplier, fieldSize.y, 0)
         );
         // Calculate the movement from prevPosition to position
         this.mouse.velocity = new Vec2(this.mouse.position).Translate(new Vec2(this.mouse.prevPosition).Scale(-1));
