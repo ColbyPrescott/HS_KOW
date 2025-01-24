@@ -48,7 +48,11 @@ function Frame() {
     window.requestAnimationFrame(Frame);
 
     // Draw the field as the image that stops frames from drawing on top of each other
-    ctx.drawImage(document.getElementById(domElements.fieldSelect.value), 0, fieldSize.y, fieldSize.x, -fieldSize.y);
+    ctx.save();
+    ctx.scale(1, -1);
+    ctx.translate(0, -fieldSize.y);
+    ctx.drawImage(document.getElementById(domElements.fieldSelect.value), 0, 0, fieldSize.x, fieldSize.y);
+    ctx.restore();
 
     path.Draw();
 }

@@ -1,5 +1,5 @@
 class PathSection {
-    constructor(p0, p1, p2, p3, code) {
+    constructor(p0, p1, p2, p3, startSpeed, endSpeed, code) {
         // First anchor point of the cubic bezier curve
         this.p0 = p0 || new Vec2(0, 0);
         // First control point of the cubic bezier curve
@@ -8,6 +8,10 @@ class PathSection {
         this.p2 = p2 || new Vec2(6, 0);
         // Second anchor point of the cubic bezier curve
         this.p3 = p3 || new Vec2(9, 0);
+        // Percent speed to target at the start of the curve
+        this.startSpeed = startSpeed || 100;
+        // Percent speed to target at the end of the curve
+        this.endSpeed = endSpeed || 100;
         // C++ code to execute after driving the curve
         this.code = code || "";
     }
@@ -25,18 +29,21 @@ class PathSection {
     }
 
     DrawCurve() {
-        ctx.strokeStyle = theme.pathColor;
         ctx.lineWidth = theme.pathWidth;
-
-        if(this == input.selectedPathSection) ctx.strokeStyle = theme.selectedPathColor;
-
-        ctx.beginPath();
-        ctx.moveTo(this.p0.x, this.p0.y);
-        for(let i = 0; i <= theme.pathQuality; i++) {
-            const point = this.GetPoint(i / theme.pathQuality);
-            ctx.lineTo(point.x, point.y);
+        
+        for(let i = 0; i < theme.pathQuality; i++) {
+            const pointA = this.GetPoint((i + 0) / theme.pathQuality);
+            const pointB = this.GetPoint((i + 1) / theme.pathQuality);
+            ctx.beginPath();
+            ctx.moveTo(pointA.x, pointA.y);
+            ctx.lineTo(pointB.x, pointB.y);
+            ctx.strokeStyle = `rgb(${
+                // Luminence calculation derived from https://stackoverflow.com/questions/596216/formula-to-determine-perceived-brightness-of-rgb-color
+                Math.max(0, Lerp(-this.startSpeed, -this.endSpeed, i / theme.pathQuality)) / 100 / 0.299 * 0.587 * 255}, ${
+                Math.max(0, Lerp(this.startSpeed, this.endSpeed, i / theme.pathQuality)) / 100 / 0.587 * 0.587 * 255}, ${
+                this == input.selectedPathSection ? 150 : 0})`;
+            ctx.stroke();
         }
-        ctx.stroke();
 
         // Draw an arrow to show direction
         ctx.strokeStyle = theme.pathArrowColor;

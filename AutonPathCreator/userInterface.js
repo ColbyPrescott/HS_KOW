@@ -10,6 +10,8 @@ const domElements = {
     p2XInput: document.getElementById("p2XInput"),
     p2YInput: document.getElementById("p2YInput"),
     p3YInput: document.getElementById("p3YInput"),
+    startSpeedInput: document.getElementById("startSpeedInput"),
+    endSpeedInput: document.getElementById("endSpeedInput"),
     codeTextarea: document.getElementById("codeTextarea"),
 
     jsonTextarea: document.getElementById("jsonTextarea"),
@@ -26,6 +28,8 @@ function ClearPointUI() {
     domElements.p2YInput.value = "";
     domElements.p3XInput.value = "";
     domElements.p3YInput.value = "";
+    domElements.startSpeedInput.value = "";
+    domElements.endSpeedInput.value = "";
     domElements.codeTextarea.value = "";
 }
 
@@ -42,14 +46,16 @@ function UpdateUI() {
         ClearPointUI();
     } else {
         // Set the text in each input field
-        domElements.p0XInput.value = Math.round(input.selectedPathSection.p0.x * Math.pow(10, theme.decimals)) / Math.pow(10, theme.decimals);
-        domElements.p0YInput.value = Math.round(input.selectedPathSection.p0.y * Math.pow(10, theme.decimals)) / Math.pow(10, theme.decimals);
-        domElements.p1XInput.value = Math.round(input.selectedPathSection.p1.x * Math.pow(10, theme.decimals)) / Math.pow(10, theme.decimals);
-        domElements.p1YInput.value = Math.round(input.selectedPathSection.p1.y * Math.pow(10, theme.decimals)) / Math.pow(10, theme.decimals);
-        domElements.p2XInput.value = Math.round(input.selectedPathSection.p2.x * Math.pow(10, theme.decimals)) / Math.pow(10, theme.decimals);
-        domElements.p2YInput.value = Math.round(input.selectedPathSection.p2.y * Math.pow(10, theme.decimals)) / Math.pow(10, theme.decimals);
-        domElements.p3XInput.value = Math.round(input.selectedPathSection.p3.x * Math.pow(10, theme.decimals)) / Math.pow(10, theme.decimals);
-        domElements.p3YInput.value = Math.round(input.selectedPathSection.p3.y * Math.pow(10, theme.decimals)) / Math.pow(10, theme.decimals);
+        domElements.p0XInput.value = input.selectedPathSection.p0.x;
+        domElements.p0YInput.value = input.selectedPathSection.p0.y;
+        domElements.p1XInput.value = input.selectedPathSection.p1.x;
+        domElements.p1YInput.value = input.selectedPathSection.p1.y;
+        domElements.p2XInput.value = input.selectedPathSection.p2.x;
+        domElements.p2YInput.value = input.selectedPathSection.p2.y;
+        domElements.p3XInput.value = input.selectedPathSection.p3.x;
+        domElements.p3YInput.value = input.selectedPathSection.p3.y;
+        domElements.startSpeedInput.value = input.selectedPathSection.startSpeed;
+        domElements.endSpeedInput.value = input.selectedPathSection.endSpeed;
         domElements.codeTextarea.value = input.selectedPathSection.code;
     }
 
@@ -70,7 +76,7 @@ function UpdateUI() {
 
         // Body of the autonomous sequence
         for(let pathSection of path.pathSections) {
-            cppTextarea.value += `aps.AddPathSection(${pathSection.p0.x}, ${pathSection.p0.y}, ${pathSection.p1.x}, ${pathSection.p1.y}, ${pathSection.p2.x}, ${pathSection.p2.y}, ${pathSection.p3.x}, ${pathSection.p3.y});\n`;
+            cppTextarea.value += `aps.AddPathSection(${pathSection.p0.x}, ${pathSection.p0.y}, ${pathSection.p1.x}, ${pathSection.p1.y}, ${pathSection.p2.x}, ${pathSection.p2.y}, ${pathSection.p3.x}, ${pathSection.p3.y}, ${pathSection.startSpeed}, ${pathSection.endSpeed});\n`;
             if(pathSection.code == "") continue;
 
             cppTextarea.value += "aps.EndPath();\n";
@@ -86,6 +92,8 @@ function OnEditUI(element) {
         else if(element == domElements.p1XInput || element == domElements.p1YInput) input.MoveSelectedP1(new Vec2(parseFloat(domElements.p1XInput.value), parseFloat(domElements.p1YInput.value)));
         else if(element == domElements.p2XInput || element == domElements.p2YInput) input.MoveSelectedP2(new Vec2(parseFloat(domElements.p2XInput.value), parseFloat(domElements.p2YInput.value)));
         else if(element == domElements.p3XInput || element == domElements.p3YInput) input.MoveSelectedP3(new Vec2(parseFloat(domElements.p3XInput.value), parseFloat(domElements.p3YInput.value)));
+        else if(element == domElements.startSpeedInput) input.selectedPathSection.startSpeed = parseFloat(domElements.startSpeedInput.value) || 0;
+        else if(element == domElements.endSpeedInput) input.selectedPathSection.endSpeed = parseFloat(domElements.endSpeedInput.value) || 0;
         else if(element == domElements.codeTextarea) input.selectedPathSection.code = domElements.codeTextarea.value;
     }
 
@@ -100,6 +108,8 @@ function OnEditUI(element) {
                     new Vec2(jsonPathSection.p1.x, jsonPathSection.p1.y),
                     new Vec2(jsonPathSection.p2.x, jsonPathSection.p2.y),
                     new Vec2(jsonPathSection.p3.x, jsonPathSection.p3.y),
+                    jsonPathSection.startSpeed,
+                    jsonPathSection.endSpeed,
                     jsonPathSection.code
                 ));
             }

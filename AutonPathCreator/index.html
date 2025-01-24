@@ -33,7 +33,7 @@
 
             div.numberSetting > p {
                 display: inline; /* Keep text on the same line as the input fields */
-                padding-right: 10px /* Small amount of space between the text and the input fields */
+                padding-right: 10px; /* Small amount of space between the text and the input fields */
             }
             div.numberSetting > input {
                 width: 7em;
@@ -78,6 +78,8 @@
                     <br />
                     <div class="numberSetting"><p>Control A</p><input id="p1XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p1YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
                     <div class="numberSetting"><p>Control B</p><input id="p2XInput" type="number" placeholder="X inches" oninput="OnEditUI(this);" /><input id="p2YInput" type="number" placeholder="Y inches" oninput="OnEditUI(this);" /></div>
+                    <br />
+                    <div class="numberSetting"><p>Speed</p><input id="startSpeedInput" type="number" placeholder="Start percentage" min="-100" max="100" oninput="OnEditUI(this);" /><input id="endSpeedInput" type="number" placeholder="End percentage" min="-100" max="100" oninput="OnEditUI(this);" /></div>
                     <br />
                     <textarea id="codeTextarea" placeholder="C++ code to execute after driving the path section" oninput="OnEditUI(this);"></textarea>
                 </div>
