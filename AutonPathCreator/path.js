@@ -25,7 +25,7 @@ const path = {
         // Transform the points to be at the end of prevPathSection
         for(let vertex of [newPathSection.p0, newPathSection.p1, newPathSection.p2, newPathSection.p3]) {
             vertex.Translate(new Vec2(newPathSection.p3).Scale(-1));
-            vertex.Rotate(Math.atan2(nextPathSection.p1.y - nextPathSection.p0.y, nextPathSection.p1.x - nextPathSection.p0.x) + Math.PI);
+            vertex.Rotate(Math.atan2(nextPathSection.p1.y - nextPathSection.p0.y, nextPathSection.p1.x - nextPathSection.p0.x));
             vertex.Translate(nextPathSection.p0);
         }
     },

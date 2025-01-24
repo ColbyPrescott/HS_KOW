@@ -4,6 +4,11 @@ const theme = {
     pathWidth: 0.75,
     pathQuality: 30,
 
+    pathArrowColor: "#000000c0", // Transparent black
+    pathArrowSize: 1,
+    pathArrowWidth: 0.3,
+    pathArrowsPerSection: 1,
+
     anchorPointColor: "#ffffff", // White
     anchorPointRadius: 1.5,
 

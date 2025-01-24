@@ -37,6 +37,26 @@ class PathSection {
             ctx.lineTo(point.x, point.y);
         }
         ctx.stroke();
+
+        // Draw an arrow to show direction
+        ctx.strokeStyle = theme.pathArrowColor;
+        ctx.lineWidth = theme.pathArrowWidth;
+
+        for(let i = 0; i < theme.pathArrowsPerSection; i++) {
+            let pathPercent = 1 / (theme.pathArrowsPerSection + 1) * (i + 1);
+            let arrowPoint = this.GetPoint(pathPercent);
+            let arrowPointTowards = this.GetPoint(pathPercent + 0.01);
+            let arrowAngle = Math.atan2(arrowPointTowards.y - arrowPoint.y, arrowPointTowards.x - arrowPoint.x);
+            ctx.save();
+            ctx.translate(arrowPoint.x, arrowPoint.y);
+            ctx.rotate(arrowAngle);
+            ctx.beginPath();
+            ctx.moveTo(-theme.pathArrowSize, theme.pathArrowSize);
+            ctx.lineTo(0, 0);
+            ctx.lineTo(-theme.pathArrowSize, -theme.pathArrowSize);
+            ctx.stroke();
+            ctx.restore();
+        }
     }
 
     DrawControlPoints() {
