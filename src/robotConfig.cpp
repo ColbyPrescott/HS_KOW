@@ -39,10 +39,10 @@ motor_group winch = motor_group(leftWinch, rightWinch);
 
 
 // Pneumatics
-pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.C);
-
 pneumatics leftElevationPiston = pneumatics(Brain.ThreeWirePort.A);
 pneumatics rightElevationPiston = pneumatics(Brain.ThreeWirePort.B);
+
+pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.C);
 
 
 // Sensors
