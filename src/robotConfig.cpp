@@ -31,7 +31,7 @@ motor_group rightWheels = motor_group(rightWheelsPrimary, rightWheelsSecondary);
 
 motor hooks = motor(PORT3, ratio18_1, false);
 
-motor neutralFlip = motor(PORT18, ratio18_1, false);
+motor neutralFlip = motor(PORT18, ratio36_1, false);
 
 motor leftWinch = motor(PORT8, ratio36_1, false);
 motor rightWinch = motor(PORT6, ratio36_1, false);

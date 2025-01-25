@@ -2,6 +2,13 @@
 
 using namespace vex;
 
+#pragma region Quick settings
+
+// Maximum degrees that the neutral flip is allowed to extend
+const float neutralFlipExtendedPosition = 90;
+
+#pragma endregion
+
 #pragma region Runtime variables
 
 // Whether or not the neutral flip is extended outward
@@ -17,8 +24,13 @@ void ToggleNeutralFlip() {
     neutralFlipExtended = !neutralFlipExtended;
     
     // Spin to the extended or retracted position based on the new state
-    if(neutralFlipExtended) neutralFlip.spinToPosition(115, degrees, false);
-    else neutralFlip.spinToPosition(0, degrees, false);
+    if(neutralFlipExtended) {
+        neutralFlip.spinToPosition(neutralFlipExtendedPosition, degrees, false);
+        neutralFlip.setStopping(hold);
+    } else {
+        neutralFlip.spinToPosition(0, degrees, false);
+        neutralFlip.setStopping(coast);
+    }
 }
 
 #pragma endregion
