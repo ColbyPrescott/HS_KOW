@@ -1,0 +1,56 @@
+body {
+    margin: 0px; /* Place the canvas in the top left corner */
+    overflow: hidden; /* Don't let the fullscreen canvas create scrollbars */
+}
+
+.imageAsset {
+    display: none; /* Do not show the assets on the page */
+}
+
+#splitPanel {
+    display: flex; /* Allow child elements to resize themselves */
+    flex-direction: row; /* Place sidePanel to the right or bottom, updated in JS */
+
+    height: 100vh; /* All parent tags inherit 100% width but not height. Make sure height takes 100% of the screen */
+}
+
+#sidePanel {
+    background-color: darkslategray; /* Color of the panel */
+    color: white; /* Default color of text in the panel */
+
+    flex-grow: 1; /* Grow to fill all available space */
+    padding: 10px; /* Space contents away from the edges of the screen */
+
+    display: flex;
+    flex-direction: column;
+}
+
+div.numberSetting > p {
+    display: inline; /* Keep text on the same line as the input fields */
+    padding-right: 10px; /* Small amount of space between the text and the input fields */
+}
+div.numberSetting > input {
+    width: 7em;
+}
+
+#codeTextarea {
+    width: calc(100% - 10px); /* Take up the full width of the side panel, and account for the textarea borders */
+
+    resize: vertical; /* Only let the user resize the height */
+}
+
+#inOutDiv {
+    flex-grow: 1; /* Take up all remaining height in the sidePanel */
+
+    display: flex; /* Dynamically resize the child textareas */
+    flex-direction: row; /* Place the child textareas next to each other */
+}
+
+#inOutDiv > textarea {
+    flex-grow: 1; /* Expand to equally fit as much width as possible */
+    width: 0px; /* For some reason, this works instead of min-width to set the minimum width */
+
+    font-size: 7px; /* Make the text very small so more of the data can fit on screen */
+    
+    resize: none; /* Don't let the user resize the textarea, it has some odd behavior */
+}
