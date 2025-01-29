@@ -43,11 +43,11 @@ void TickDrivetrain() {
     rightwardInput *= turnSpeed;
 
     // Increase / decrease voltage of one side to help correct drifting caused by drivetrain friction or center of mass
-    double rightWheelsVoltageBias = forwardInput >= 0 ? -0.025 : 0.025; // TODO This runs even if there's no user input, causing the right side to lock up when controls stop
+    double signedRightWheelsVoltageBias = forwardInput >= 0 ? -rightWheelsVoltageBias : rightWheelsVoltageBias; // TODO This runs even if there's no user input, causing the right side to lock up when controls stop
 
     // Set motor velocities
     leftWheels.spin(forward, fmin(fmax((forwardInput + rightwardInput) * 12, -12), 12), volt);
-    rightWheels.spin(forward, fmin(fmax((forwardInput - rightwardInput + rightWheelsVoltageBias) * 12, -12), 12), volt);
+    rightWheels.spin(forward, fmin(fmax((forwardInput - rightwardInput + signedRightWheelsVoltageBias) * 12, -12), 12), volt);
 }
 
 #pragma endregion

@@ -16,6 +16,16 @@ inline double Clamp(double n, double min, double max) {
     return fmin(fmax(n, min), max);
 }
 
+// Linearly interpolate between a and b by fraction t
+inline double Lerp(double a, double b, double t) {
+    return a + (b - a) * t;
+}
+
+// Map a value from one range to another
+inline double Map(double n, double min1, double max1, double min2, double max2) {
+    return (n - min1) / (max1 - min1) * (max2 - min2) + min2;
+}
+
 // Convert degrees to radians
 inline double DegreesToRadians(double degrees) {
     return degrees * M_PI / 180.0;

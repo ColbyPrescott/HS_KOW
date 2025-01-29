@@ -5,7 +5,7 @@ using namespace vex;
 #pragma region Quick settings
 
 // Maximum degrees that the neutral flip is allowed to extend
-const float neutralFlipExtendedPosition = 90;
+const float neutralFlipExtendedPosition = 100;
 
 #pragma endregion
 

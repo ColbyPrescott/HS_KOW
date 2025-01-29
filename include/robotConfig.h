@@ -15,6 +15,7 @@ extern vex::motor_group leftWheels;
 extern vex::motor rightWheelsPrimary;
 extern vex::motor rightWheelsSecondary;
 extern vex::motor_group rightWheels;
+extern double rightWheelsVoltageBias;
 
 extern vex::motor hooks;
 

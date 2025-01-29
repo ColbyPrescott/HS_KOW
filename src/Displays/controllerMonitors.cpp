@@ -26,10 +26,14 @@ void DrawControllerMonitors() {
     // State of whether or not the mogo mover is holding a mogo
     std::string mogoMoverStatus = mogoMover.value() == 0 ? "HOLD" : "____";
 
+    // DEBUG Get the position of the robot
+    int apsX = (int)aps.GetX();
+    int apsY = (int)aps.GetY();
+
     // Draw to screen
     PrimaryController.Screen.clearScreen();
     PrimaryController.Screen.setCursor(1, 1);
     PrimaryController.Screen.print("%d--%d   %d--%d", leftWheelsPrimaryTemp, rightWheelsPrimaryTemp, leftWinchTemp, rightWinchTemp); PrimaryController.Screen.newLine();
     PrimaryController.Screen.print("%d--%d   %d", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp, neutralFlipTemp); PrimaryController.Screen.newLine();
-    PrimaryController.Screen.print("%s, %d", mogoMoverStatus.c_str(), hooksTemp);
+    PrimaryController.Screen.print("%s, %d   (%d, %d)", mogoMoverStatus.c_str(), hooksTemp, apsX, apsY);
 }

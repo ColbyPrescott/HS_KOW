@@ -7,37 +7,37 @@
 using namespace vex;
 
 void AutonNegativeRed() {
-    // 1 Set up robot in top left of field facing into west wall
-    aps.SetPosition(0.5*tiles, 4*tiles);
-    aps.SetRotation(DegreesToRadians(180));
-    storingRing = true;
+    // // 1 Set up robot in top left of field facing into west wall
+    // aps.SetPosition(0.5*tiles, 4*tiles);
+    // aps.SetRotation(DegreesToRadians(180));
+    // storingRing = true;
 
-    // 1 Give drivetrain control to the APS
-    aps.SetDriving(true);
+    // // 1 Give drivetrain control to the APS
+    // aps.SetDriving(true);
 
-    // 2 Drive over to the mogo in the top left and grab it
-    mogoMover.open();
-    aps.AddPathPoint(1.25*tiles, 4*tiles + 5, true, 0.4, 0.4, 5); // Arc to help get better angle on mogo
-    aps.AddPathPoint(2*tiles, 4*tiles, true, 0.4, 0.4, 2);
-    aps.EndPath();
-    mogoMover.close();
+    // // 2 Drive over to the mogo in the top left and grab it
+    // mogoMover.open();
+    // aps.AddPathPoint(1.25*tiles, 4*tiles + 5, true, 0.4, 0.4, 5); // Arc to help get better angle on mogo
+    // aps.AddPathPoint(2*tiles, 4*tiles, true, 0.4, 0.4, 2);
+    // aps.EndPath();
+    // mogoMover.close();
 
-    // 2 Deposit preload onto held mogo
-    // hooks.spinFor(-360, degrees, 200, rpm, true); // Move hooks back so AutoHooks detects it as the waitForMogo hook
-    task([](){TriggerAutoHooks(); return 0;});
-    wait(1, seconds);
+    // // 2 Deposit preload onto held mogo
+    // // hooks.spinFor(-360, degrees, 200, rpm, true); // Move hooks back so AutoHooks detects it as the waitForMogo hook
+    // task([](){TriggerAutoHooks(); return 0;});
+    // wait(1, seconds);
 
-    // 3 Drive into a stack of rings and pick up the lower red one onto the held mogo
-    aps.AddPathPoint(2*tiles + 3, 5*tiles + 3, false, 0.4, 0.4, 2);
-    aps.EndPath();
-    task([](){TriggerAutoHooks(); return 0;});
-    wait(3.5, seconds);
+    // // 3 Drive into a stack of rings and pick up the lower red one onto the held mogo
+    // aps.AddPathPoint(2*tiles + 3, 5*tiles + 3, false, 0.4, 0.4, 2);
+    // aps.EndPath();
+    // task([](){TriggerAutoHooks(); return 0;});
+    // wait(3.5, seconds);
 
-    // Running out of time!! Just drive to the ladder for now and hope that the other robot can get the last ring
+    // // Running out of time!! Just drive to the ladder for now and hope that the other robot can get the last ring
 
-    // Drive to touch ladder
-    aps.AddPathPoint(2.5*tiles, 3.5*tiles, true, 0.5, 0.5, 2);
-    aps.EndPath();
+    // // Drive to touch ladder
+    // aps.AddPathPoint(2.5*tiles, 3.5*tiles, true, 0.5, 0.5, 2);
+    // aps.EndPath();
 
 
 

@@ -8,31 +8,36 @@
 
 #include <vector>
 
-struct PathPoint {
-    // X coordinate in inches
-    double x;
-    // Y coordinate in inches
-    double y;
-    // Whether or not to drive backwards towards the point
-    bool driveBackwards;
-    // Maximum forwards input allowed
-    double maxDriveSpeed;
-    // Maximum turning input allowed
-    double maxTurnSpeed;
-    // How close the robot has to be in inches in order to jump to the next point
-    double distanceThreshold;
-    // Direction to face once distance threshold was reached
-    const static double noTargetHeading = -1000;
-    double targetHeading = noTargetHeading;
+struct PathSection {
+    // Four points that make up a cubic Bézier curve
+    double p0x;
+    double p0y;
+    double p1x;
+    double p1y;
+    double p2x;
+    double p2y;
+    double p3x;
+    double p3y;
 
-    PathPoint(double _x, double _y, bool _driveBackwards = false, double _maxDriveSpeed = 0.3, double _maxTurnSpeed = 0.3, double _distanceThreshold = 10, double _targetHeading = noTargetHeading) : 
-        x(_x),
-        y(_y),
-        driveBackwards(_driveBackwards),
-        maxDriveSpeed(_maxDriveSpeed),
-        maxTurnSpeed(_maxTurnSpeed),
-        distanceThreshold(_distanceThreshold),
-        targetHeading(_targetHeading) {}
+    // What percentage speed to drive at the start of the curve
+    double startSpeed;
+    // What percentage speed to drive at by the end of the curve
+    double endSpeed;
+
+    PathSection(double _p0x, double _p0y, double _p1x, double _p1y, double _p2x, double _p2y, double _p3x, double _p3y, double _startSpeed, double _endSpeed) :
+        p0x(_p0x),
+        p0y(_p0y),
+        p1x(_p1x),
+        p1y(_p1y),
+        p2x(_p2x),
+        p2y(_p2y),
+        p3x(_p3x),
+        p3y(_p3y),
+        startSpeed(_startSpeed),
+        endSpeed(_endSpeed) {}
+    
+    double GetX(double t);
+    double GetY(double t);
 };
 
 class AbsolutePositioningSystem {
@@ -50,6 +55,11 @@ class AbsolutePositioningSystem {
         vex::motor_group* mRightDrivetrainMotors;
         // Inertial sensors to use to improve tracking
         DualInertial* mInertialSensors;
+        // GPS sensor to occasionally calibrate tracking position
+        vex::gps* mGPSSensor;
+
+        // Whether or not to use values from the GPS sensor to update the position
+        bool mEnableGPS = false;
 
         // Scale to convert motor encoder rotation to inches that the wheels travel
         double mDegreesToInchesRatio = 1;
@@ -69,15 +79,18 @@ class AbsolutePositioningSystem {
         bool mMirrorPath = false;
 
         // Buffered path to follow
-        std::vector<PathPoint> mPath;
+        std::vector<PathSection> mPath;
+        // How far along the robot is on the current PathSection
+        double mPathSectionProgress = 0;
 
         void TickDriving();
 
     public:
-        AbsolutePositioningSystem(vex::motor_group* leftDrivetrainMotors, vex::motor_group* rightDrivetrainMotors, DualInertial* inertialSensors, double degreesToInchesRatio) : 
+        AbsolutePositioningSystem(vex::motor_group* leftDrivetrainMotors, vex::motor_group* rightDrivetrainMotors, DualInertial* inertialSensors, vex::gps* gpsSensor, double degreesToInchesRatio) : 
             mLeftDrivetrainMotors(leftDrivetrainMotors),
             mRightDrivetrainMotors(rightDrivetrainMotors),
             mInertialSensors(inertialSensors),
+            mGPSSensor(gpsSensor),
             mDegreesToInchesRatio(degreesToInchesRatio) {}
 
         void SetPosition(double x, double y);
@@ -92,8 +105,8 @@ class AbsolutePositioningSystem {
 
         void SetDriving(bool driving);
         void SetMirrored(bool mirrored);
-        void AddPathPoint(PathPoint pathPoint);
-        void AddPathPoint(double xInches, double yInches, bool driveBackwards = false, double maxDriveSpeed = 0.3, double maxTurnSpeed = 0.3, double distanceThreshold = 10, double targetHeading = PathPoint::noTargetHeading);
+        void AddPathSection(PathSection pathSection);
+        void AddPathSection(double p0x, double p0y, double p1x, double p1y, double p2x, double p2y, double p3x, double p3y, double startSpeed, double endSpeed);
         void EndPath();
         
 

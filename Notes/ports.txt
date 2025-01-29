@@ -11,15 +11,15 @@
 10: BROKEN
 
 11: WEIRD
-12: Inertial sensor A (upright)
+12: 
 13: 
 14: Left wheels primary
 15: BROKEN
 
-16: 
-17: GPS sensor
+16: Inertial sensor A (upright)
+17: 
 18: Neutral flip
-19: 
+19: GPS sensor
 20: Left wheels secondary
 
 21: 
