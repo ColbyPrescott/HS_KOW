@@ -54,7 +54,7 @@ const path = {
         // Insert a new PathSection into the path
         let index = this.pathSections.indexOf(targetPathSection);
         let newPathSection = new PathSection();
-        this.pathSections.splice(index + 1, 0, newPathSection);
+        this.pathSections.splice(index, 0, newPathSection);
 
         // Get key points
         let start = targetPathSection.GetPoint(0);
@@ -64,14 +64,14 @@ const path = {
         let end = targetPathSection.GetPoint(1);
 
         // Set the position of each point in the two PathSections
-        targetPathSection.p0 = new Vec2(start);
-        targetPathSection.p1 = new Vec2(firstControl);
-        targetPathSection.p2 = new Vec2(middle);
-        targetPathSection.p3 = new Vec2(middle);
-        newPathSection.p0 = new Vec2(middle);
-        newPathSection.p1 = new Vec2(middle);
-        newPathSection.p2 = new Vec2(lastControl);
-        newPathSection.p3 = new Vec2(end);
+        newPathSection.p0 = new Vec2(start);
+        newPathSection.p1 = new Vec2(firstControl);
+        newPathSection.p2 = new Vec2(middle);
+        newPathSection.p3 = new Vec2(middle);
+        targetPathSection.p0 = new Vec2(middle);
+        targetPathSection.p1 = new Vec2(middle);
+        targetPathSection.p2 = new Vec2(lastControl);
+        targetPathSection.p3 = new Vec2(end);
     },
 
     RemovePathSectionPoint(targetPathSection, targetPathSectionPoint) {
@@ -107,7 +107,7 @@ const path = {
         }
 
         // Remove a PathSection from the path
-        path.pathSections.splice(nextIndex, 1);
+        path.pathSections.splice(prevIndex, 1);
 
         // Get key points
         let start = prevPathSection.p0;
@@ -115,11 +115,11 @@ const path = {
         let lastControl = nextPathSection.p2;
         let end = nextPathSection.p3;
 
-        // Glue the end of the prevPathSection to the end of the nextPathSection
-        prevPathSection.p0 = new Vec2(start);
-        prevPathSection.p1 = new Vec2(firstControl);
-        prevPathSection.p2 = new Vec2(lastControl);
-        prevPathSection.p3 = new Vec2(end);
+        // Glue the start of the nextPathSection to the start of the prevPathSection
+        nextPathSection.p0 = new Vec2(start);
+        nextPathSection.p1 = new Vec2(firstControl);
+        nextPathSection.p2 = new Vec2(lastControl);
+        nextPathSection.p3 = new Vec2(end);
     },
 
     Draw() {

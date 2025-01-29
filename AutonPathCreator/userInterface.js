@@ -71,7 +71,7 @@ function UpdateUI() {
         if(startHeading < 0) startHeading = Math.PI * 2 + startHeading;
         
         cppTextarea.value += `aps.SetPosition(${start.p0.x}, ${start.p0.y});\n`;
-        cppTextarea.value += `aps.SetRotation(${startHeading}));\n`;
+        cppTextarea.value += `aps.SetRotation(${startHeading});\n`;
         cppTextarea.value += "aps.SetDriving(true);\n";
 
         // Body of the autonomous sequence
@@ -82,6 +82,9 @@ function UpdateUI() {
             cppTextarea.value += "aps.EndPath();\n";
             cppTextarea.value += pathSection.code + "\n";
         }
+
+        // End path if needed
+        if(path.pathSections[path.pathSections.length - 1].code == "") cppTextarea.value += "aps.EndPath();";
     }
 }
 
