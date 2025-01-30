@@ -17,7 +17,7 @@ GUI gui = GUI(Brain);
 // Other global variables
 // Push number of inches / Output degrees: 160 / 2646
 // Circumference per degree * gear ratio: (2*pi*2)/360*(60/36)
-AbsolutePositioningSystem aps = AbsolutePositioningSystem(&leftWheels, &rightWheels, &dualInertial, &gpsSensor, 160.0 / 2646.0);
+AbsolutePositioningSystem aps = AbsolutePositioningSystem(&leftWheels, &rightWheels, &dualInertial, &unpoweredWheel, &gpsSensor, 160.0 / 2646.0, 96.0 / 2592.0, 20.0 / 11846.0);
 
 
 // Motors
@@ -48,4 +48,5 @@ pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.C);
 
 // Sensors
 DualInertial dualInertial = DualInertial(InertialIntercept(PORT16, left, 18000.0 / 18099.0), InertialIntercept(PORT19, left, 18000.0 / 17935.0));
+encoder unpoweredWheel = encoder(Brain.ThreeWirePort.E);
 gps gpsSensor = gps(PORT19, 5.2, 9, inches, 0, left);

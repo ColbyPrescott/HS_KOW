@@ -31,6 +31,7 @@ extern vex::pneumatics rightElevationPiston;
 extern vex::pneumatics mogoMover;
 
 extern DualInertial dualInertial;
+extern vex::encoder unpoweredWheel;
 extern vex::gps gpsSensor;
 
 #endif

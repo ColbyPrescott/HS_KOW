@@ -35,30 +35,54 @@ double PathSection::GetY(double t) {
 
 // Update the absolute position
 void AbsolutePositioningSystem::TickTracking() {
-    // Find average travel distance
+    // Calculate forwards travel from the drivetrain encoders
     double leftMotorPosition = mLeftDrivetrainMotors->position(vex::degrees);
     double rightMotorPosition = mRightDrivetrainMotors->position(vex::degrees);
     
-    double leftMotorTravel = (leftMotorPosition - mPrevLeftDrivetrainMotorPosition) * mDegreesToInchesRatio;
-    double rightMotorTravel = (rightMotorPosition - mPrevRightDrivetrainMotorPosition) * mDegreesToInchesRatio;
+    double leftMotorTravel = (leftMotorPosition - mPrevLeftDrivetrainMotorPosition) * mDrivetrainDegreesToInchesRatio;
+    double rightMotorTravel = (rightMotorPosition - mPrevRightDrivetrainMotorPosition) * mDrivetrainDegreesToInchesRatio;
+    
+    double forwardTravel = (leftMotorTravel + rightMotorTravel) / 2.0;
 
-    double averageTravel = (leftMotorTravel + rightMotorTravel) / 2.0;
 
-    // Add travel to absolute coordinate
-    mX += cos(mPrevInertialSensorAngle) * averageTravel;
-    mY += sin(mPrevInertialSensorAngle) * averageTravel;
+    // Calculate rightward travel from the unpowered wheel
+    double unpoweredWheelRotation = mUnpoweredWheel->rotation(vex::degrees);
+
+    double inertialSensorsRotation = mInertialSensors->GetRotation();
+    double inertialSensorsDifference = (inertialSensorsRotation - mPrevInertialSensorsRotation);
+    double unpoweredWheelExpectedRotation = inertialSensorsDifference * mUnpoweredWheelRobot360ToDegreesRatio;
+
+    double rightwardTravel = (unpoweredWheelRotation - mPrevUnpoweredWheelRotation - unpoweredWheelExpectedRotation) * mUnpoweredWheelDegreesToInchesRatio;
+
+
+    // Add travel to the internal tracked coordinate
+    mX += cos(mPrevInertialSensorsRotation) * forwardTravel;
+    mY += sin(mPrevInertialSensorsRotation) * forwardTravel;
+
+    mX += sin(mPrevInertialSensorsRotation) * rightwardTravel;
+    mY -= cos(mPrevInertialSensorsRotation) * rightwardTravel;
+    static double unpoweredWheelCompensationX = 0;
+    static double unpoweredWheelCompensationY = 0;
+    unpoweredWheelCompensationX += sin(mPrevInertialSensorsRotation) * rightwardTravel;
+    unpoweredWheelCompensationY -= cos(mPrevInertialSensorsRotation) * rightwardTravel;
+    static int frame = 0;
+    frame++;
+    if(frame % 100 == 0) printf("Compensation: (%.1f, %.1f)\n", unpoweredWheelCompensationX, unpoweredWheelCompensationY);
+
     mRotation = mInertialSensors->GetRotation();
+
     
     // Update previous tick values
     mPrevLeftDrivetrainMotorPosition = leftMotorPosition;
     mPrevRightDrivetrainMotorPosition = rightMotorPosition;
-    mPrevInertialSensorAngle = mInertialSensors->GetRotation();
+    mPrevUnpoweredWheelRotation = unpoweredWheelRotation;
+    mPrevInertialSensorsRotation = inertialSensorsRotation;
 
 
-    // Make sure the GPS is providing accurate data
-    if(mGPSSensor->quality() != 100) mEnableGPS = true;
-    // If GPS can see the strips, override the drivetrain data
-    if(!mEnableGPS || mGPSSensor->quality() != 100) return;
+    // // Make sure the GPS is providing accurate data
+    // if(mGPSSensor->quality() != 100) mEnableGPS = true;
+    // // If GPS can see the strips, override the drivetrain data
+    // if(!mEnableGPS || mGPSSensor->quality() != 100) return;
     // mX = mGPSSensor->xPosition(vex::inches) + 24 * 3;
     // mY = mGPSSensor->yPosition(vex::inches) + 24 * 3;
 }

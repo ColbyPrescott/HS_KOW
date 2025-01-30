@@ -53,6 +53,8 @@ class AbsolutePositioningSystem {
         vex::motor_group* mLeftDrivetrainMotors;
         // A motor on the right side of the tank drivetrain
         vex::motor_group* mRightDrivetrainMotors;
+        // Rotation sensor to detect sideways sliding
+        vex::encoder* mUnpoweredWheel;
         // Inertial sensors to use to improve tracking
         DualInertial* mInertialSensors;
         // GPS sensor to occasionally calibrate tracking position
@@ -62,12 +64,17 @@ class AbsolutePositioningSystem {
         bool mEnableGPS = false;
 
         // Scale to convert motor encoder rotation to inches that the wheels travel
-        double mDegreesToInchesRatio = 1;
+        double mDrivetrainDegreesToInchesRatio;
+        // Scale to convert the shaft encoder rotation to inches that the wheel travels
+        double mUnpoweredWheelDegreesToInchesRatio;
+        // Scale to compensate for the unpowered wheel's rotation while turning on the spot
+        double mUnpoweredWheelRobot360ToDegreesRatio;
 
         // Previous tick values so they can be compared between ticks
         double mPrevLeftDrivetrainMotorPosition = 0;
         double mPrevRightDrivetrainMotorPosition = 0;
-        double mPrevInertialSensorAngle = 0;
+        double mPrevUnpoweredWheelRotation = 0;
+        double mPrevInertialSensorsRotation = 0;
 
         void TickTracking();
 
@@ -86,12 +93,15 @@ class AbsolutePositioningSystem {
         void TickDriving();
 
     public:
-        AbsolutePositioningSystem(vex::motor_group* leftDrivetrainMotors, vex::motor_group* rightDrivetrainMotors, DualInertial* inertialSensors, vex::gps* gpsSensor, double degreesToInchesRatio) : 
+        AbsolutePositioningSystem(vex::motor_group* leftDrivetrainMotors, vex::motor_group* rightDrivetrainMotors, DualInertial* inertialSensors, vex::encoder* unpoweredWheel, vex::gps* gpsSensor, double drivetrainDegreesToInchesRatio, double unpoweredWheelDegreesToInchesRatio, double unpoweredWheelRobot360ToDegreesRatio) : 
             mLeftDrivetrainMotors(leftDrivetrainMotors),
             mRightDrivetrainMotors(rightDrivetrainMotors),
             mInertialSensors(inertialSensors),
+            mUnpoweredWheel(unpoweredWheel),
             mGPSSensor(gpsSensor),
-            mDegreesToInchesRatio(degreesToInchesRatio) {}
+            mDrivetrainDegreesToInchesRatio(drivetrainDegreesToInchesRatio),
+            mUnpoweredWheelDegreesToInchesRatio(unpoweredWheelDegreesToInchesRatio),
+            mUnpoweredWheelRobot360ToDegreesRatio(unpoweredWheelRobot360ToDegreesRatio) {}
 
         void SetPosition(double x, double y);
         void SetRotation(double rotation);
