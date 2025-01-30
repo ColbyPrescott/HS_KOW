@@ -38,21 +38,6 @@ void autonomous(void) {
 
     // Call the autonomous function that was selected
     if(selectedAutonSequence != nullptr) selectedAutonSequence();
-
-    printf("Starting auton!\n");
-    wait(0.2, seconds);
-
-    aps.SetPosition(119, 119.33);
-    aps.SetRotation(4.71238898038469);
-    aps.SetDriving(true);
-    aps.AddPathSection(119, 119.33, 119, 109.81, 119.52, 83.51, 120, 71.59, 100, 100);
-    aps.AddPathSection(120, 71.59, 120.48, 59.67, 130.64, 55.1, 120.22, 46.75, 75, 50);
-    aps.AddPathSection(120.22, 46.75, 109.8, 38.4, 105.32, 54.22, 95.1, 47.66, 50, 50);
-    aps.AddPathSection(95.1, 47.66, 84.88, 41.1, 88.73, 28.21, 95.93, 23.42, 50, 50);
-    aps.AddPathSection(95.93, 23.42, 103.13, 18.63, 109.57, 15.07, 119.34, 22.16, 50, 50);
-    aps.AddPathSection(119.34, 22.16, 129.11, 29.25, 125.49, 29.29, 118.16, 67.91, 50, 100);
-    aps.AddPathSection(118.16, 67.91, 110.83, 106.53, 110.17, 104.48, 108.06, 119.89, 100, 30);
-    aps.EndPath();
 }
 
 // Called at start of driver control
@@ -79,7 +64,7 @@ void usercontrol(void) {
 }
 
 int main() {
-    printf("Console works!\n");
+    printf("Confirming console\n");
     // Set up callbacks for autonomous and driver control periods.
     Competition.drivercontrol(usercontrol);
     Competition.autonomous(autonomous);
@@ -90,11 +75,11 @@ int main() {
     // Run the pre-autonomous function.
     pre_auton();
 
-    // DEBUG
-    Brain.Screen.clearScreen();
-    aps.StartTicking(100);
-    aps.SetPosition(24 * 3, 24 * 3);
-    Brain.Screen.pressed([](){Brain.Screen.clearScreen();});
+    // // DEBUG
+    // Brain.Screen.clearScreen();
+    // aps.StartTicking(100);
+    // aps.SetPosition(24 * 3, 24 * 3);
+    // Brain.Screen.pressed([](){Brain.Screen.clearScreen();});
 
     // Keep track of current screen frame number for screen related timing
     int frameNum = 0;
@@ -107,18 +92,13 @@ int main() {
         if(frameNum % 5 == 0) DrawControllerMonitors();
 
         // Render the next frame on the brain's screen with KOWGUI
-        // gui.Tick();
+        gui.Tick();
 
-        // Brain.Screen.clearScreen();
-        // Brain.Screen.printAt(40, 40, "%.1f, %.1f", gpsSensor.xPosition(inches), gpsSensor.yPosition(inches));
-        // Brain.Screen.printAt(40, 70, "%d", (int)gpsSensor.heading(degrees));
-        // Brain.Screen.printAt(40, 100, "%d", gpsSensor.quality());
-
-        // DEBUG
-        Brain.Screen.setPenColor(white);
-        Brain.Screen.drawPixel(Map(aps.GetX(), 0, 24 * 6, 240 - 120, 240 + 120), Map(aps.GetY(), 0, 24 * 6, 240, 0));
-        Brain.Screen.setPenColor(gpsSensor.quality() == 100 ? color(0, 255, 0) : color(50, 0, 0));
-        Brain.Screen.drawPixel(Map(gpsSensor.xPosition(inches), -24 * 3, 24 * 3, 240 - 120, 240 + 120), Map(gpsSensor.yPosition(inches), -24 * 3, 24 * 3, 240, 0));
+        // // DEBUG
+        // Brain.Screen.setPenColor(white);
+        // Brain.Screen.drawPixel(Map(aps.GetX(), 0, 24 * 6, 240 - 120, 240 + 120), Map(aps.GetY(), 0, 24 * 6, 240, 0));
+        // Brain.Screen.setPenColor(gpsSensor.quality() == 100 ? color(0, 255, 0) : color(50, 0, 0));
+        // Brain.Screen.drawPixel(Map(gpsSensor.xPosition(inches), -24 * 3, 24 * 3, 240 - 120, 240 + 120), Map(gpsSensor.yPosition(inches), -24 * 3, 24 * 3, 240, 0));
 
         wait(20, msec);
     }

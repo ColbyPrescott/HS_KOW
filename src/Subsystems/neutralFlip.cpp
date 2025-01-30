@@ -29,7 +29,7 @@ void ToggleNeutralFlip() {
         neutralFlip.setStopping(hold);
     } else {
         neutralFlip.spinToPosition(0, degrees, false);
-        neutralFlip.setStopping(coast);
+        neutralFlip.setStopping(hold);
     }
 }
 
@@ -40,7 +40,7 @@ void ToggleNeutralFlip() {
 // Initialize neutral flip at the start of the program
 void InitNeutralFlip() {
     // Put max amount of inertia into the ring
-    neutralFlip.setVelocity(100, percent);
+    neutralFlip.setVelocity(50, percent);
 
     // Ensure that the neutral flip can force the ring onto the stake
     neutralFlip.setMaxTorque(100, percent);

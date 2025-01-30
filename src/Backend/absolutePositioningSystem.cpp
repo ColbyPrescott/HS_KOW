@@ -55,19 +55,12 @@ void AbsolutePositioningSystem::TickTracking() {
     double rightwardTravel = (unpoweredWheelRotation - mPrevUnpoweredWheelRotation - unpoweredWheelExpectedRotation) * mUnpoweredWheelDegreesToInchesRatio;
 
 
-    // Add travel to the internal tracked coordinate
+    // Use calculated travel to update internal tracked coordinate
     mX += cos(mPrevInertialSensorsRotation) * forwardTravel;
     mY += sin(mPrevInertialSensorsRotation) * forwardTravel;
 
     mX += sin(mPrevInertialSensorsRotation) * rightwardTravel;
     mY -= cos(mPrevInertialSensorsRotation) * rightwardTravel;
-    static double unpoweredWheelCompensationX = 0;
-    static double unpoweredWheelCompensationY = 0;
-    unpoweredWheelCompensationX += sin(mPrevInertialSensorsRotation) * rightwardTravel;
-    unpoweredWheelCompensationY -= cos(mPrevInertialSensorsRotation) * rightwardTravel;
-    static int frame = 0;
-    frame++;
-    if(frame % 100 == 0) printf("Compensation: (%.1f, %.1f)\n", unpoweredWheelCompensationX, unpoweredWheelCompensationY);
 
     mRotation = mInertialSensors->GetRotation();
 
@@ -89,13 +82,8 @@ void AbsolutePositioningSystem::TickTracking() {
 
 // Update the wheel velocities
 void AbsolutePositioningSystem::TickDriving() {
-    printf("\n\n\nTickDriving()\n");
-    printf("Path size: %d\n", mPath.size());
     // Don't continue if no PathSections are buffered
     if(mPath.empty()) return;
-
-    printf("Current pos: (%.1f, %.1f)\n", GetX(), GetY());
-    printf("Current rotation: %.1f\n", GetRotation());
 
     // Start reading the next PathSection if at the end of the current one
     if(mPathSectionProgress >= 1 && mPath.size() >= 2) {
@@ -105,14 +93,12 @@ void AbsolutePositioningSystem::TickDriving() {
 
     // Get the current PathSection to drive along
     PathSection targetPathSection = mPath.front();
-    printf("TargetPathSection: (%d, %d) to (%d, %d)\n", (int)targetPathSection.p0x, (int)targetPathSection.p0y, (int)targetPathSection.p3x, (int)targetPathSection.p3y);
 
     // Move mPathSectionProgress as far along the path that's within a distance
     const double lookaheadInches = 12;
     while(pow(GetX() - targetPathSection.GetX(mPathSectionProgress), 2) + pow(GetY() - targetPathSection.GetY(mPathSectionProgress), 2) < pow(lookaheadInches, 2) && mPathSectionProgress < 1) {
         mPathSectionProgress += 0.01;
     }
-    printf("Path progress: %.2f\n", mPathSectionProgress);
 
     // Test if the end of the buffered path has been reached already
     const double endInches = 1;
@@ -122,7 +108,6 @@ void AbsolutePositioningSystem::TickDriving() {
 
         mLeftDrivetrainMotors->stop();
         mRightDrivetrainMotors->stop();
-        printf("End of buffered path, stopping motors\n");
 
         return;
     }
@@ -137,30 +122,25 @@ void AbsolutePositioningSystem::TickDriving() {
     // Transform to local rotation
     double tmpX = targetX;
     double tmpY = targetY;
-    printf("Tmp point: (%d, %d)\n", (int)tmpX, (int)tmpY);
     targetX = tmpX * cos(-GetRotation()) - tmpY * sin(-GetRotation());
     targetY = tmpX * sin(-GetRotation()) + tmpY * cos(-GetRotation());
-    printf("Target point: (%d, %d)\n", (int)targetX, (int)targetY);
 
 
     // Calculate how fast to drive towards target point
     double targetSpeed = Lerp(targetPathSection.startSpeed, targetPathSection.endSpeed, mPathSectionProgress) / 100;
     double forwardInput = targetSpeed;
-    printf("Forward input: %.2f\n", forwardInput);
 
     // Calculate how fast to turn towards target point
     // Get direction to target
     double targetHeading = -atan2(targetY, targetX);
     // Flip target heading 180 degrees if driving backwards
     if(targetSpeed < 0) targetHeading = atan2(targetY, -targetX);
-    printf("Target heading: %.2f\n", targetHeading);
     // Convert to speed
     double rightwardInput = targetHeading;
     // Max turning is 90 degrees away TODO Calibrate
     rightwardInput /= M_2_PI; 
     // Don't turn too much if position is super close TODO Calibrate
     if(targetX * targetX + targetY * targetY < 2 * 2) rightwardInput = Clamp(rightwardInput, -0.1, 0.1);
-    printf("Rightward input: %2f\n", rightwardInput);
     
 
     // Increase / decrease voltage of one side to help correct drifting caused by drivetrain friction or center of mass
