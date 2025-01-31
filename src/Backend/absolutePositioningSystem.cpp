@@ -101,7 +101,7 @@ void AbsolutePositioningSystem::TickDriving() {
     }
 
     // Test if the end of the buffered path has been reached already
-    const double endInches = 1;
+    const double endInches = 2;
     if(mPath.size() == 1 && lookaheadInches >= 1 && pow(GetX() - targetPathSection.GetX(mPathSectionProgress), 2) + pow(GetY() - targetPathSection.GetY(mPathSectionProgress), 2) < pow(endInches, 2)) {
         mPath.erase(mPath.begin());
         mPathSectionProgress = 0;

@@ -6,6 +6,7 @@ using namespace vex;
 
 // Maximum degrees that the neutral flip is allowed to extend
 const float neutralFlipExtendedPosition = 100;
+const float neutralFlipRetractedPosition = -10;
 
 #pragma endregion
 
@@ -18,19 +19,32 @@ bool neutralFlipExtended = false;
 
 #pragma region NeutralFlip-specific functions
 
+// Move the neutral flip to the extended position
+void ExtendNeutralFlip() {
+    neutralFlipExtended = true;
+
+    neutralFlip.setVelocity(40, percent);
+    neutralFlip.spinToPosition(neutralFlipExtendedPosition, degrees, false);
+    neutralFlip.setStopping(hold);
+}
+
+// Move the neutral flip to the retracted position
+void RetractNeutralFlip() {
+    neutralFlipExtended = false;
+    
+    neutralFlip.setVelocity(80, percent);
+    neutralFlip.spinToPosition(neutralFlipRetractedPosition, degrees, false);
+    neutralFlip.setStopping(hold);
+}
+
 // Toggle the neutral flip between the extended and retracted state
 void ToggleNeutralFlip() {
     // Invert the current state 
     neutralFlipExtended = !neutralFlipExtended;
     
     // Spin to the extended or retracted position based on the new state
-    if(neutralFlipExtended) {
-        neutralFlip.spinToPosition(neutralFlipExtendedPosition, degrees, false);
-        neutralFlip.setStopping(hold);
-    } else {
-        neutralFlip.spinToPosition(0, degrees, false);
-        neutralFlip.setStopping(hold);
-    }
+    if(neutralFlipExtended) ExtendNeutralFlip();
+    else RetractNeutralFlip();
 }
 
 #pragma endregion
@@ -40,7 +54,7 @@ void ToggleNeutralFlip() {
 // Initialize neutral flip at the start of the program
 void InitNeutralFlip() {
     // Put max amount of inertia into the ring
-    neutralFlip.setVelocity(50, percent);
+    neutralFlip.setVelocity(40, percent);
 
     // Ensure that the neutral flip can force the ring onto the stake
     neutralFlip.setMaxTorque(100, percent);
