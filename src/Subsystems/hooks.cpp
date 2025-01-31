@@ -10,8 +10,7 @@ using namespace vex;
 #pragma region Quick settings
 
 // Speed for the hook motor
-const double hookMainRPM = 150;
-const double hookFloorRPM = 100;
+const double hookRPM = 150;
 
 // How long to pause the intake at the depositRing position. 
 // This gives more time for the ring to fall onto the stake
@@ -24,12 +23,12 @@ const std::vector<double> hookPositions = {
     0,
     567,
     1134,
-    1614,
-    2183
+    1588,
+    2159
 };
 
 // Encoder position where the reset hook will make a full loop back to the reset position
-const double hookResetPosition = 2639.3;
+const double hookResetPosition = 2610.5714;
 
 #pragma endregion
 
@@ -96,7 +95,7 @@ void MoveClosestHookToWaypoint(HWPs hook, HWPs waypoint) {
 void TriggerAutoHooks() {
     // If a ring is currently stored, deposit it, then wait for next ring
     if(storingRing) {
-        hooks.setVelocity(hookMainRPM, rpm);
+        hooks.setVelocity(hookRPM, rpm);
         MoveClosestHookToWaypoint(HWPs::waitForMogo, HWPs::depositRingOnMogo);
         wait(depositPauseMilliseconds, msec);
         storingRing = false;
@@ -106,18 +105,14 @@ void TriggerAutoHooks() {
     
     // A ring is not stored. If the mogo is ready, pick up and deposit a ring
     if(mogoMover.value() == 0) {
-        hooks.setVelocity(hookFloorRPM, rpm);
-        MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::grabbedRing);
-        hooks.setVelocity(hookMainRPM, rpm);
-        MoveClosestHookToWaypoint(HWPs::grabbedRing, HWPs::depositRingOnMogo);
+        hooks.setVelocity(hookRPM, rpm);
+        MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::depositRingOnMogo);
         wait(depositPauseMilliseconds, msec);
         MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::waitForRing);
     // A ring is not stored, nor is the mogo ready. Pick up and store a ring
     } else { 
-        hooks.setVelocity(hookFloorRPM, rpm);
-        MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::grabbedRing);
-        hooks.setVelocity(hookMainRPM, rpm);
-        MoveClosestHookToWaypoint(HWPs::grabbedRing, HWPs::waitForMogo);
+        hooks.setVelocity(hookRPM, rpm);
+        MoveClosestHookToWaypoint(HWPs::waitForRing, HWPs::waitForMogo);
         storingRing = true;
     }
 }
@@ -129,7 +124,7 @@ void TriggerAutoHooks() {
 // Initialize hooks at the start of the program
 void InitHooks() {
     // Set motor speeds
-    hooks.setVelocity(hookMainRPM, rpm);
+    hooks.setVelocity(hookRPM, rpm);
 
     // Set motor brakings
     hooks.setStopping(brake);
@@ -140,14 +135,14 @@ void UserInitHooks() {
     // Controls
     PrimaryController.ButtonRight.pressed(TriggerAutoHooks);
 
-    PrimaryController.ButtonUp.pressed([](){hooks.setVelocity(hookMainRPM, rpm); hooks.spin(forward);});
+    PrimaryController.ButtonUp.pressed([](){hooks.setVelocity(hookRPM, rpm); hooks.spin(forward);});
     PrimaryController.ButtonUp.released([](){hooks.stop();});
-    PrimaryController.ButtonLeft.pressed([](){hooks.setVelocity(hookMainRPM, rpm); hooks.spin(reverse);});
+    PrimaryController.ButtonLeft.pressed([](){hooks.setVelocity(hookRPM, rpm); hooks.spin(reverse);});
     PrimaryController.ButtonLeft.released([](){hooks.stop();});
 
-    PrimaryController.ButtonR1.pressed([](){hooks.setVelocity(hookMainRPM, rpm); hooks.spin(forward);});
+    PrimaryController.ButtonR1.pressed([](){hooks.setVelocity(hookRPM, rpm); hooks.spin(forward);});
     PrimaryController.ButtonR1.released([](){hooks.stop();});
-    PrimaryController.ButtonR2.pressed([](){hooks.setVelocity(hookMainRPM, rpm); hooks.spin(reverse);});
+    PrimaryController.ButtonR2.pressed([](){hooks.setVelocity(hookRPM, rpm); hooks.spin(reverse);});
     PrimaryController.ButtonR2.released([](){hooks.stop();});
 }
 
