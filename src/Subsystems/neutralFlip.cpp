@@ -6,7 +6,7 @@ using namespace vex;
 
 // Maximum degrees that the neutral flip is allowed to extend
 const float neutralFlipExtendedPosition = 100;
-const float neutralFlipRetractedPosition = -10;
+const float neutralFlipRetractedPosition = -20;
 
 #pragma endregion
 
@@ -32,7 +32,7 @@ void ExtendNeutralFlip() {
 void RetractNeutralFlip() {
     neutralFlipExtended = false;
     
-    neutralFlip.setVelocity(80, percent);
+    neutralFlip.setVelocity(99, percent);
     neutralFlip.spinToPosition(neutralFlipRetractedPosition, degrees, false);
     neutralFlip.setStopping(hold);
 }
