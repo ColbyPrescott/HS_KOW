@@ -49,18 +49,24 @@ void HooksSpinForwardTo(double targetDegrees) {
     // Wait for hooks to accelerate
     wait(0.2, seconds);
 
+    // Hooks are allowed to attempt spinning this number of times before the loop forcefully exits
+    int remainingStrikes = 2;
+
     // Lock execution in this function until the hooks finish spinning
     while(hooks.isSpinning()) {
         // Pause to let other threads run
         wait(0.1, seconds);
         // Continue spinning normally if not stuck
         if(hooks.velocity(rpm) >= 5) continue;
-        // Continue spinning normally is simply slowing down because it's almost at the target
+        // Continue spinning normally if slowing down because it's almost at the target
         if((targetDegrees - hooks.position(degrees)) < 360) continue;
 
-        // If stuck, reverse direction for a short distance
-        hooks.spinFor(reverse, 1000, degrees, true);
-        wait(0.3, seconds);
+        // Hooks are stuck, reverse direction for a short distance
+        hooks.spinFor(reverse, 500, degrees, false);
+        wait(0.8, seconds);
+        // Check if it's allowed to retry spinning to the target position
+        remainingStrikes--;
+        if(remainingStrikes < 0) return;
         // Start spinning to the target position again
         hooks.spinFor(targetDegrees - hooks.position(degrees), degrees, false);
         // Wait for hooks to accelerate
