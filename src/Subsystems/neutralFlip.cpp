@@ -1,5 +1,8 @@
 #include "vex.h"
 
+#include "Displays/autonSelector.h"
+#include "Autonomous/autonSequences.h"
+
 using namespace vex;
 
 #pragma region Quick settings
@@ -64,6 +67,10 @@ void InitNeutralFlip() {
 void UserInitNeutralFlip() {
     // Controls
     PrimaryController.ButtonDown.pressed(ToggleNeutralFlip);
+
+    // Retract at the end of driver control
+    if(selectedAutonSequence != AutonSkills) Brain.Timer.event(RetractNeutralFlip, (1 * 60 + 45 - 5) * 1000);
+    else                                     Brain.Timer.event(RetractNeutralFlip, (1 * 60 + 0  - 5) * 1000);
 }
 
 // Update mogo mover during driver control

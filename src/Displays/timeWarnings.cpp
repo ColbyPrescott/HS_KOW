@@ -20,7 +20,7 @@ void UserInitTimeWarnings() {
     } else {
         // Rumble controller in the last 20 seconds of a driver skills match
         for(int offset = 5; offset <= 20; offset += 5) {
-            Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 + 45 - offset) * 1000);
+            Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 + 0 - offset) * 1000);
         }
     }
 }
