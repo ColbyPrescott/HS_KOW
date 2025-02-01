@@ -11,18 +11,16 @@ void UserInitTimeWarnings() {
     if(selectedAutonSequence == nullptr) return;
     // Set up indicators for a normal 1:45 driver control match
     else if(selectedAutonSequence != AutonSkills) {
-        // Rumble controller in the last 20 seconds of a competition match (Multiple packets because packets have a size limit and are sometimes missed)
-        Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 + 45 - 20) * 1000);
-        Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 + 45 - 15) * 1000);
-        Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 + 45 - 10) * 1000);
-        Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 + 45 - 5 ) * 1000);
+        // Rumble controller in the last 35 seconds of a competition match (Multiple packets because packets have a size limit and are sometimes missed)
+        for(int offset = 5; offset <= 35; offset += 5) {
+            Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 + 45 - offset) * 1000);
+        }
     
     // Set up indicators for a 1:00 skills match
     } else {
         // Rumble controller in the last 20 seconds of a driver skills match
-        Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 - 20) * 1000);
-        Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 - 15) * 1000);
-        Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 - 10) * 1000);
-        Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 - 5 ) * 1000);
+        for(int offset = 5; offset <= 20; offset += 5) {
+            Brain.Timer.event([](){PrimaryController.rumble("- - - -");}, (1 * 60 + 45 - offset) * 1000);
+        }
     }
 }
