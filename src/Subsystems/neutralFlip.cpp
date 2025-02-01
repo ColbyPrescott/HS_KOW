@@ -63,7 +63,13 @@ void InitNeutralFlip() {
     neutralFlip.setMaxTorque(100, percent);
 }
 
-// Initialize mogo mover at the start of driver control
+// Initialize neutral flip at the start of autonomous
+void AutonInitNeutralFlip() {
+    // Retract at the end of autonomous
+    if(selectedAutonSequence != AutonSkills) Brain.Timer.event(RetractNeutralFlip, (1 * 0 + 15 - 2) * 1000);
+}
+
+// Initialize neutral flip at the start of driver control
 void UserInitNeutralFlip() {
     // Controls
     PrimaryController.ButtonDown.pressed(ToggleNeutralFlip);

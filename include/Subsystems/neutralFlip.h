@@ -5,6 +5,7 @@ void ExtendNeutralFlip();
 void RetractNeutralFlip();
 
 void InitNeutralFlip();
+void AutonInitNeutralFlip();
 void UserInitNeutralFlip();
 void TickNeutralFlip();
 

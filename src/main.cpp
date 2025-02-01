@@ -36,6 +36,9 @@ void autonomous(void) {
     aps.StartTicking(100);
     aps.SetMirrored(false); // DEBUG Does this fix the APS being haunted?
 
+    // Call the autonomous initialization of each subsystem
+    AutonInitNeutralFlip();
+
     // Call the autonomous function that was selected
     if(selectedAutonSequence != nullptr) selectedAutonSequence();
 }
