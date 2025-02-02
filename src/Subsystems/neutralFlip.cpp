@@ -67,6 +67,7 @@ void InitNeutralFlip() {
 void AutonInitNeutralFlip() {
     // Retract at the end of autonomous
     if(selectedAutonSequence != AutonSkills) Brain.Timer.event(RetractNeutralFlip, (1 * 0 + 15 - 2) * 1000);
+    else                                     Brain.Timer.event(RetractNeutralFlip, (1 * 60 + 0  - 2) * 1000);
 }
 
 // Initialize neutral flip at the start of driver control

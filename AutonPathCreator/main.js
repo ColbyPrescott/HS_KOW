@@ -55,5 +55,10 @@ function Frame() {
     ctx.restore();
 
     path.Draw();
+
+    ctx.fillStyle = "#00000040";
+    ctx.beginPath();
+    ctx.arc(input.mouse.position.x, input.mouse.position.y, 12, 0, Math.PI * 2);
+    ctx.fill();
 }
 window.requestAnimationFrame(Frame);
