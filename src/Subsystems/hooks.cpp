@@ -10,7 +10,7 @@ using namespace vex;
 #pragma region Quick settings
 
 // Speed for the hook motor
-const double hookRPM = 150;
+const double hookRPM = 200;
 
 // How long to pause the intake at the depositRing position. 
 // This gives more time for the ring to fall onto the stake
