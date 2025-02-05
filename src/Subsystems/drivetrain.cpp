@@ -8,7 +8,7 @@ using namespace vex;
 const double driveSpeed = 1;
 
 // Drivetrain motor speed turning left and right, 0 - 1
-const double turnSpeed = 0.5;
+const double turnSpeed = 1;
 
 // Value that controller joystick axes must exceed to avoid being considered joystick drift, 0 - 1
 const double driftThreshold = 0.08;
