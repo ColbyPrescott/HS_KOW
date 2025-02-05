@@ -5,7 +5,6 @@
 #include "Subsystems/drivetrain.h"
 #include "Subsystems/mogoMover.h"
 #include "Subsystems/hooks.h"
-#include "Subsystems/neutralFlip.h"
 #include "Subsystems/elevation.h"
 
 #include "Autonomous/autonSequences.h"
@@ -26,7 +25,6 @@ void pre_auton(void) {
     InitDrivetrain();
     InitMogoMover();
     InitHooks();
-    InitNeutralFlip();
     InitElevation();
 }
 
@@ -35,9 +33,6 @@ void autonomous(void) {
     // Start tracking and driving with APS
     aps.StartTicking(100);
     aps.SetMirrored(false); // DEBUG Does this fix the APS being haunted?
-
-    // Call the autonomous initialization of each subsystem
-    AutonInitNeutralFlip();
 
     // Call the autonomous function that was selected
     if(selectedAutonSequence != nullptr) selectedAutonSequence();
@@ -49,7 +44,6 @@ void usercontrol(void) {
     UserInitDrivetrain();
     UserInitMogoMover();
     UserInitHooks();
-    UserInitNeutralFlip();
     UserInitElevation();
 
     UserInitTimeWarnings();
@@ -59,7 +53,6 @@ void usercontrol(void) {
         TickDrivetrain();
         TickMogoMover();
         TickHooks();
-        TickNeutralFlip();
         TickElevation();
         
         wait(20, msec);

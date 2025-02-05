@@ -17,7 +17,7 @@
 15: BROKEN
 
 16: Inertial sensor A (upright)
-17: Neutral flip
+17: 
 18: Right elevation arm
 19: GPS sensor
 20: Left wheels secondary

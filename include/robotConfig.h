@@ -19,8 +19,6 @@ extern double rightWheelsVoltageBias;
 
 extern vex::motor hooks;
 
-extern vex::motor neutralFlip;
-
 extern vex::motor leftElevationWinch;
 extern vex::motor rightElevationWinch;
 extern vex::motor_group elevationWinch;
