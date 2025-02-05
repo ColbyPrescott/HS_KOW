@@ -21,12 +21,12 @@ extern vex::motor hooks;
 
 extern vex::motor neutralFlip;
 
-extern vex::motor leftWinch;
-extern vex::motor rightWinch;
-extern vex::motor_group winch;
-
-extern vex::pneumatics leftElevationPiston;
-extern vex::pneumatics rightElevationPiston;
+extern vex::motor leftElevationWinch;
+extern vex::motor rightElevationWinch;
+extern vex::motor_group elevationWinch;
+extern vex::motor leftElevationArm;
+extern vex::motor rightElevationArm;
+extern vex::motor_group elevationArm;
 
 extern vex::pneumatics mogoMover;
 

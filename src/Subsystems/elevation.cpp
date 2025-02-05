@@ -2,18 +2,33 @@
 
 using namespace vex;
 
+#pragma region Runtime variables
+
+// Current state of whether the elevation arm is pivoted forwards or backwards
+bool elevationArmExtended = false;
+
+#pragma endregion
+
 #pragma region Elevation-specific functions
 
-void ToggleElevationPistons() {
-    // Get the state of one piston, that way the two sides can't ever desync
-    bool elevationPistonState = leftElevationPiston.value();
+// Move the elevation arm forwards
+void ExtendElevationArm() {
+    elevationArmExtended = true;
+    elevationArm.spinToPosition(62, degrees);
+}
 
-    // Invert the state for the new value
-    elevationPistonState = !elevationPistonState;
+// Move the elevation arm backwards
+void RetractElevationArm() {
+    elevationArmExtended = false;
+    elevationArm.spinToPosition(0, degrees, false);
+}
 
-    // Update each piston to the new, inverted extended state
-    leftElevationPiston.set(elevationPistonState);
-    rightElevationPiston.set(elevationPistonState);
+// Switch the elevation arm between the forwards and backwards state
+void ToggleElevationArm() {
+    elevationArmExtended = !elevationArmExtended;
+
+    if(elevationArmExtended) ExtendElevationArm();
+    else RetractElevationArm();
 }
 
 #pragma endregion
@@ -22,23 +37,28 @@ void ToggleElevationPistons() {
 
 // Initialize neutral flip at the start of the program
 void InitElevation() {
-    // Red motors are slow, use as much speed as they have
-    winch.setVelocity(100, percent);
+    // Elevation should happen as quickly as possible
+    elevationWinch.setVelocity(100, percent);
+    elevationArm.setVelocity(100, percent);
 
-    // Hold the weight of the entire robot
-    winch.setMaxTorque(100, percent);
-    winch.setStopping(hold);
+    // Make sure the motors can still move under the load of the entire robot's weight
+    elevationWinch.setMaxTorque(100, percent);
+    elevationArm.setMaxTorque(100, percent);
+
+    // Ensure the motors hold their position even when they aren't actively spinning
+    elevationWinch.setStopping(hold);
+    elevationArm.setStopping(hold);
 }
 
 // Initialize mogo mover at the start of driver control
 void UserInitElevation() {
     // Controls
-    PrimaryController.ButtonY.pressed(ToggleElevationPistons);
+    PrimaryController.ButtonY.pressed(ToggleElevationArm);
     
-    PrimaryController.ButtonL1.pressed([](){winch.spin(forward);});
-    PrimaryController.ButtonL2.pressed([](){winch.spin(reverse);});
-    PrimaryController.ButtonL1.released([](){winch.stop();});
-    PrimaryController.ButtonL2.released([](){winch.stop();});
+    PrimaryController.ButtonL1.pressed([](){elevationWinch.spin(forward);});
+    PrimaryController.ButtonL2.pressed([](){elevationWinch.spin(reverse);});
+    PrimaryController.ButtonL1.released([](){elevationWinch.stop();});
+    PrimaryController.ButtonL2.released([](){elevationWinch.stop();});
 }
 
 // Update mogo mover during driver control

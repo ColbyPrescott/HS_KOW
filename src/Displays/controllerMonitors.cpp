@@ -19,9 +19,13 @@ void DrawControllerMonitors() {
     // Neutral flip temperature 0 to 10
     int neutralFlipTemp = (int)neutralFlip.temperature(percent) / 10;
 
-    // Winch temperatures 0 to 10
-    int leftWinchTemp = (int)leftWinch.temperature(percent) / 10;
-    int rightWinchTemp = (int)rightWinch.temperature(percent) / 10;
+    // Elevation winch temperatures 0 to 10
+    int leftElevationWinchTemp = (int)leftElevationWinch.temperature(percent) / 10;
+    int rightElevationWinchTemp = (int)rightElevationWinch.temperature(percent) / 10;
+
+    // Elevation arm temperatures 0 to 10
+    int leftElevationArmTemp = (int)leftElevationArm.temperature(percent) / 10;
+    int rightElevationArmTemp = (int)rightElevationArm.temperature(percent) / 10;
 
     // State of whether or not the mogo mover is holding a mogo
     std::string mogoMoverStatus = mogoMover.value() == 0 ? "HOLD" : "____";
@@ -29,7 +33,7 @@ void DrawControllerMonitors() {
     // Draw to screen
     PrimaryController.Screen.clearScreen();
     PrimaryController.Screen.setCursor(1, 1);
-    PrimaryController.Screen.print("%d--%d   %d--%d", leftWheelsPrimaryTemp, rightWheelsPrimaryTemp, leftWinchTemp, rightWinchTemp); PrimaryController.Screen.newLine();
-    PrimaryController.Screen.print("%d--%d   %d", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp, neutralFlipTemp); PrimaryController.Screen.newLine();
-    PrimaryController.Screen.print("%s, %d", mogoMoverStatus.c_str(), hooksTemp);
+    PrimaryController.Screen.print("%d--%d   %d-W-%d", leftWheelsPrimaryTemp, rightWheelsPrimaryTemp, leftElevationWinchTemp, rightElevationWinchTemp); PrimaryController.Screen.newLine();
+    PrimaryController.Screen.print("%d--%d   %d-A-%d", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp, neutralFlipTemp, leftElevationArmTemp, rightElevationArmTemp); PrimaryController.Screen.newLine();
+    PrimaryController.Screen.print("%s, %d, %d", mogoMoverStatus.c_str(), hooksTemp, neutralFlipTemp);
 }
