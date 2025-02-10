@@ -14,7 +14,7 @@ bool elevationArmExtended = false;
 // Move the elevation arm forwards
 void ExtendElevationArm() {
     elevationArmExtended = true;
-    elevationArm.spinToPosition(62, degrees);
+    elevationArm.spinToPosition(115, degrees, false);
 }
 
 // Move the elevation arm backwards

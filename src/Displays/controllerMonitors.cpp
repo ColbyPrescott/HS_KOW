@@ -32,5 +32,5 @@ void DrawControllerMonitors() {
     PrimaryController.Screen.setCursor(1, 1);
     PrimaryController.Screen.print("%d--%d   %d-W-%d", leftWheelsPrimaryTemp, rightWheelsPrimaryTemp, leftElevationWinchTemp, rightElevationWinchTemp); PrimaryController.Screen.newLine();
     PrimaryController.Screen.print("%d--%d   %d-A-%d", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp, leftElevationArmTemp, rightElevationArmTemp); PrimaryController.Screen.newLine();
-    PrimaryController.Screen.print("%s, %d, %d", mogoMoverStatus.c_str(), hooksTemp);
+    PrimaryController.Screen.print("%s, %d", mogoMoverStatus.c_str(), hooksTemp);
 }
