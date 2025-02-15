@@ -25,6 +25,17 @@ body {
     flex-direction: column;
 }
 
+#ghostTextarea {
+    position: absolute; /* Pin to the top right of the side panel */
+    right: 10px;
+    top: 10px;
+
+    width: 13em; /* Size just large enough to fit the text */
+    height: 1.1em;
+
+    resize: none; /* Drive log is deleted as soon as it's pasted, no need to see any text other than placeholder */
+}
+
 div.numberSetting > p {
     display: inline; /* Keep text on the same line as the input fields */
     padding-right: 10px; /* Small amount of space between the text and the input fields */

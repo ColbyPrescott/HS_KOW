@@ -15,7 +15,9 @@ const domElements = {
     codeTextarea: document.getElementById("codeTextarea"),
 
     jsonTextarea: document.getElementById("jsonTextarea"),
-    cppTextarea: document.getElementById("cppTextarea")
+    cppTextarea: document.getElementById("cppTextarea"),
+
+    ghostTextarea: document.getElementById("ghostTextarea")
 };
 
 // Clear all of the point related inputs
@@ -38,6 +40,7 @@ function ClearAllUI() {
     ClearPointUI();
     domElements.jsonTextarea.value = "";
     domElements.cppTextarea.value = "";
+    domElements.ghostTextarea.value = "";
 }
 
 function UpdateUI() {
@@ -120,6 +123,14 @@ function OnEditUI(element) {
             domElements.jsonTextarea.value = "Invalid JSON";
             return;
         }
+    }
+
+    // When a drive log is pastes, convert it into a ghost
+    if(element == domElements.ghostTextarea) {
+        Ghost.ghosts.push(new Ghost(domElements.ghostTextarea.value));
+
+        // Clear textarea, the raw numbers aren't meant to mean much
+        domElements.ghostTextarea.value = "";
     }
 
     // Since other points were moved as well, update the entire UI

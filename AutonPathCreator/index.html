@@ -9,6 +9,7 @@
         <div id="splitPanel">
             <canvas id="mainCanvas" tabindex="1"></canvas> <!-- tabindex makes it possible to target the canvas in keyboard events -->
             <div id="sidePanel">
+                <textarea id="ghostTextarea" placeholder="Paste drive log here" oninput="OnEditUI(this);"></textarea>
                 <div>
                     <label>Field: </label>
                     <select id="fieldSelect">
@@ -42,6 +43,7 @@
         <script src="input.js"></script>
         <script src="pathSection.js"></script>
         <script src="path.js"></script>
+        <script src="ghost.js"></script>
         <script src="userInterface.js"></script>
         <script src="main.js"></script>
     </body>

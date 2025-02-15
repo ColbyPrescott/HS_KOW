@@ -21,6 +21,9 @@ const theme = {
     controlLineColor: "#fcaf5880", // Transparent orange
     controlLineWidth: 0.25,
 
+    ghostColor: "#00008014", // Transparent dark green
+    ghostWidth: 0.5,
+
     decimals: 2,
     canvasQualityMultiplier: 3,
 };
