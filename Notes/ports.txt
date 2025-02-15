@@ -24,7 +24,7 @@
 
 21: 
 
-A: 
+A: Wing
 B: 
 C: Mogo mover
 D: 

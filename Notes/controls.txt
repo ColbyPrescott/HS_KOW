@@ -4,7 +4,7 @@ R1: Manual hooks forward
 R2: Manual hooks backward
 
 Up: Manual hooks forward
-Down: 
+Down: Wing
 Left: Manual hooks backward
 Right: Auto hooks
 

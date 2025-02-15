@@ -17,7 +17,7 @@ GUI gui = GUI(Brain);
 // Other global variables
 // Push number of inches / Output degrees: 160 / 2646
 // Circumference per degree * gear ratio: (2*pi*2)/360*(60/36)
-AbsolutePositioningSystem aps = AbsolutePositioningSystem(leftWheels, rightWheels, dualInertial, unpoweredWheel, gpsSensor, 160.0 / 2646.0,  96.0 / 2592.0,  20.0 / 11846.0);
+AbsolutePositioningSystem aps = AbsolutePositioningSystem(leftWheels, rightWheels, dualInertial, unpoweredWheel, gpsSensor, 160.0 / 2646.0,  96.0 / 2592.0,  20.0 / 11846.0, Brain.SDcard);
 
 
 // Motors
@@ -36,11 +36,13 @@ motor leftElevationWinch = motor(PORT8, ratio36_1, false);
 motor rightElevationWinch = motor(PORT6, ratio36_1, false);
 motor_group elevationWinch = motor_group(leftElevationWinch, rightElevationWinch);
 motor leftElevationArm = motor(PORT13, ratio36_1, false);
-motor rightElevationArm = motor(PORT18, ratio36_1, true);
+motor rightElevationArm = motor(PORT18, ratio36_1, false);
 motor_group elevationArm = motor_group(leftElevationArm, rightElevationArm);
 
 // Pneumatics
 pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.C);
+
+pneumatics wing = pneumatics(Brain.ThreeWirePort.A);
 
 
 // Sensors

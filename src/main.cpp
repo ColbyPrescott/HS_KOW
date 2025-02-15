@@ -6,6 +6,7 @@
 #include "Subsystems/mogoMover.h"
 #include "Subsystems/hooks.h"
 #include "Subsystems/elevation.h"
+#include "Subsystems/wing.h"
 
 #include "Autonomous/autonSequences.h"
 
@@ -26,6 +27,7 @@ void pre_auton(void) {
     InitMogoMover();
     InitHooks();
     InitElevation();
+    InitWing();
 }
 
 // Called at start of autonomous
@@ -45,6 +47,7 @@ void usercontrol(void) {
     UserInitMogoMover();
     UserInitHooks();
     UserInitElevation();
+    UserInitWing();
 
     UserInitTimeWarnings();
 
@@ -54,6 +57,7 @@ void usercontrol(void) {
         TickMogoMover();
         TickHooks();
         TickElevation();
+        TickWing();
         
         wait(20, msec);
     }
@@ -65,17 +69,8 @@ int main() {
     Competition.drivercontrol(usercontrol);
     Competition.autonomous(autonomous);
 
-    // Make sure the program can start up
-    wait(0.5, seconds);
-
     // Run the pre-autonomous function.
     pre_auton();
-
-    // // DEBUG
-    // Brain.Screen.clearScreen();
-    // aps.StartTicking(100);
-    // aps.SetPosition(24 * 3, 24 * 3);
-    // Brain.Screen.pressed([](){Brain.Screen.clearScreen();});
 
     // Keep track of current screen frame number for screen related timing
     int frameNum = 0;
@@ -89,12 +84,6 @@ int main() {
 
         // Render the next frame on the brain's screen with KOWGUI
         gui.Tick();
-
-        // // DEBUG
-        // Brain.Screen.setPenColor(white);
-        // Brain.Screen.drawPixel(Map(aps.GetX(), 0, 24 * 6, 240 - 120, 240 + 120), Map(aps.GetY(), 0, 24 * 6, 240, 0));
-        // Brain.Screen.setPenColor(gpsSensor.quality() == 100 ? color(0, 255, 0) : color(50, 0, 0));
-        // Brain.Screen.drawPixel(Map(gpsSensor.xPosition(inches), -24 * 3, 24 * 3, 240 - 120, 240 + 120), Map(gpsSensor.yPosition(inches), -24 * 3, 24 * 3, 240, 0));
 
         wait(20, msec);
     }

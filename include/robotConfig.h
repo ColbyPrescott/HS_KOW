@@ -28,6 +28,8 @@ extern vex::motor_group elevationArm;
 
 extern vex::pneumatics mogoMover;
 
+extern vex::pneumatics wing;
+
 extern DualInertial dualInertial;
 extern vex::encoder unpoweredWheel;
 extern vex::gps gpsSensor;

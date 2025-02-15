@@ -35,7 +35,7 @@ void ToggleElevationArm() {
 
 #pragma region Subsystem template functions
 
-// Initialize neutral flip at the start of the program
+// Initialize elevation at the start of the program
 void InitElevation() {
     // Elevation should happen as quickly as possible
     elevationWinch.setVelocity(100, percent);
@@ -50,7 +50,7 @@ void InitElevation() {
     elevationArm.setStopping(hold);
 }
 
-// Initialize mogo mover at the start of driver control
+// Initialize elevation at the start of driver control
 void UserInitElevation() {
     // Controls
     PrimaryController.ButtonY.pressed(ToggleElevationArm);
@@ -61,7 +61,7 @@ void UserInitElevation() {
     PrimaryController.ButtonL2.released([](){elevationWinch.stop();});
 }
 
-// Update mogo mover during driver control
+// Update elevation during driver control
 void TickElevation() {
 
 }

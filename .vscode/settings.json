@@ -3,9 +3,12 @@
 		"${config:vexrobotics.vexcode.Cpp.Sdk.Home}/V5/V5_20240802_15_00_00/vexv5/gcc/include/sys"
 	],
 	"files.associations": {
+		"*.bsml": "xml",
 		"vector": "cpp",
 		"random": "cpp",
 		"chrono": "cpp",
-		"regex": "cpp"
+		"regex": "cpp",
+		"iosfwd": "cpp",
+		"sstring": "cpp"
 	}
 }
