@@ -60,5 +60,12 @@ void InitScreenAutonSelector() {
             else if(selectedAutonSequence == AutonSkills) textSelf->SetText("Selected: Skills");
             else textSelf->SetText("Selected: ERROR");
         }),
+
+        // Button to save the APS drive log
+        (new Clickable)->SetPosition(0, 240 - 30)->SetSize(30, 30)->SetPress([](BaseNode* self){aps.SaveDriveLog();})->AddChildren({
+            (new NFocused)->AddChildren({(new RoundedRectangle)->SetOutlineRadius(30)->SetFillColor(Color::white)}),
+            (new Focused)->AddChildren({(new RoundedRectangle)->SetOutlineRadius(30)->SetFillColor(Color::gray)}),
+            (new Text)->SetText("Log")->SetFontSize(13)->SetColor(Color::black)->SetAlignments(Text::HorizontalAlign::center, Text::VerticalAlign::middle)->SetOverflow(Text::Overflow::wrap),
+        }),
     });
 }

@@ -7,6 +7,7 @@
 #include "Backend/dualInertial.h"
 
 #include <vector>
+#include <sstream>
 
 struct PathSection {
     // Four points that make up a cubic Bézier curve
@@ -59,6 +60,9 @@ class AbsolutePositioningSystem {
         DualInertial* mInertialSensors;
         // GPS sensor to occasionally calibrate tracking position
         vex::gps* mGPSSensor;
+        
+        // SDCard to record the path on
+        vex::brain::sdcard* mSDCard;
 
         // Whether or not to use values from the GPS sensor to update the position
         bool mEnableGPS = false;
@@ -75,6 +79,9 @@ class AbsolutePositioningSystem {
         double mPrevRightDrivetrainMotorPosition = 0;
         double mPrevUnpoweredWheelRotation = 0;
         double mPrevInertialSensorsRotation = 0;
+
+        // A long string to store data about the robot at each tick
+        std::stringstream* mDriveLog = nullptr;
 
         void TickTracking();
 
@@ -93,15 +100,16 @@ class AbsolutePositioningSystem {
         void TickDriving();
 
     public:
-        AbsolutePositioningSystem(vex::motor_group* leftDrivetrainMotors, vex::motor_group* rightDrivetrainMotors, DualInertial* inertialSensors, vex::encoder* unpoweredWheel, vex::gps* gpsSensor, double drivetrainDegreesToInchesRatio, double unpoweredWheelDegreesToInchesRatio, double unpoweredWheelRobot360ToDegreesRatio) : 
-            mLeftDrivetrainMotors(leftDrivetrainMotors),
-            mRightDrivetrainMotors(rightDrivetrainMotors),
-            mInertialSensors(inertialSensors),
-            mUnpoweredWheel(unpoweredWheel),
-            mGPSSensor(gpsSensor),
+        AbsolutePositioningSystem(vex::motor_group& leftDrivetrainMotors, vex::motor_group& rightDrivetrainMotors, DualInertial& inertialSensors, vex::encoder& unpoweredWheel, vex::gps& gpsSensor, double drivetrainDegreesToInchesRatio, double unpoweredWheelDegreesToInchesRatio, double unpoweredWheelRobot360ToDegreesRatio, vex::brain::sdcard& sdCard) : 
+            mLeftDrivetrainMotors(&leftDrivetrainMotors),
+            mRightDrivetrainMotors(&rightDrivetrainMotors),
+            mInertialSensors(&inertialSensors),
+            mUnpoweredWheel(&unpoweredWheel),
+            mGPSSensor(&gpsSensor),
             mDrivetrainDegreesToInchesRatio(drivetrainDegreesToInchesRatio),
             mUnpoweredWheelDegreesToInchesRatio(unpoweredWheelDegreesToInchesRatio),
-            mUnpoweredWheelRobot360ToDegreesRatio(unpoweredWheelRobot360ToDegreesRatio) {}
+            mUnpoweredWheelRobot360ToDegreesRatio(unpoweredWheelRobot360ToDegreesRatio),
+            mSDCard(&sdCard) {}
 
         void SetPosition(double x, double y);
         void SetRotation(double rotation);
@@ -109,6 +117,8 @@ class AbsolutePositioningSystem {
         double GetX();
         double GetY();
         double GetRotation();
+
+        void SaveDriveLog();
 
         void StartTicking(double refreshRate = 50);
 

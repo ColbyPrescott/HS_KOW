@@ -3,6 +3,8 @@
 #include "vex.h"
 #include "Backend/utilityMath.h"
 
+#include <sstream>
+
 #pragma region PathSection functions
 
 // Get the X coordinate of a point along the curve at fractional time t
@@ -32,6 +34,23 @@ double PathSection::GetY(double t) {
 #pragma endregion
 
 #pragma region Main tick functions
+
+// Save the drive log onto the SDCard
+void AbsolutePositioningSystem::SaveDriveLog() {
+    // Make sure the SD Card can be saved to
+    if(!mSDCard->isInserted()) {
+        printf("SD Card not inserted\n");
+        return;
+    };
+
+    // Path to store the file at. Folder can not be used unless already created from computer
+    const char filePath[] = "apsLastDrive.txt";
+    // Turn the stringstream drive log into a uint8_t* for the savefile(...) function
+    std::string driveLog = mDriveLog->str();
+    uint8_t* buf = reinterpret_cast<uint8_t*>(const_cast<char*>(driveLog.c_str()));
+    // Store the drive log onto the SD Card, overwriting the previous file
+    mSDCard->savefile(filePath, buf, driveLog.length() + 1);
+}
 
 // Update the absolute position
 void AbsolutePositioningSystem::TickTracking() {
@@ -78,6 +97,11 @@ void AbsolutePositioningSystem::TickTracking() {
     // if(!mEnableGPS || mGPSSensor->quality() != 100) return;
     // mX = mGPSSensor->xPosition(vex::inches) + 24 * 3;
     // mY = mGPSSensor->yPosition(vex::inches) + 24 * 3;
+
+
+    // Append position to the drive log
+    if(mDriveLog == nullptr) mDriveLog = new std::stringstream();
+    *mDriveLog << round(mX * 100) / 100 << ", " << round(mY * 100) / 100 << ", " << round(mRotation * 100) / 100 << ",\n";
 }
 
 // Update the wheel velocities
