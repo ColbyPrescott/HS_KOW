@@ -120,13 +120,13 @@ void AbsolutePositioningSystem::TickDriving() {
 
     // Move mPathSectionProgress as far along the path that's within a distance
     const double lookaheadInches = 12;
-    while(pow(GetX() - targetPathSection.GetX(mPathSectionProgress), 2) + pow(GetY() - targetPathSection.GetY(mPathSectionProgress), 2) < pow(lookaheadInches, 2) && mPathSectionProgress < 1) {
+    while(mPathSectionProgress < 1 && DistSq(GetX(), GetY(), targetPathSection.GetX(mPathSectionProgress), targetPathSection.GetY(mPathSectionProgress)) < lookaheadInches * lookaheadInches) {
         mPathSectionProgress += 0.01;
     }
 
     // Test if the end of the buffered path has been reached already
     const double endInches = 2;
-    if(mPath.size() == 1 && lookaheadInches >= 1 && pow(GetX() - targetPathSection.GetX(mPathSectionProgress), 2) + pow(GetY() - targetPathSection.GetY(mPathSectionProgress), 2) < pow(endInches, 2)) {
+    if(mPath.size() == 1 && DistSq(GetX(), GetY(), targetPathSection.GetX(mPathSectionProgress), targetPathSection.GetY(mPathSectionProgress)) < endInches * endInches) {
         mPath.erase(mPath.begin());
         mPathSectionProgress = 0;
 
