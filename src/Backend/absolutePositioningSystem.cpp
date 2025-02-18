@@ -118,8 +118,16 @@ void AbsolutePositioningSystem::TickDriving() {
     // Get the current PathSection to drive along
     PathSection targetPathSection = mPath.front();
 
+    // Get a quick approximation of the closest point (position and progress) on the path
+    double pathSectionClosestProgress = 0;
+    double distSqToClosest = 12 * 12; // Max lookahead distance
+    while(pathSectionClosestProgress < 1 && DistSq(GetX(), GetY(), targetPathSection.GetX(pathSectionClosestProgress), targetPathSection.GetY(pathSectionClosestProgress)) <= distSqToClosest) {
+        pathSectionClosestProgress += 0.01;
+    }
+    // Calculate how far to look ahead on the path. If farther away, look further ahead
+    double lookaheadInches = sqrt(distSqToClosest) * 1.4 + 5;
+
     // Move mPathSectionProgress as far along the path that's within a distance
-    const double lookaheadInches = 12;
     while(mPathSectionProgress < 1 && DistSq(GetX(), GetY(), targetPathSection.GetX(mPathSectionProgress), targetPathSection.GetY(mPathSectionProgress)) < lookaheadInches * lookaheadInches) {
         mPathSectionProgress += 0.01;
     }

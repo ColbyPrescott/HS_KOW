@@ -34,6 +34,10 @@ void AutonPositiveRed() {
     aps.AddPathSection(32.05, 71.83, 32.45, 72.03, 9.78, 71.63, 9.95, 71.83, -40, -20);
     aps.EndPath();
     TriggerAutoHooks();
-    aps.AddPathSection(9.95, 71.83, 10.12, 72.03, 39.64, 71.04, 43.41, 71.24, 40, 40);
+    aps.AddPathSection(9.95, 71.83, 10.12, 72.03, 25.77, 86.89, 32.11, 94.22, 40, 40);
+    aps.AddPathSection(32.11, 94.22, 38.45, 101.55, 47.27, 120.3, 47.7, 120.74, 50, 40);
+    aps.EndPath();
+    TriggerAutoHooks();
+    aps.AddPathSection(47.7, 120.74, 48.13, 121.18, 48.57, 104.79, 48.2, 98.31, -40, -40);
     aps.EndPath();
 }
