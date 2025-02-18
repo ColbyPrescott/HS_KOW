@@ -5,7 +5,7 @@ using namespace vex;
 #pragma region Quick settings
 
 // Drivetrain motor speed going forwards and backwards, 0 - 1
-const double driveSpeed = 1;
+const double driveSpeed = 0.99;
 
 // Drivetrain motor speed turning left and right, 0 - 1
 const double turnSpeed = 1;

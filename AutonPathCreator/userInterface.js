@@ -14,7 +14,6 @@ const domElements = {
     endSpeedInput: document.getElementById("endSpeedInput"),
     codeTextarea: document.getElementById("codeTextarea"),
 
-    jsonTextarea: document.getElementById("jsonTextarea"),
     cppTextarea: document.getElementById("cppTextarea"),
 
     ghostTextarea: document.getElementById("ghostTextarea")
@@ -38,7 +37,6 @@ function ClearPointUI() {
 // Clear all inputs
 function ClearAllUI() {
     ClearPointUI();
-    domElements.jsonTextarea.value = "";
     domElements.cppTextarea.value = "";
     domElements.ghostTextarea.value = "";
 }
@@ -62,33 +60,8 @@ function UpdateUI() {
         domElements.codeTextarea.value = input.selectedPathSection.code;
     }
 
-    // Update the JSON textarea with the latest PathSection data
-    jsonTextarea.value = JSON.stringify(path.pathSections);
-
-    // Generate C++ code
-    cppTextarea.value = "";
-    if(path.pathSections.length > 0) {
-        // Setup APS
-        let start = path.pathSections[0];
-        let startHeading = Math.atan2(start.p1.y - start.p0.y, start.p1.x - start.p0.x);
-        if(startHeading < 0) startHeading = Math.PI * 2 + startHeading;
-        
-        cppTextarea.value += `aps.SetPosition(${start.p0.x}, ${start.p0.y});\n`;
-        cppTextarea.value += `aps.SetRotation(${startHeading});\n`;
-        cppTextarea.value += "aps.SetDriving(true);\n";
-
-        // Body of the autonomous sequence
-        for(let pathSection of path.pathSections) {
-            cppTextarea.value += `aps.AddPathSection(${pathSection.p0.x}, ${pathSection.p0.y}, ${pathSection.p1.x}, ${pathSection.p1.y}, ${pathSection.p2.x}, ${pathSection.p2.y}, ${pathSection.p3.x}, ${pathSection.p3.y}, ${pathSection.startSpeed}, ${pathSection.endSpeed});\n`;
-            if(pathSection.code == "") continue;
-
-            cppTextarea.value += "aps.EndPath();\n";
-            cppTextarea.value += pathSection.code + "\n";
-        }
-
-        // End path if needed
-        if(path.pathSections[path.pathSections.length - 1].code == "") cppTextarea.value += "aps.EndPath();";
-    }
+    // Turn the displayed path into C++ code
+    cppTextarea.value = converter.Generate();
 }
 
 function OnEditUI(element) {
@@ -103,27 +76,8 @@ function OnEditUI(element) {
         else if(element == domElements.codeTextarea) input.selectedPathSection.code = domElements.codeTextarea.value;
     }
 
-    // Convert the JSON input into PathSection objects
-    if(element == domElements.jsonTextarea) {
-        try {
-            const jsonArray = JSON.parse(domElements.jsonTextarea.value);
-            path.pathSections = [];
-            for(let jsonPathSection of jsonArray) {
-                path.pathSections.push(new PathSection(
-                    new Vec2(jsonPathSection.p0.x, jsonPathSection.p0.y),
-                    new Vec2(jsonPathSection.p1.x, jsonPathSection.p1.y),
-                    new Vec2(jsonPathSection.p2.x, jsonPathSection.p2.y),
-                    new Vec2(jsonPathSection.p3.x, jsonPathSection.p3.y),
-                    jsonPathSection.startSpeed,
-                    jsonPathSection.endSpeed,
-                    jsonPathSection.code
-                ));
-            }
-        } catch(err) {
-            domElements.jsonTextarea.value = "Invalid JSON";
-            return;
-        }
-    }
+    // Turn the C++ code into the displayed path
+    if(element == domElements.cppTextarea) converter.Read(domElements.cppTextarea.value);
 
     // When a drive log is pastes, convert it into a ghost
     if(element == domElements.ghostTextarea) {

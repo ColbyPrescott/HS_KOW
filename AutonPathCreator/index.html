@@ -28,10 +28,7 @@
                     <textarea id="codeTextarea" placeholder="C++ code to execute after driving the path section" oninput="OnEditUI(this);"></textarea>
                 </div>
                 <div style="height: 10px;"></div>
-                <div id="inOutDiv">
-                    <textarea id="jsonTextarea" placeholder="Start by pasting JSON data here.&#10;&#10;Make sure to save by copying this JSON back into the file!" onchange="OnEditUI(this);"></textarea>
-                    <textarea id="cppTextarea" placeholder="Copy C++ code here" onchange="OnEditUI(this);"></textarea>
-                </div>
+                <textarea id="cppTextarea" placeholder="Import and export C++ code here with copy and paste" onchange="OnEditUI(this);"></textarea>
             </div>
         </div>
 
@@ -44,6 +41,7 @@
         <script src="pathSection.js"></script>
         <script src="path.js"></script>
         <script src="ghost.js"></script>
+        <script src="converter.js"></script>
         <script src="userInterface.js"></script>
         <script src="main.js"></script>
     </body>

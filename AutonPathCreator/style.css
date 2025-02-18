@@ -50,16 +50,8 @@ div.numberSetting > input {
     resize: vertical; /* Only let the user resize the height */
 }
 
-#inOutDiv {
-    flex-grow: 1; /* Take up all remaining height in the sidePanel */
-
-    display: flex; /* Dynamically resize the child textareas */
-    flex-direction: row; /* Place the child textareas next to each other */
-}
-
-#inOutDiv > textarea {
-    flex-grow: 1; /* Expand to equally fit as much width as possible */
-    width: 0px; /* For some reason, this works instead of min-width to set the minimum width */
+#cppTextarea {
+    flex-grow: 1;
 
     font-size: 7px; /* Make the text very small so more of the data can fit on screen */
     
