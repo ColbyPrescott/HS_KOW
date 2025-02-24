@@ -106,6 +106,16 @@ void AbsolutePositioningSystem::TickTracking() {
 
 // Update the wheel velocities
 void AbsolutePositioningSystem::TickDriving() {
+    // Skip PathSections if stuck
+    static uint32_t lastMovementTimestamp = vexSystemTimeGet();
+    if(vexSystemTimeGet() - lastMovementTimestamp > 1000) {
+        mPath.erase(mPath.begin());
+        mPathSectionProgress = 0;
+        lastMovementTimestamp = vexSystemTimeGet();
+        return;
+    }
+    if(leftWheels.velocity(vex::percent) > 5 || rightWheels.velocity(vex::percent) > 5 || mPath.empty()) lastMovementTimestamp = vexSystemTimeGet();
+
     // Don't continue if no PathSections are buffered
     if(mPath.empty()) return;
 

@@ -4,7 +4,7 @@
 
 using namespace vex;
 
-void AutonPositiveRed() {
+void AutonPositiveRedPotentialAWP() {
     storingRing = true;
     mogoMover.open();
 
