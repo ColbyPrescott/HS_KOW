@@ -5,7 +5,6 @@
 #include "Subsystems/drivetrain.h"
 #include "Subsystems/mogoMover.h"
 #include "Subsystems/hooks.h"
-#include "Subsystems/elevation.h"
 #include "Subsystems/wing.h"
 
 #include "Autonomous/autonSequences.h"
@@ -26,7 +25,6 @@ void pre_auton(void) {
     InitDrivetrain();
     InitMogoMover();
     InitHooks();
-    InitElevation();
     InitWing();
 }
 
@@ -46,7 +44,6 @@ void usercontrol(void) {
     UserInitDrivetrain();
     UserInitMogoMover();
     UserInitHooks();
-    UserInitElevation();
     UserInitWing();
 
     UserInitTimeWarnings();
@@ -56,7 +53,6 @@ void usercontrol(void) {
         TickDrivetrain();
         TickMogoMover();
         TickHooks();
-        TickElevation();
         TickWing();
         
         wait(20, msec);

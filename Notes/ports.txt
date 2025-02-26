@@ -4,21 +4,21 @@
 4: 
 5: Right wheels primary
 
-6: Right elevation winch
+6: 
 7: BROKEN
-8: Left elevation winch
+8: 
 9: Right wheels secondary
 10: BROKEN
 
 11: WEIRD
 12: 
-13: Left elevation arm
+13: 
 14: Left wheels primary
 15: BROKEN
 
 16: Inertial sensor A (upright)
 17: 
-18: Right elevation arm
+18: 
 19: GPS sensor
 20: Left wheels secondary
 

@@ -32,13 +32,6 @@ double rightWheelsVoltageBias = 0;
 
 motor hooks = motor(PORT3, ratio18_1, false);
 
-motor leftElevationWinch = motor(PORT8, ratio36_1, false);
-motor rightElevationWinch = motor(PORT6, ratio36_1, false);
-motor_group elevationWinch = motor_group(leftElevationWinch, rightElevationWinch);
-motor leftElevationArm = motor(PORT13, ratio36_1, false);
-motor rightElevationArm = motor(PORT18, ratio36_1, false);
-motor_group elevationArm = motor_group(leftElevationArm, rightElevationArm);
-
 // Pneumatics
 pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.C);
 

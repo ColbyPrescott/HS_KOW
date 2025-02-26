@@ -1,5 +1,5 @@
-L1: Elevation winch
-L2: Elevation winch
+L1: 
+L2: 
 R1: Manual hooks forward
 R2: Manual hooks backward
 
@@ -10,7 +10,7 @@ Right: Auto hooks
 
 X: 
 B: Toggle mogo mover
-Y: Toggle elevation arms
+Y: 
 A: 
 
 Axis 1: Turn left & right
