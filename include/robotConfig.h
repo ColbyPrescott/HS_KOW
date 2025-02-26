@@ -19,6 +19,8 @@ extern double rightWheelsVoltageBias;
 
 extern vex::motor hooks;
 
+extern vex::motor neutralFlip;
+
 extern vex::pneumatics mogoMover;
 
 extern vex::pneumatics wing;

@@ -19,10 +19,13 @@ void DrawControllerMonitors() {
     // State of whether or not the mogo mover is holding a mogo
     std::string mogoMoverStatus = mogoMover.value() == 0 ? "HOLD" : "____";
 
+    // Neutral flip temerature 0 to 10
+    int neutralFlipTemp = (int)neutralFlip.temperature(percent) / 10;
+
     // Draw to screen
     PrimaryController.Screen.clearScreen();
     PrimaryController.Screen.setCursor(1, 1);
     PrimaryController.Screen.print("%d--%d", leftWheelsPrimaryTemp, rightWheelsPrimaryTemp); PrimaryController.Screen.newLine();
     PrimaryController.Screen.print("%d--%d", leftWheelsSecondaryTemp, rightWheelsSecondaryTemp); PrimaryController.Screen.newLine();
-    PrimaryController.Screen.print("%s, %d", mogoMoverStatus.c_str(), hooksTemp);
+    PrimaryController.Screen.print("%s, %d, %d", mogoMoverStatus.c_str(), hooksTemp, neutralFlipTemp);
 }

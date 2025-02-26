@@ -1,4 +1,4 @@
-L1: 
+L1: Toggle neutral flip
 L2: 
 R1: Manual hooks forward
 R2: Manual hooks backward

@@ -6,6 +6,7 @@
 #include "Subsystems/mogoMover.h"
 #include "Subsystems/hooks.h"
 #include "Subsystems/wing.h"
+#include "Subsystems/neutralFlip.h"
 
 #include "Autonomous/autonSequences.h"
 
@@ -26,6 +27,7 @@ void pre_auton(void) {
     InitMogoMover();
     InitHooks();
     InitWing();
+    InitNeutralFlip();
 }
 
 // Called at start of autonomous
@@ -33,6 +35,9 @@ void autonomous(void) {
     // Start tracking and driving with APS
     aps.StartTicking(100);
     aps.SetMirrored(false); // DEBUG Does this fix the APS being haunted?
+
+    // Call the autonomous initialization of each subsystem
+    AutonInitNeutralFlip();
 
     // Call the autonomous function that was selected
     if(selectedAutonSequence != nullptr) selectedAutonSequence();
@@ -45,6 +50,7 @@ void usercontrol(void) {
     UserInitMogoMover();
     UserInitHooks();
     UserInitWing();
+    UserInitNeutralFlip();
 
     UserInitTimeWarnings();
 
@@ -54,6 +60,7 @@ void usercontrol(void) {
         TickMogoMover();
         TickHooks();
         TickWing();
+        TickNeutralFlip();
         
         wait(20, msec);
     }

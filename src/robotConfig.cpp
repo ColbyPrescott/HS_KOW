@@ -32,6 +32,8 @@ double rightWheelsVoltageBias = 0;
 
 motor hooks = motor(PORT3, ratio18_1, false);
 
+motor neutralFlip = motor(PORT18, ratio36_1, true);
+
 // Pneumatics
 pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.C);
 
