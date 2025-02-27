@@ -20,7 +20,7 @@ void DrawControllerMonitors() {
     std::string mogoMoverStatus = mogoMover.value() == 0 ? "HOLD" : "____";
 
     // Neutral flip temerature 0 to 10
-    int neutralFlipTemp = (int)neutralFlip.temperature(percent) / 10;
+    int neutralFlipTemp = (int)fmax(leftNeutralFlip.temperature(percent), rightNeutralFlip.temperature(percent)) / 10;
 
     // Draw to screen
     PrimaryController.Screen.clearScreen();

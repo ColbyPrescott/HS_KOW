@@ -36,7 +36,9 @@ motor leftHooks = motor(PORT3, ratio18_1, false);
 motor rightHooks = motor(PORT8, ratio18_1, true);
 motor_group hooks = motor_group(leftHooks, rightHooks);
 
-motor neutralFlip = motor(PORT18, ratio36_1, true);
+motor leftNeutralFlip = motor(PORT18, ratio36_1, true);
+motor rightNeutralFlip = motor(PORT12, ratio36_1, false);
+motor_group neutralFlip = motor_group(leftNeutralFlip, rightNeutralFlip);
 
 // Pneumatics
 pneumatics mogoMover = pneumatics(Brain.ThreeWirePort.C);

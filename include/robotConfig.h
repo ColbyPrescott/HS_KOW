@@ -23,7 +23,9 @@ extern vex::motor leftHooks;
 extern vex::motor rightHooks;
 extern vex::motor_group hooks;
 
-extern vex::motor neutralFlip;
+extern vex::motor leftNeutralFlip;
+extern vex::motor rightNeutralFlip;
+extern vex::motor_group neutralFlip;
 
 extern vex::pneumatics mogoMover;
 

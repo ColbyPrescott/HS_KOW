@@ -11,18 +11,18 @@
 10: BROKEN
 
 11: WEIRD
-12: 
+12: Right neutral flip
 13: 
 14: Left wheels primary
 15: BROKEN
 
 16: Inertial sensor A (upright)
 17: 
-18: Neutral flip
+18: Left neutral flip
 19: GPS sensor
 20: Left wheels secondary
 
-21: 
+21: Radio
 
 A: Wing
 B: 
