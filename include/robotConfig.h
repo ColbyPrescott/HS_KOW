@@ -19,7 +19,9 @@ extern double rightWheelsVoltageBias;
 
 extern vex::drivetrain basicDrive;
 
-extern vex::motor hooks;
+extern vex::motor leftHooks;
+extern vex::motor rightHooks;
+extern vex::motor_group hooks;
 
 extern vex::motor neutralFlip;
 

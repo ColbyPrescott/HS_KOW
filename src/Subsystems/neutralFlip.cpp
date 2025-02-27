@@ -37,7 +37,7 @@ void RetractNeutralFlip() {
     
     neutralFlip.setVelocity(99, percent);
     neutralFlip.spinToPosition(neutralFlipRetractedPosition, degrees, false);
-    neutralFlip.setStopping(hold);
+    neutralFlip.setStopping(coast);
 }
 
 // Toggle the neutral flip between the extended and retracted state

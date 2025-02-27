@@ -14,7 +14,7 @@ void DrawControllerMonitors() {
     int rightWheelsSecondaryTemp = (int)rightWheelsSecondary.temperature(percent) / 10;
 
     // Hooks temperature 0 to 10
-    int hooksTemp = (int)hooks.temperature(percent) / 10;
+    int hooksTemp = (int)fmax(leftHooks.temperature(percent), rightHooks.temperature(percent)) / 10;
 
     // State of whether or not the mogo mover is holding a mogo
     std::string mogoMoverStatus = mogoMover.value() == 0 ? "HOLD" : "____";

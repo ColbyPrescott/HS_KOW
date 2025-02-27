@@ -1,12 +1,12 @@
 1: 
 2: WEIRD (maybe)
-3: Hooks
+3: Left hooks
 4: 
 5: Right wheels primary
 
 6: 
 7: BROKEN
-8: 
+8: Right hooks
 9: Right wheels secondary
 10: BROKEN
 
