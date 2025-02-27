@@ -106,15 +106,15 @@ void AbsolutePositioningSystem::TickTracking() {
 
 // Update the wheel velocities
 void AbsolutePositioningSystem::TickDriving() {
-    // Skip PathSections if stuck
-    static uint32_t lastMovementTimestamp = vexSystemTimeGet();
-    if(vexSystemTimeGet() - lastMovementTimestamp > 1000) {
-        mPath.erase(mPath.begin());
-        mPathSectionProgress = 0;
-        lastMovementTimestamp = vexSystemTimeGet();
-        return;
-    }
-    if(leftWheels.velocity(vex::percent) > 5 || rightWheels.velocity(vex::percent) > 5 || mPath.empty()) lastMovementTimestamp = vexSystemTimeGet();
+    // // Skip PathSections if stuck
+    // static uint32_t lastMovementTimestamp = vexSystemTimeGet();
+    // if(vexSystemTimeGet() - lastMovementTimestamp > 1000) {
+    //     mPath.erase(mPath.begin());
+    //     mPathSectionProgress = 0;
+    //     lastMovementTimestamp = vexSystemTimeGet();
+    //     return;
+    // }
+    // if(leftWheels.velocity(vex::percent) > 5 || rightWheels.velocity(vex::percent) > 5 || mPath.empty()) lastMovementTimestamp = vexSystemTimeGet();
 
     // Don't continue if no PathSections are buffered
     if(mPath.empty()) return;
@@ -128,14 +128,16 @@ void AbsolutePositioningSystem::TickDriving() {
     // Get the current PathSection to drive along
     PathSection targetPathSection = mPath.front();
 
-    // Get a quick approximation of the closest point (position and progress) on the path
-    double pathSectionClosestProgress = 0;
-    double distSqToClosest = 12 * 12; // Max lookahead distance
-    while(pathSectionClosestProgress < 1 && DistSq(GetX(), GetY(), targetPathSection.GetX(pathSectionClosestProgress), targetPathSection.GetY(pathSectionClosestProgress)) <= distSqToClosest) {
-        pathSectionClosestProgress += 0.01;
-    }
-    // Calculate how far to look ahead on the path. If farther away, look further ahead
-    double lookaheadInches = sqrt(distSqToClosest) * 1.4 + 5;
+    // // Get a quick approximation of the closest point (position and progress) on the path
+    // double pathSectionClosestProgress = 0;
+    // double distSqToClosest = 12 * 12; // Max lookahead distance
+    // while(pathSectionClosestProgress < 1 && DistSq(GetX(), GetY(), targetPathSection.GetX(pathSectionClosestProgress), targetPathSection.GetY(pathSectionClosestProgress)) <= distSqToClosest) {
+    //     pathSectionClosestProgress += 0.01;
+    // }
+    // // Calculate how far to look ahead on the path. If farther away, look further ahead
+    // double lookaheadInches = sqrt(distSqToClosest) * 1.4 + 5;
+
+    double lookaheadInches = 12;
 
     // Move mPathSectionProgress as far along the path that's within a distance
     while(mPathSectionProgress < 1 && DistSq(GetX(), GetY(), targetPathSection.GetX(mPathSectionProgress), targetPathSection.GetY(mPathSectionProgress)) < lookaheadInches * lookaheadInches) {

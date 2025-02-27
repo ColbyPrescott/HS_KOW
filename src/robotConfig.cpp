@@ -30,6 +30,8 @@ motor rightWheelsSecondary = motor(PORT9, ratio18_1, false);
 motor_group rightWheels = motor_group(rightWheelsPrimary, rightWheelsSecondary);
 double rightWheelsVoltageBias = 0;
 
+drivetrain basicDrive = drivetrain(leftWheels, rightWheels, 12.8, 10.0, 7.3, inches, 60.0/36.0);
+
 motor hooks = motor(PORT3, ratio18_1, false);
 
 motor neutralFlip = motor(PORT18, ratio36_1, true);
