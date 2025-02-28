@@ -6,7 +6,7 @@
 using namespace KOWGUI;
 
 // Current auton function to run when autonomous starts
-void (*selectedAutonSequence)() = AutonNegativeRed;
+void (*selectedAutonSequence)() = AutonPositiveRedBasic;
 
 // Initialize the UI for the autonomous selection screen
 void InitScreenAutonSelector() {
@@ -28,16 +28,16 @@ void InitScreenAutonSelector() {
             }),
             (new Row)->SetScaleToFit(true)->SetSpacing(15)->AddChildren({
                 // Button to select AutonPositiveRed
-                (new Clickable)->SetRelease([](BaseNode* self){selectedAutonSequence = AutonPositiveRed;})->AddChildren({
+                (new Clickable)->SetRelease([](BaseNode* self){selectedAutonSequence = AutonPositiveRedBasic;})->AddChildren({
                     (new NFocused)->AddChildren({(new RoundedRectangle)->SetOutlineRadius(30)->SetFillColor(Color::red)}),
                     (new Focused)->AddChildren({(new RoundedRectangle)->SetOutlineRadius(30)->SetFillColor(Color::darkRed)}),
-                    (new Text)->SetText("+ Red")->SetFontSize(30)->SetColor(Color::white)->SetAlignments(Text::HorizontalAlign::center, Text::VerticalAlign::middle)->SetOverflow(Text::Overflow::wrap),
+                    (new Text)->SetText("+ Red B")->SetFontSize(30)->SetColor(Color::white)->SetAlignments(Text::HorizontalAlign::center, Text::VerticalAlign::middle)->SetOverflow(Text::Overflow::wrap),
                 }),
                 // Button to select AutonPositiveBlue
-                (new Clickable)->SetRelease([](BaseNode* self){selectedAutonSequence = AutonPositiveBlue;})->AddChildren({
+                (new Clickable)->SetRelease([](BaseNode* self){selectedAutonSequence = AutonPositiveBlueBasic;})->AddChildren({
                     (new NFocused)->AddChildren({(new RoundedRectangle)->SetOutlineRadius(30)->SetFillColor(Color::blue)}),
                     (new Focused)->AddChildren({(new RoundedRectangle)->SetOutlineRadius(30)->SetFillColor(Color::darkBlue)}),
-                    (new Text)->SetText("+ Blue")->SetFontSize(30)->SetColor(Color::white)->SetAlignments(Text::HorizontalAlign::center, Text::VerticalAlign::middle)->SetOverflow(Text::Overflow::wrap),
+                    (new Text)->SetText("+ Blue B")->SetFontSize(30)->SetColor(Color::white)->SetAlignments(Text::HorizontalAlign::center, Text::VerticalAlign::middle)->SetOverflow(Text::Overflow::wrap),
                 }),
             }),
             (new Row)->SetScaleToFit(true)->SetSpacing(15)->AddChildren({
@@ -62,8 +62,8 @@ void InitScreenAutonSelector() {
             if(selectedAutonSequence == nullptr) textSelf->SetText("Selected: None");
             else if(selectedAutonSequence == AutonNegativeRed) textSelf->SetText("Selected: - Red");
             else if(selectedAutonSequence == AutonNegativeBlue) textSelf->SetText("Selected: - Blue");
-            else if(selectedAutonSequence == AutonPositiveRed) textSelf->SetText("Selected: + Red");
-            else if(selectedAutonSequence == AutonPositiveBlue) textSelf->SetText("Selected: + Blue");
+            else if(selectedAutonSequence == AutonPositiveRedBasic) textSelf->SetText("Selected: + Red B");
+            else if(selectedAutonSequence == AutonPositiveBlueBasic) textSelf->SetText("Selected: + Blue B");
             else if(selectedAutonSequence == AutonDriveForward) textSelf->SetText("Selected: Drv Frd");
             else if(selectedAutonSequence == AutonSkills) textSelf->SetText("Selected: Skills");
             else textSelf->SetText("Selected: ERROR");

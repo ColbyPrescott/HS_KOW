@@ -43,6 +43,7 @@ bool storingRing = false;
 
 // Rotate hooks to position, temporarily reversing direction if it gets stuck
 void HooksSpinForwardTo(double targetDegrees) {
+    if(hooks.isSpinning()) printf("Hooks are already spinning?\n");
     // Start spinning to position
     hooks.spinFor(targetDegrees - hooks.position(degrees), degrees, false);
 

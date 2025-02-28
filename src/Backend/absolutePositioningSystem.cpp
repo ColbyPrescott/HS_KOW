@@ -109,6 +109,7 @@ void AbsolutePositioningSystem::TickDriving() {
     // // Skip PathSections if stuck
     // static uint32_t lastMovementTimestamp = vexSystemTimeGet();
     // if(vexSystemTimeGet() - lastMovementTimestamp > 1000) {
+    //     printf("Erasing path...\n");
     //     mPath.erase(mPath.begin());
     //     mPathSectionProgress = 0;
     //     lastMovementTimestamp = vexSystemTimeGet();
@@ -130,14 +131,15 @@ void AbsolutePositioningSystem::TickDriving() {
 
     // // Get a quick approximation of the closest point (position and progress) on the path
     // double pathSectionClosestProgress = 0;
-    // double distSqToClosest = 12 * 12; // Max lookahead distance
+    // double distSqToClosest = 25; // Max squared lookahead distance
     // while(pathSectionClosestProgress < 1 && DistSq(GetX(), GetY(), targetPathSection.GetX(pathSectionClosestProgress), targetPathSection.GetY(pathSectionClosestProgress)) <= distSqToClosest) {
     //     pathSectionClosestProgress += 0.01;
     // }
     // // Calculate how far to look ahead on the path. If farther away, look further ahead
     // double lookaheadInches = sqrt(distSqToClosest) * 1.4 + 5;
+    // printf("Lookahead inches: %.1f\n", lookaheadInches);
 
-    double lookaheadInches = 12;
+    double lookaheadInches = 8;
 
     // Move mPathSectionProgress as far along the path that's within a distance
     while(mPathSectionProgress < 1 && DistSq(GetX(), GetY(), targetPathSection.GetX(mPathSectionProgress), targetPathSection.GetY(mPathSectionProgress)) < lookaheadInches * lookaheadInches) {

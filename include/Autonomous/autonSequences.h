@@ -5,6 +5,8 @@ void AutonNegativeRed();
 void AutonNegativeBlue();
 void AutonPositiveRed();
 void AutonPositiveBlue();
+void AutonPositiveRedBasic();
+void AutonPositiveBlueBasic();
 void AutonDriveForward();
 
 void AutonSkills();

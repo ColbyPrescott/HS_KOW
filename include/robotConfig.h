@@ -6,8 +6,6 @@ extern vex::brain Brain;
 extern vex::controller PrimaryController;
 extern KOWGUI::GUI gui;
 
-extern AbsolutePositioningSystem aps;
-
 extern vex::motor leftWheelsPrimary;
 extern vex::motor leftWheelsSecondary;
 extern vex::motor_group leftWheels;
@@ -16,8 +14,6 @@ extern vex::motor rightWheelsPrimary;
 extern vex::motor rightWheelsSecondary;
 extern vex::motor_group rightWheels;
 extern double rightWheelsVoltageBias;
-
-extern vex::drivetrain basicDrive;
 
 extern vex::motor leftHooks;
 extern vex::motor rightHooks;
@@ -32,7 +28,12 @@ extern vex::pneumatics mogoMover;
 extern vex::pneumatics wing;
 
 extern DualInertial dualInertial;
+extern vex::inertial singleInertial;
 extern vex::encoder unpoweredWheel;
 extern vex::gps gpsSensor;
+
+extern AbsolutePositioningSystem aps;
+extern vex::drivetrain basicDrive;
+extern vex::smartdrive basicInertialDrive;
 
 #endif
